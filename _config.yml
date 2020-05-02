@@ -1,0 +1,49 @@
+# Basic
+title: 我的静态网站
+subtitle: 很高兴认识你，我是廖志伟
+welcome_message: <a href="http://139.224.137.74:8080/" target="_blank">去动态网站（未开发完）</a>
+description:
+creator: <a href="http://onev.cat">@onevcat</a>
+
+url: "http://vno.onevcat.com"
+
+permalink: /:year/:month/:title/
+
+# Format
+highlighter: rouge
+
+# supported colors: blue, green, purple, red, orange or slate. If you need clear, leave it empty.
+cover_color: red
+
+# The blog button should not be removed.
+blog_button:
+    title: 个人主页
+    description: Visit blog
+
+# Navigation buttons in the front page.
+nav:
+    - {title: CSDN（java_wxid）, description: A button, url: 'https://blog.csdn.net/java_wxid?t=1'}
+    - {title: 博客园, description: A button, url: 'https://www.cnblogs.com/javawxid/'}
+
+# Pagination
+plugins: [jekyll-paginate]
+paginate: 10
+paginate_path: "page/:num/"
+
+# Comment
+comment:
+    disqus: vno-jekyll
+    # duoshuo: 
+    
+# Social
+social:
+    weibo: onevcat
+    github: onevcat
+    twitter: onevcat
+    gplus: 107108267983477358170
+    mail: onev@onevcat.com
+
+# Google Analytics
+ga:
+    # id: your_ga_id
+    # host: your_host

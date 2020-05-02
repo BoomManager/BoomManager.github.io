@@ -1,0 +1,36 @@
+<nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  {% if site.social.weibo %}
+  <!-- Weibo -->
+  <li class="navigation__item">
+    <a href="https://weibo.com/javaliao" title="廖志伟的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+  {% endif %}
+
+  {% if site.social.github %}
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/BoomManager" title="廖志伟的Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  {% endif %}
+
+    {% if site.social.gitee %}
+    <!-- Github -->
+    <li class="navigation__item">
+      <a href="https://gitee.com/java_wxid" title="廖志伟的码云" target="_blank">
+        <i class='social fa fa-github'></i>
+        <span class="label">码云</span>
+      </a>
+    </li>
+    {% endif %}
+  
+
+  </ul>
+</nav>

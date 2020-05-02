@@ -1,2 +1,1 @@
-# BoomManager.github.io
-个人网站
+# 欢迎来到我的巢，该网站是静态网站
