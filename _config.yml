@@ -22,7 +22,7 @@ blog_button:
 
 # Navigation buttons in the front page.
 nav:
-    - {title: CSDN（java_wxid）, description: A button, url: 'https://blog.csdn.net/java_wxid?t=1'}
+    - {title: CSDN, description: A button, url: 'https://blog.csdn.net/java_wxid?t=1'}
 
 # Pagination
 plugins: [jekyll-paginate]
