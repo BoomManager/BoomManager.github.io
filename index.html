@@ -1,29 +1,269 @@
----
-layout: default
----
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?0374f90541df5d51341fbd1b86642d72";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
+<!DOCTYPE html>
+<html lang="zh-cn">
 
-<div class="main-post-list hidden">
-  <div>廖志伟</div>
-  <ol class="post-list">
-    {% for post in paginator.posts %}
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="{{ post.url }}" title="访问 {{ post.title }}">{{ post.title }}</a></h2>
-      <p class="excerpt">{{ post.content | strip_html | strip_newlines | truncate: 250 }}&hellip;</p>
-      <div class="post-list__meta"><time datetime="{{post.date | date: date_to_xmlschema}}" class="post-list__meta--date date">{{ post.date | date: "%F"}}</time> &#8226; <span class="post-list__meta--tags tags">{{ post.tags | join:' ' }}</span><a class="btn-border-small" href={{ post.url }}>继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-    {% endfor %}
-  </ol>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
+    />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="renderer" content="webkit">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>廖志伟</title>
+    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="assets/css/typo.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <script>
+        function loading() {
+            document.getElementsByClassName('avatar')[0].style.display = 'block';
+            document.getElementsByClassName('loading')[0].style.display = 'none';
+        }
+    </script>
+</head>
 
-  {% include pagination.html %}
+<body>
 
-</div>
+    <header class="header"></header>
+
+    <article class="container">
+        <section class="side" id="side">
+
+            <!-- 左栏固定开关，记得及时删除这段代码 Start-->
+            <label class="switch" style="display: none;" onchange="switchFixed()">
+                <script type="text/javaScript">
+                    function switchFixed(){
+                        var value = document.getElementById('side').style.position === 'fixed' ? 'absolute' : 'fixed';
+                        document.getElementById('side').style.position = value;
+                    }
+                </script>
+                <input id="cb" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <style>
+                @media (min-width: 	750px){
+                    .switch{position:relative;display:inline-block!important;width:60px;height:34px;}
+                    .switch input{display:none;}
+                    .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;-webkit-transition:.4s;transition:.4s;}
+                    .slider:before{position:absolute;content:"";height:26px;width:26px;left:4px;bottom:4px;background-color:white;-webkit-transition:.4s;transition:.4s;}
+                    input:checked + .slider{background-color:#1abc9c;}
+                    input:focus + .slider{box-shadow:0 0 1px #1abc9c;}
+                    input:checked + .slider:before{-webkit-transform:translateX(26px);-ms-transform:translateX(26px);transform:translateX(26px);}.slider.round{border-radius:34px;}
+                    .slider.round:before{border-radius:50%;}
+                }
+            </style>
+            <!-- 左侧固定开关，记得及时删除这段代码 End-->
+
+            <!-- 个人肖像 -->
+            <section class="me">
+                <section class="portrait">
+                    <div class="loading">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <!-- 头像照片 -->
+                    <img class="avatar" src="http://hadoop-mall.oss-cn-shanghai.aliyuncs.com/liaozhiwei02.jpg?Expires=1915696996&OSSAccessKeyId=LTAI4G2Ch1kRCTQ7uP5P3eQ1&Signature=fzwf4dKCWAgABlJFpxVBMPq0wVI%3D" onload="loading()">
+                </section>
+
+                <h1 class="name">廖志伟</h1>
+                <h4 class="info-job">Java开发工程师 / 上海</h4>
+
+            </section>
+
+            <!-- 基本信息 -->
+            <section class="profile info-unit">
+                <h2>
+                    <i class="fa fa-user" aria-hidden="true"></i>基本信息</h2>
+                <hr/>
+                <ul>
+                    <li>
+                        <label>个人信息</label>
+                        <span>廖志伟 / 男 / 97年</span>
+                    </li>
+                    <li>
+                        <label>英语水平</label>
+                        <span>CET-4</span>
+                    </li>
+                    <li>
+                        <label>计算机水平</label>
+                        <span>中级</span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 联系方式 -->
+            <section class="contact info-unit">
+                <h2>
+                    <i class="fa fa-phone" aria-hidden="true"></i>联系方式</h2>
+                <hr/>
+                <ul>
+                    <li>
+                        <label>微信</label>
+                        <a href="" target="_blank">java_wxid</a>
+                    </li>
+                    <li>
+                        <label>QQ</label>
+                        <a href="" target="_blank">2469278741</a>
+                    </li>
+                    <li>
+                        <label>手机</label>
+                        <a href="tel:17717299170" target="_blank">17717299170</a>
+                    </li>
+                    <li>
+                        <label>邮箱</label>
+                        <a href="mailto:2469278741@qq.com" target="_blank">2469278741@qq.com</a>
+                    </li>
+                    <li>
+                        <label>个人主页</label>
+                        <a href="http://139.224.137.74:8080/" target="_blank">http://139.224.137.74:8080/</a>
+                    </li>
+                    <li>
+                        <label>码云</label>
+                        <a href="https://gitee.com/java_wxid" target="_blank">https://gitee.com/java_wxid</a>
+                    </li>
+                    <li>
+                        <label>Github</label>
+                        <a href="https://github.com/javaliao" target="_blank">https://github.com/javaliao</a>
+                    </li>
+                    <li>
+                        <label>CSDN</label>
+                        <a href="https://blog.csdn.net/java_wxid" target="_blank">https://blog.csdn.net/java_wxid</a>
+                    </li>
+                </ul>
+            </section>
+
+
+            <section class="qrcode info-unit">
+                <h2><i class="fa fa-qrcode" aria-hidden="true"></i>二维码</h2>
+                <hr/>
+                <img src="http://hadoop-mall.oss-cn-shanghai.aliyuncs.com/1.jpg?Expires=1916722548&OSSAccessKeyId=LTAI4G2Ch1kRCTQ7uP5P3eQ1&Signature=DKaUZ5JKsRjeE%2FEr7zjAfAQ1GtA%3D" style="width: 100%;" alt="">
+            </section>
+
+
+        </section>
+
+        <section class="main">
+
+            <!-- 教育经历 -->
+            <section class="edu info-unit">
+                <h2>
+                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>教育经历</h2>
+                <hr/>
+                <ul>
+                    <li>
+                        <h3>
+                            <span>湖南电子科技职业学院 - 软件工程专业（大专）</span>
+                            <time>2017.03.07-2019.06.30</time>
+                        </h3>
+                        <p>证书编号<mark>141225201906001202</mark></p>
+                    </li>
+                    <li>
+                        <h3>
+                            <span>湖南工商大学 - 人力资源管理专业（本科）</span>
+                            <time>2017.03.07-2019.12.30</time>
+                        </h3>
+                        <p>证书编号<mark>65439117162003928</mark></p>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 工作经历 -->
+            <section class="work info-unit">
+                <h2>
+                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>工作经历</h2>
+                <hr/>
+                <ul>
+                    <li>
+                        <h3>
+                            <span>[经历1]上海优创融联计算机科技有限公司－java开发工程师（初级）</span>
+                            <time>2017.06 至 2018.03</time>
+                        </h3>
+                    </li>
+                    <li>
+                        <h3>
+                            <span>[经历2]深圳市灵犀谷科技有限公司－java开发工程师（初级）</span>
+                            <time>2018.04-2019.03</time>
+                        </h3>
+                    </li>
+                    <li>
+                        <h3>
+                            <span>[经历3]上海富总信息科技有限公司－java开发工程师（中级）</span>
+                            <time>2019.03-2019.12</time>
+                        </h3>
+                    </li>
+                    <li>
+                        <h3>
+                            <span>[经历4]上海梦创双杨数据科技股份有限公司－java开发工程师（中级）</span>
+                            <time>2020.02-至今</time>
+                        </h3>
+                    </li>
+                </ul>
+            </section>
+
+            <!--职业技能-->
+            <section class="work info-unit">
+                <h2>
+                    <i class="fa fa-pencil" aria-hidden="true">职业技能</i></h2>
+                <hr/>
+                <p> 熟练掌握常用的java集合以及多线程并发环境下集合类出现的并发修改异常。比如，写时复制,CAS,ABA,Volatilte等。</p>
+                <p> 熟练掌握线程池底层实现原理并可根据实际业务场景配置合理的线程数以及拒绝策略。</p>
+                <p> 深入理解MySQL底层索引数据结构，B+ tree索引特点以及数据库事务的隔离级别。</p>
+                <p> 深入理解JVM底层原理，JMM内存模型，垃圾回收机制，GC算法，熟悉JVM各种垃圾回收器的使用以及核心参数调优。</p>
+                <p> 熟悉掌握Redis数据结构的使用场景，熟悉Redis缓存高并发的使用场景。比如，缓存雪崩，缓存穿透。</p>
+                <p> 熟悉常见消息中间件的使用，解决过各种消息通讯场景的疑难问题。比如，消息丢失，消息重复消费。</p>
+                <p> 熟练掌握JUC并发包，比如：循环栅栏，信号灯，倒计时器等。 在项目中解决过各种分布式场景的技术难题，比如分布式锁，分布式事务。</p>
+                <p> 熟练掌握spring,spring mvc,mybatis,spring boot等开源框架。 深入理解spring could,dubbo,zookeeper等开源框架的底层架构。</p>
+                <p> 熟练掌握Linux常用命令，生产环境服务器变慢诊断，线上排查，性能评估。</p>
+
+            </section>
+
+            <!-- 自我评价 -->
+            <section class="work info-unit">
+                <h2>
+                    <i class="fa fa-pencil" aria-hidden="true"></i>自我评价/期望</h2>
+                <hr/>
+                <p>很多人给IT男贴标签，认为IT男闷，宅，忙，无趣，轴，直男，单纯，工资高，青春饭等。</p>
+                <p>接触下来他们是自律，爱学习，认真，有目标感，有使命感，努力，上进。</p>
+                <p>请善待每一个IT男，因为他们都有一颗忙到没有时间出轨的爱你的心，他们可能没你那么懂生活，因为他们有虚拟世界里的悲伤和孤独。</p>
+                <p>本人自学能力强，思维敏捷，对于新知识接受快。</p>
+                <p>为人诚恳，待人真诚，具有良好的团队合作精神和沟通组织能力，工作积极上进。</p>
+                <p>能接受加班，能接受出差，乐于接受新技术，期待技术提高。</p>
+                <p>工作主动，责任心、执行力及抗压性强，能够积极的面对并解决工作中的问题。</p>
+                <p>勇于面对困难，迎接挑战，乐于学习新的知识，并对未来有充足的信心。</p>
+            </section>
+        </section>
+    </article>
+
+
+
+    <footer class="footer">
+        <p>© 2017 廖志伟.文档最后更新时间为
+            <time>2020年09月29日</time>.</p>
+    </footer>
+
+<!--    &lt;!&ndash; 侧栏 &ndash;&gt;-->
+<!--    <aside>-->
+<!--        <ul>-->
+<!--            <li>-->
+<!--                <a href="https://gitee.com/itsay/resume" target="_blank">源代码</a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a href="http://if2er.com/" target="_blank">Blog</a>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </aside>-->
+
+    <script src="./assets/js/index.js"></script>
+</body>
+
+</html>
