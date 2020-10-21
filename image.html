@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>戴佳苗</title>
+    <style type="text/css">
+      html{
+          width: 100%;
+          height: 100%;
+        }
+        .bigbox{
+          width: 10px;
+          height: 10px;
+          margin: 200px 400px;
+          position: relative;
+        }
+        .box{
+          width:500px;
+          height:300px;
+          margin: 0 auto;
+          transform-style: preserve-3d;
+          transform: rotateX(-30deg) rotateY(-80deg);
+          -webkit-animation: mystyle 15s infinite;
+          animation-timing-function: linear;
+        }
+        @-webkit-keyframes mystyle{
+          from{transform: rotateX(-180deg) rotateY(-180deg);}
+          to{transform: rotateX(180deg) rotateY(180deg);}
+        }
+        .box div{
+          position: absolute;
+          width: 200px;
+          height: 200px;
+          opacity: 0.8;
+          transition: all .4s;
+        }
+        .bigpic{
+          width: 200px;
+          height: 200px;
+        }
+        .box .bigfront{
+          transform: rotateY(0deg) translateZ(100px);
+        }
+        .box .bigback{
+          transform: translateZ(-100px) rotateY(180deg);
+        }
+        .box .bigleft{
+          transform: rotateY(90deg) translateZ(100px);
+        }
+        .box .bigright{
+          transform: rotateY(-90deg) translateZ(100px);
+        }
+        .box .bigtop{
+          transform: rotateX(90deg) translateZ(100px);
+        }
+        .box .bigbottom{
+          transform: rotateX(-90deg) translateZ(100px);
+        }
+        .box span{
+          display: block;
+          position: absolute;
+          width: 140px;
+          height: 140px;
+          top: 25px;
+          left: 25px;
+        }
+        .box .smallpic{
+          width: 140px;
+          height: 140px;
+        }
+        .box .smallleft{
+          transform: rotateY(90deg) translateZ(70px);
+        }
+        .box .smallright{
+          transform: rotateY(-90deg) translateZ(70px);
+        }
+        .box .smalltop{
+          transform: rotateX(90deg) translateZ(70px);
+        }
+        .box .smallbottom{
+          transform: rotateX(-90deg) translateZ(70px);
+        }
+        .box .smallfront{
+          transform: rotateY(0deg) translateZ(70px);
+        }
+        .box .smallback{
+          transform: translateZ(-70px) rotateY(180deg);
+        }
+        /*:hover 我们之前说过的一个css选择器，能够让鼠标指向的时候触发*/
+        .box:hover .bigleft{
+          transform: rotateY(90deg) translateZ(300px);
+        }
+        .box:hover .bigright{
+          transform: rotateY(-90deg) translateZ(300px);
+        }
+        .box:hover .bigtop{
+          transform: rotateX(90deg) translateZ(300px);
+        }
+        .box:hover .bigbottom{
+          transform: rotateX(-90deg) translateZ(300px);
+        }
+        .box:hover .bigfront{
+          transform: rotateY(0deg) translateZ(300px);
+        }
+        .box:hover .bigback{
+          transform: translateZ(-300px) rotateY(180deg);
+        }
+    </style>
+  </head>
+  <body>
+    <div class="bigbox">
+      <div class="box">
+        <div class="bigfront">
+          <img src="http://hadoop-mall.oss-cn-shanghai.aliyuncs.com/20201021-01.jpg?Expires=1918629128&OSSAccessKeyId=LTAI4G2Ch1kRCTQ7uP5P3eQ1&Signature=UXX2kYXub7QR3Imi8eb%2Fru5j68s%3D" class="bigpic" >
+        </div>
+        <div class="bigback">
+          <img src="http://hadoop-mall.oss-cn-shanghai.aliyuncs.com/20201021-02.jpg?Expires=1918629160&OSSAccessKeyId=LTAI4G2Ch1kRCTQ7uP5P3eQ1&Signature=%2FoU2vZiDtw13LK%2FkcDxGjQTglBw%3D" class="bigpic">
+        </div>
+        <div class="bigleft">
+          <img src="http://hadoop-mall.oss-cn-shanghai.aliyuncs.com/20201021-03.jpg?Expires=1918629169&OSSAccessKeyId=LTAI4G2Ch1kRCTQ7uP5P3eQ1&Signature=JNF9M97M6Nw35eBYJ1UM7UQH4Pk%3D" class="bigpic">
+        </div>
+        <div class="bigright">
+          <img src="http://hadoop-mall.oss-cn-shanghai.aliyuncs.com/20201021-04.jpg?Expires=1918629207&OSSAccessKeyId=LTAI4G2Ch1kRCTQ7uP5P3eQ1&Signature=NWNEObY%2Bq6HmD3jCYN9%2FAIdsu68%3D" class="bigpic">
+        </div>
+        <div class="bigtop">
+          <img src="http://hadoop-mall.oss-cn-shanghai.aliyuncs.com/20201021-05.jpg?Expires=1918629219&OSSAccessKeyId=LTAI4G2Ch1kRCTQ7uP5P3eQ1&Signature=o4Ig5x0epEK40%2FhWlq9O0fl8M0k%3D" class="bigpic">
+        </div>
+        <div class="bigbottom">
+          <img src="http://hadoop-mall.oss-cn-shanghai.aliyuncs.com/20201021-06.jpg?Expires=1918629228&OSSAccessKeyId=LTAI4G2Ch1kRCTQ7uP5P3eQ1&Signature=W0J%2Bv6TXTEsHvI4rdxYAGe2O%2BQE%3D" class="bigpic">
+        </div>
+        <span class="smallfront">
+          <img src="http://hadoop-mall.oss-cn-shanghai.aliyuncs.com/20201021-01.jpg?Expires=1918629128&OSSAccessKeyId=LTAI4G2Ch1kRCTQ7uP5P3eQ1&Signature=UXX2kYXub7QR3Imi8eb%2Fru5j68s%3D" class="smallpic" />
+        </span>
+        <span class="smallback">
+          <img src="http://hadoop-mall.oss-cn-shanghai.aliyuncs.com/20201021-02.jpg?Expires=1918629160&OSSAccessKeyId=LTAI4G2Ch1kRCTQ7uP5P3eQ1&Signature=%2FoU2vZiDtw13LK%2FkcDxGjQTglBw%3D" class="smallpic" />
+        </span>
+        <span class="smallleft">
+          <img src="http://hadoop-mall.oss-cn-shanghai.aliyuncs.com/20201021-03.jpg?Expires=1918629169&OSSAccessKeyId=LTAI4G2Ch1kRCTQ7uP5P3eQ1&Signature=JNF9M97M6Nw35eBYJ1UM7UQH4Pk%3D" class="smallpic" />
+        </span>
+        <span class="smallright">
+          <img src="http://hadoop-mall.oss-cn-shanghai.aliyuncs.com/20201021-04.jpg?Expires=1918629207&OSSAccessKeyId=LTAI4G2Ch1kRCTQ7uP5P3eQ1&Signature=NWNEObY%2Bq6HmD3jCYN9%2FAIdsu68%3D" class="smallpic" />
+        </span>
+        <span class="smalltop">
+          <img src="http://hadoop-mall.oss-cn-shanghai.aliyuncs.com/20201021-05.jpg?Expires=1918629219&OSSAccessKeyId=LTAI4G2Ch1kRCTQ7uP5P3eQ1&Signature=o4Ig5x0epEK40%2FhWlq9O0fl8M0k%3D" class="smallpic" />
+        </span>
+        <span class="smallbottom">
+          <img src="http://hadoop-mall.oss-cn-shanghai.aliyuncs.com/20201021-06.jpg?Expires=1918629228&OSSAccessKeyId=LTAI4G2Ch1kRCTQ7uP5P3eQ1&Signature=W0J%2Bv6TXTEsHvI4rdxYAGe2O%2BQE%3D" class="smallpic" />
+        </span>
+      </div>
+    </div>
+  </body>
+</html>
+
