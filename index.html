@@ -31,371 +31,371 @@
 
 <body>
 
-    <header class="header"></header>
+<header class="header"></header>
 
-    <article class="container">
-        <section class="side" id="side">
+<article class="container">
+    <section class="side" id="side">
 
-            <!-- 左栏固定开关，记得及时删除这段代码 Start-->
-            <label class="switch" style="display: none;" onchange="switchFixed()">
-                <script type="text/javaScript">
-                    function switchFixed(){
-                        var value = document.getElementById('side').style.position === 'fixed' ? 'absolute' : 'fixed';
-                        document.getElementById('side').style.position = value;
-                    }
-                </script>
-                <input id="cb" type="checkbox">
-                <span class="slider round"></span>
-            </label>
-            <style>
-                @media (min-width: 	750px){
-                    .switch{position:relative;display:inline-block!important;width:60px;height:34px;}
-                    .switch input{display:none;}
-                    .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;-webkit-transition:.4s;transition:.4s;}
-                    .slider:before{position:absolute;content:"";height:26px;width:26px;left:4px;bottom:4px;background-color:white;-webkit-transition:.4s;transition:.4s;}
-                    input:checked + .slider{background-color:#1abc9c;}
-                    input:focus + .slider{box-shadow:0 0 1px #1abc9c;}
-                    input:checked + .slider:before{-webkit-transform:translateX(26px);-ms-transform:translateX(26px);transform:translateX(26px);}.slider.round{border-radius:34px;}
-                    .slider.round:before{border-radius:50%;}
+        <!-- 左栏固定开关，记得及时删除这段代码 Start-->
+        <label class="switch" style="display: none;" onchange="switchFixed()">
+            <script type="text/javaScript">
+                function switchFixed(){
+                    var value = document.getElementById('side').style.position === 'fixed' ? 'absolute' : 'fixed';
+                    document.getElementById('side').style.position = value;
                 }
-            </style>
-            <!-- 左侧固定开关，记得及时删除这段代码 End-->
+            </script>
+            <input id="cb" type="checkbox">
+            <span class="slider round"></span>
+        </label>
+        <style>
+            @media (min-width: 	750px){
+                .switch{position:relative;display:inline-block!important;width:60px;height:34px;}
+                .switch input{display:none;}
+                .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;-webkit-transition:.4s;transition:.4s;}
+                .slider:before{position:absolute;content:"";height:26px;width:26px;left:4px;bottom:4px;background-color:white;-webkit-transition:.4s;transition:.4s;}
+                input:checked + .slider{background-color:#1abc9c;}
+                input:focus + .slider{box-shadow:0 0 1px #1abc9c;}
+                input:checked + .slider:before{-webkit-transform:translateX(26px);-ms-transform:translateX(26px);transform:translateX(26px);}.slider.round{border-radius:34px;}
+                .slider.round:before{border-radius:50%;}
+            }
+        </style>
+        <!-- 左侧固定开关，记得及时删除这段代码 End-->
 
-            <!-- 个人肖像 -->
-            <section class="me">
-                <section class="portrait">
-                    <div class="loading">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                    <!-- 头像照片 -->
-                    <img class="avatar" src="http://hadoop-mall.oss-cn-shanghai.aliyuncs.com/liaozhiwei02.jpg?Expires=1915696996&OSSAccessKeyId=LTAI4G2Ch1kRCTQ7uP5P3eQ1&Signature=fzwf4dKCWAgABlJFpxVBMPq0wVI%3D" onload="loading()">
-                </section>
-
-                <h1 class="name">廖志伟</h1>
-                <h4 class="info-job">Java开发工程师 / 上海</h4>
-
+        <!-- 个人肖像 -->
+        <section class="me">
+            <section class="portrait">
+                <div class="loading">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <!-- 头像照片 -->
+                <img class="avatar" src="http://hadoop-mall.oss-cn-shanghai.aliyuncs.com/liaozhiwei02.jpg?Expires=1915696996&OSSAccessKeyId=LTAI4G2Ch1kRCTQ7uP5P3eQ1&Signature=fzwf4dKCWAgABlJFpxVBMPq0wVI%3D" onload="loading()">
             </section>
 
-            <!-- 基本信息 -->
-            <section class="profile info-unit">
-                <h2>
-                    <i class="fa fa-user" aria-hidden="true"></i>基本信息</h2>
-                <hr/>
-                <ul>
-                    <li>
-                        <label>个人信息</label>
-                        <span>廖志伟 / 男 / 1997年</span>
-                    </li>
-                    <li>
-                        <label>身高</label>
-                        <span>180cm</span>
-                    </li>
-                    <li>
-                        <label>学历</label>
-                        <span>本科</span>
-                    </li>
-                    <li>
-                        <label>职业</label>
-                        <span>Java开发工程师</span>
-                    </li>
-                </ul>
-            </section>
-
-            <!-- 联系方式 -->
-            <section class="contact info-unit">
-                <h2>
-                    <i class="fa fa-phone" aria-hidden="true"></i>联系方式</h2>
-                <hr/>
-                <ul>
-                    <li>
-                        <label>微信</label>
-                        <a href="https://wx.qq.com/" target="_blank">java_wxid</a>
-                    </li>
-                    <li>
-                        <label>QQ</label>
-                        <a href="" target="_blank">2469278741</a>
-                    </li>
-                    <li>
-                        <label><b>手机</b></label>
-                        <a href="tel:17717299170" target="_blank">17717299170</a>
-                    </li>
-                    <li>
-                        <label><b>邮箱</b></label>
-                        <a href="mailto:2469278741@qq.com" target="_blank">2469278741@qq.com</a>
-                    </li>
-                    <li>
-                        <label><b>知乎</b></label>
-                        <a href="https://www.zhihu.com/people/javawei-xin-id" target="_blank">javawxid</a>
-                    </li>
-                    <li>
-                        <label><b>哔哩哔哩</b></label>
-                        <a href="https://space.bilibili.com/353586723" target="_blank">java_wxid</a>
-                    </li>
-                    <li>
-                        <label><b>CSDN</b></label>
-                        <a href="https://blog.csdn.net/java_wxid" target="_blank">java小丑（博客专家）</a>
-                    </li>
-                    <li>
-                        <label><b>掘金</b></label>
-                        <a href="https://juejin.cn/user/3290187978253431" target="_blank">java_wxid</a>
-                    </li>
-                    <li>
-                        <label><b>博客园</b></label>
-                        <a href="https://www.cnblogs.com/liaozhiwei/" target="_blank">liaozhiwei</a>
-                    </li>
-                    <li>
-                        <label><b>马克java社区</b></label>
-                        <a href="http://www.mark-to-win.com/TeacherV2.html?id=34" target="_blank">java小丑（教学老师）</a>
-                    </li>
-                    <li>
-                        <label><b>InfoQ</b></label>
-                        <a href="https://www.infoq.cn/u/liaozhiwei/publish" target="_blank">java_wxid</a>
-                    </li>
-                    <li>
-                        <label><b>简书</b></label>
-                        <a href="https://www.jianshu.com/u/291aeb531f8b" target="_blank">java小丑</a>
-                    </li>
-                    <li>
-                        <label><b>码云</b></label>
-                        <a href="https://gitee.com/java_wxid" target="_blank">java_wxid</a>
-                    </li>
-                    <li>
-                        <label><b>Github</b></label>
-                        <a href="https://github.com/javaliao" target="_blank">javaliao</a>
-                    </li>
-                </ul>
-            </section>
-
-
-            <section class="qrcode info-unit">
-                <h2><i class="fa fa-qrcode" aria-hidden="true"></i>二维码</h2>
-                <hr/>
-                <img src="http://hadoop-mall.oss-cn-shanghai.aliyuncs.com/1.jpg?Expires=1916722548&OSSAccessKeyId=LTAI4G2Ch1kRCTQ7uP5P3eQ1&Signature=DKaUZ5JKsRjeE%2FEr7zjAfAQ1GtA%3D" style="width: 100%;" alt="">
-            </section>
-
+            <h1 class="name">廖志伟</h1>
+            <h4 class="info-job">Java开发工程师 / 上海</h4>
 
         </section>
 
-        <section class="main">
-
-            <!-- 教育经历 -->
-            <section class="edu info-unit">
-                <h2>
-                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>教育经历</h2>
-                <hr/>
-                <ul>
-                    <li>
-                        <h3>
-                            <span>湖南电子科技职业学院 - 软件工程专业（大专）</span>
-                            <time>2017.03.07-2019.06.30</time>
-                        </h3>
-                        <p>证书编号<mark>141225201906001202</mark></p>
-                    </li>
-                    <li>
-                        <h3>
-                            <span>湖南工商大学 - 人力资源管理专业（本科）</span>
-                            <time>2017.03.07-2019.12.30</time>
-                        </h3>
-                        <p>证书编号<mark>65439117162003928</mark></p>
-                    </li>
-                </ul>
-            </section>
-
-            <!-- 工作经历 -->
-            <section class="work info-unit">
-                <h2>
-                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>工作经历</h2>
-                <hr/>
-                <ul>
-                    <li>
-                        <h3>
-                            <span>[经历1]上海优创融联计算机科技有限公司－java开发工程师（初级）</span>
-                            <time>2017.12 至 2018.03</time>
-                        </h3>
-                    </li>
-                    <li>
-                        <h3>
-                            <span>[经历2]深圳市灵犀谷科技有限公司－java开发工程师（初级）</span>
-                            <time>2019.03-2019.06</time>
-                        </h3>
-                    </li>
-                    <li>
-                        <h3>
-                            <span>[经历3]上海富总信息科技有限公司－java开发工程师（中级）</span>
-                            <time>2019.09-2019.12</time>
-                        </h3>
-                    </li>
-                    <li>
-                        <h3>
-                            <span>[经历4]上海梦创双杨数据科技股份有限公司－java开发工程师（中级）</span>
-                            <time>2020.02-2021.04</time>
-                        </h3>
-                    </li>
-                    <li>
-                        <h3>
-                            <span>[经历5]上海塔莫信息科技有限公司－java开发工程师（高级）</span>
-                            <time>2021.04-至今</time>
-                        </h3>
-                    </li>
-                </ul>
-            </section>
-
-            <!--职业技能-->
-            <section class="work info-unit">
-                <h2>
-                    <i class="fa fa-pencil" aria-hidden="true">职业技能</i></h2>
-                <hr/>
-                <p> 熟练掌握常用的java集合以及多线程并发环境下集合类出现的并发修改异常。比如，写时复制,CAS,ABA,Volatilte等。</p>
-                <p> 熟练掌握线程池底层实现原理并可根据实际业务场景配置合理的线程数以及拒绝策略。</p>
-                <p> 深入理解MySQL底层索引数据结构，B+ tree索引特点以及数据库事务的隔离级别。</p>
-                <p> 深入理解JVM底层原理，JMM内存模型，垃圾回收机制，GC算法，熟悉JVM各种垃圾回收器的使用以及核心参数调优。</p>
-                <p> 熟悉掌握Redis数据结构的使用场景，熟悉Redis缓存高并发的使用场景。比如，缓存雪崩，缓存穿透。</p>
-                <p> 熟悉常见消息中间件的使用，解决过各种消息通讯场景的疑难问题。比如，消息丢失，消息重复消费。</p>
-                <p> 熟练掌握JUC并发包，比如：循环栅栏，信号灯，倒计时器等。 在项目中解决过各种分布式场景的技术难题，比如分布式锁，分布式事务。</p>
-                <p> 熟练掌握spring,spring mvc,mybatis,spring boot等开源框架。 深入理解spring could,dubbo,zookeeper等开源框架的底层架构。</p>
-                <p> 熟练掌握Linux常用命令，生产环境服务器变慢诊断，线上排查，性能评估。</p>
-            </section>
-
-            <!-- 自我评价 -->
-            <section class="work info-unit">
-                <h2>
-                    <i class="fa fa-pencil" aria-hidden="true"></i>自我评价/期望</h2>
-                <hr/>
-                <p>很多人给IT男贴标签，认为IT男闷，宅，忙，无趣，轴，直男，单纯，工资高，青春饭等。</p>
-                <p>接触下来他们是自律，爱学习，认真，有目标感，有使命感，努力，上进。</p>
-                <p>请善待每一个IT男，他们可能没你那么懂生活，因为他们有虚拟世界里的悲伤和孤独。</p>
-                <p>再说说我自己吧：工作主动，责任心、执行力及抗压性强。勇于面对困难，迎接挑战，乐于学习新的知识，并对未来有充足的信心。</p>
-                <p>为人诚恳，待人真诚，以更包容开放的心态，观人、待事、接物。懂得克制自己，学会掌控人性里的欲望，抵得住花花世界的诱惑。</p>
-                <p>不把时间浪费在无意义的社交上，不把精力消耗在无关紧要的人身上。</p>
-                <p>就算生气，也不会暴跳如雷，摔桌子动手打人。就算失望，也不会就此低迷，坠入绝望深渊。就算伤心，也不会日夜买醉，整天以泪洗脸。</p>
-            </section>
-
-            <!-- 目标 -->
-            <section class="work info-unit">
-                <h2>
-                    <i class="fa fa-pencil" aria-hidden="true"></i>目标</h2>
-                <hr/>
-                <p>CSDN付费专栏（已达成）</p>
-                <p>谷粒商城视频看完</p>
-                <p>图灵学院视频看完</p>
-                <p>独立开发一个大型分布式电商项目（至少主要功能完成）</p>
-                <p>涨粉一千（已达成）</p>
-                <p>成为高级开发工程师（已达成）</p>
-                <p>出版书籍</p>
-                <p>在一线城市拥有一套房产（一百平以上）</p>
-                <p>全国旅游（真正意义上的一次全国旅游）</p>
-                <p>实现个人财富自由</p>
-            </section>
-
-            <!-- 兴趣爱好 -->
-            <section class="work info-unit">
-                <h2>
-                    <i class="fa fa-pencil" aria-hidden="true"></i>兴趣爱好</h2>
-                <hr/>
-                <p>喜欢的电影：漫威系列，隐秘而伟大</p>
-                <p>喜欢的动漫：超神学院，秦时明月</p>
-                <p>喜欢的小说：斗罗大陆，三体，三寸人间</p>
-                <p>喜欢的游戏：王者荣耀，QQ飞车</p>
-                <p>喜欢的球类运动：乒乓球，篮球，羽毛球</p>
-            </section>
-
-            <!-- 个人情况 -->
-            <section class="work info-unit">
-                <h2>
-                    <i class="fa fa-pencil" aria-hidden="true"></i>个人情况</h2>
-                <hr/>
-                <p>月薪：税后二万</p>
-                <p>老家：湖南衡阳</p>
-                <p>房产：20年年底在衡阳石鼓区万阳和府购房118平</p>
-                <p>工作地点：上海黄埔区（离陆家嘴三公里）</p>
-                <p>待过的城市：衡阳，长沙，广州，深圳，佛山，上海，南昌，杭州，德清</p>
-                <p>身体素质：跑过半程马拉松</p>
-                <p>性格：亲和力强，时而努力，时而松懈，积极阳光</p>
-                <p>生活技能：会做饭，会家务</p>
-                <p>心智：比较佛系，很会谦让，原则问题也会有自己的主见</p>
-            </section>
-
-
-            <!-- 个人情况 -->
-            <section class="work info-unit">
-                <h2>
-                    <i class="fa fa-pencil" aria-hidden="true"></i>自媒体</h2>
-                <hr/>
-                <p>个人网站：待定</p>
-                <p>公众号：南北踏尘</p>
-                <p>今日头条：https://www.toutiao.com/c/user/token/MS4wLjABAAAArQYj7pLVDM3Pf0Zqp1m50Be1yIbgLat5cKIobMsaHH3WORMNY3v1FzRLPp3cIRtJ/</p>
-                <p>抖音：java_wxid</p>
-                <p>快手：IAMJAVARD</p>
-                <p>小红书：1047602153</p>
-                <p>豆瓣：https://www.douban.com/</p>
-                <p>百家号：https://baijiahao.baidu.com/</p>
-                <p>企鹅号：https://om.qq.com/userAuth/index</p>
-                <p>大鱼号：https://mp.dayu.com/</p>
-                <p>贴吧：https://tieba.baidu.com/index.html</p>
-                <p>西瓜视频：https://www.ixigua.com/</p>
-                <p>趣头条：https://mp.qutoutiao.net/login</p>
-                <p>东方头条：http://mp.tt.cn/</p>
-                <p>网易号：https://mp.163.com/login.html</p>
-                <p>一点资讯：https://www.yidianzixun.com/</p>
-                <p>惠头条：http://www.cashtoutiao.com/</p>
-                <p>搜狐号：https://mp.sohu.com/mpfe/v3/login</p>
-                <p>新浪看点：http://mp.sina.com.cn</p>
-                <p>五条号：https://www.miaosong.cn/wutiaohao/</p>
-                <p>来往公众号：https://pp.laiwang.com/user/login.htm</p>
-                <p>易信公众号：http://open.yixin.im/</p>
-                <p>大风号：https://mp.ifeng.com/login</p>
-                <p>360doc个人图书馆：http://www.360doc.com/index.html</p>
-                <p>百度经验：https://jingyan.baidu.com/</p>
-                <p>百度文库：https://wenku.baidu.com/</p>
-                <p>百度知道：https://zhidao.baidu.com/</p>
-                <p>天涯：https://www.tianya.cn/</p>
-                <p>虎扑：https://www.hupu.com/</p>
-                <p>美篇：https://www.meipian.cn/</p>
-
-                <p>技术相关：</p>
-                <p>CSDN：https://blog.csdn.net/java_wxid</p>
-                <p>知乎：https://www.zhihu.com/people/javawei-xin-id</p>
-                <p>哔哩哔哩：https://space.bilibili.com/353586723</p>
-                <p>掘金：https://juejin.cn/user/3290187978253431</p>
-                <p>博客园：https://www.cnblogs.com/liaozhiwei/</p>
-                <p>腾讯云社区：https://cloud.tencent.com/developer/user/5598481</p>
-                <p>码云：https://gitee.com/java_wxid</p>
-                <p>Github：https://github.com/javaliao</p>
-                <p>开源中国：https://my.oschina.net/u/3969122</p>
-                <p>微博：https://weibo.com/7296196355/profile?topnav=1&wvr=6</p>
-                <p>马克java社区：http://www.mark-to-win.com/TeacherV2.html?id=34</p>
-                <p>InfoQ：https://www.infoq.cn/u/liaozhiwei/publish</p>
-                <p>简书：https://www.jianshu.com/u/291aeb531f8b</p>
-                <p>51cto：https://home.51cto.com/space?uid=15231602</p>
-                <p>思否：https://segmentfault.com/u/java_wxid</p>
-                <p>chinaunix：http://blog.chinaunix.net/uid/70001232.html</p>
-                <p>知识星球：https://wx.zsxq.com/dweb2/login</p>
-            </section>
-            object idletime
+        <!-- 基本信息 -->
+        <section class="profile info-unit">
+            <h2>
+                <i class="fa fa-user" aria-hidden="true"></i>基本信息</h2>
+            <hr/>
+            <ul>
+                <li>
+                    <label>个人信息</label>
+                    <span>廖志伟 / 男 / 1997年</span>
+                </li>
+                <li>
+                    <label>身高</label>
+                    <span>180cm</span>
+                </li>
+                <li>
+                    <label>学历</label>
+                    <span>本科</span>
+                </li>
+                <li>
+                    <label>职业</label>
+                    <span>Java开发工程师</span>
+                </li>
+            </ul>
         </section>
-    </article>
+
+        <!-- 联系方式 -->
+        <section class="contact info-unit">
+            <h2>
+                <i class="fa fa-phone" aria-hidden="true"></i>联系方式</h2>
+            <hr/>
+            <ul>
+                <li>
+                    <label>微信</label>
+                    <a href="https://wx.qq.com/" target="_blank">java_wxid</a>
+                </li>
+                <li>
+                    <label>QQ</label>
+                    <a href="" target="_blank">2469278741</a>
+                </li>
+                <li>
+                    <label><b>手机</b></label>
+                    <a href="tel:17717299170" target="_blank">17717299170</a>
+                </li>
+                <li>
+                    <label><b>邮箱</b></label>
+                    <a href="mailto:2469278741@qq.com" target="_blank">2469278741@qq.com</a>
+                </li>
+                <li>
+                    <label><b>知乎</b></label>
+                    <a href="https://www.zhihu.com/people/javawei-xin-id" target="_blank">javawxid</a>
+                </li>
+                <li>
+                    <label><b>哔哩哔哩</b></label>
+                    <a href="https://space.bilibili.com/353586723" target="_blank">java_wxid</a>
+                </li>
+                <li>
+                    <label><b>CSDN</b></label>
+                    <a href="https://blog.csdn.net/java_wxid" target="_blank">java小丑（博客专家）</a>
+                </li>
+                <li>
+                    <label><b>掘金</b></label>
+                    <a href="https://juejin.cn/user/3290187978253431" target="_blank">java_wxid</a>
+                </li>
+                <li>
+                    <label><b>博客园</b></label>
+                    <a href="https://www.cnblogs.com/liaozhiwei/" target="_blank">liaozhiwei</a>
+                </li>
+                <li>
+                    <label><b>马克java社区</b></label>
+                    <a href="http://www.mark-to-win.com/TeacherV2.html?id=34" target="_blank">java小丑（教学老师）</a>
+                </li>
+                <li>
+                    <label><b>InfoQ</b></label>
+                    <a href="https://www.infoq.cn/u/liaozhiwei/publish" target="_blank">java_wxid</a>
+                </li>
+                <li>
+                    <label><b>简书</b></label>
+                    <a href="https://www.jianshu.com/u/291aeb531f8b" target="_blank">java小丑</a>
+                </li>
+                <li>
+                    <label><b>码云</b></label>
+                    <a href="https://gitee.com/java_wxid" target="_blank">java_wxid</a>
+                </li>
+                <li>
+                    <label><b>Github</b></label>
+                    <a href="https://github.com/javaliao" target="_blank">javaliao</a>
+                </li>
+            </ul>
+        </section>
+
+
+        <section class="qrcode info-unit">
+            <h2><i class="fa fa-qrcode" aria-hidden="true"></i>二维码</h2>
+            <hr/>
+            <img src="http://hadoop-mall.oss-cn-shanghai.aliyuncs.com/1.jpg?Expires=1916722548&OSSAccessKeyId=LTAI4G2Ch1kRCTQ7uP5P3eQ1&Signature=DKaUZ5JKsRjeE%2FEr7zjAfAQ1GtA%3D" style="width: 100%;" alt="">
+        </section>
+
+
+    </section>
+
+    <section class="main">
+
+        <!-- 教育经历 -->
+        <section class="edu info-unit">
+            <h2>
+                <i class="fa fa-graduation-cap" aria-hidden="true"></i>教育经历</h2>
+            <hr/>
+            <ul>
+                <li>
+                    <h3>
+                        <span>湖南电子科技职业学院 - 软件工程专业（大专）</span>
+                        <time>2017.03.07-2019.06.30</time>
+                    </h3>
+                    <p>证书编号<mark>141225201906001202</mark></p>
+                </li>
+                <li>
+                    <h3>
+                        <span>湖南工商大学 - 人力资源管理专业（本科）</span>
+                        <time>2017.03.07-2019.12.30</time>
+                    </h3>
+                    <p>证书编号<mark>65439117162003928</mark></p>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 工作经历 -->
+        <section class="work info-unit">
+            <h2>
+                <i class="fa fa-shopping-bag" aria-hidden="true"></i>工作经历</h2>
+            <hr/>
+            <ul>
+                <li>
+                    <h3>
+                        <span>[经历1]上海优创融联计算机科技有限公司－java开发工程师（初级）</span>
+                        <time>2017.12 至 2018.03</time>
+                    </h3>
+                </li>
+                <li>
+                    <h3>
+                        <span>[经历2]深圳市灵犀谷科技有限公司－java开发工程师（初级）</span>
+                        <time>2019.03-2019.06</time>
+                    </h3>
+                </li>
+                <li>
+                    <h3>
+                        <span>[经历3]上海富总信息科技有限公司－java开发工程师（中级）</span>
+                        <time>2019.09-2019.12</time>
+                    </h3>
+                </li>
+                <li>
+                    <h3>
+                        <span>[经历4]上海梦创双杨数据科技股份有限公司－java开发工程师（中级）</span>
+                        <time>2020.02-2021.04</time>
+                    </h3>
+                </li>
+                <li>
+                    <h3>
+                        <span>[经历5]上海塔莫信息科技有限公司－java开发工程师（高级）</span>
+                        <time>2021.04-至今</time>
+                    </h3>
+                </li>
+            </ul>
+        </section>
+
+        <!--职业技能-->
+        <section class="work info-unit">
+            <h2>
+                <i class="fa fa-pencil" aria-hidden="true">职业技能</i></h2>
+            <hr/>
+            <p> 熟练掌握常用的java集合以及多线程并发环境下集合类出现的并发修改异常。比如，写时复制,CAS,ABA,Volatilte等。</p>
+            <p> 熟练掌握线程池底层实现原理并可根据实际业务场景配置合理的线程数以及拒绝策略。</p>
+            <p> 深入理解MySQL底层索引数据结构，B+ tree索引特点以及数据库事务的隔离级别。</p>
+            <p> 深入理解JVM底层原理，JMM内存模型，垃圾回收机制，GC算法，熟悉JVM各种垃圾回收器的使用以及核心参数调优。</p>
+            <p> 熟悉掌握Redis数据结构的使用场景，熟悉Redis缓存高并发的使用场景。比如，缓存雪崩，缓存穿透。</p>
+            <p> 熟悉常见消息中间件的使用，解决过各种消息通讯场景的疑难问题。比如，消息丢失，消息重复消费。</p>
+            <p> 熟练掌握JUC并发包，比如：循环栅栏，信号灯，倒计时器等。 在项目中解决过各种分布式场景的技术难题，比如分布式锁，分布式事务。</p>
+            <p> 熟练掌握spring,spring mvc,mybatis,spring boot等开源框架。 深入理解spring could,dubbo,zookeeper等开源框架的底层架构。</p>
+            <p> 熟练掌握Linux常用命令，生产环境服务器变慢诊断，线上排查，性能评估。</p>
+        </section>
+
+        <!-- 自我评价 -->
+        <section class="work info-unit">
+            <h2>
+                <i class="fa fa-pencil" aria-hidden="true"></i>自我评价/期望</h2>
+            <hr/>
+            <p>很多人给IT男贴标签，认为IT男闷，宅，忙，无趣，轴，直男，单纯，工资高，青春饭等。</p>
+            <p>接触下来他们是自律，爱学习，认真，有目标感，有使命感，努力，上进。</p>
+            <p>请善待每一个IT男，他们可能没你那么懂生活，因为他们有虚拟世界里的悲伤和孤独。</p>
+            <p>再说说我自己吧：工作主动，责任心、执行力及抗压性强。勇于面对困难，迎接挑战，乐于学习新的知识，并对未来有充足的信心。</p>
+            <p>为人诚恳，待人真诚，以更包容开放的心态，观人、待事、接物。懂得克制自己，学会掌控人性里的欲望，抵得住花花世界的诱惑。</p>
+            <p>不把时间浪费在无意义的社交上，不把精力消耗在无关紧要的人身上。</p>
+            <p>就算生气，也不会暴跳如雷，摔桌子动手打人。就算失望，也不会就此低迷，坠入绝望深渊。就算伤心，也不会日夜买醉，整天以泪洗脸。</p>
+        </section>
+
+        <!-- 目标 -->
+        <section class="work info-unit">
+            <h2>
+                <i class="fa fa-pencil" aria-hidden="true"></i>目标</h2>
+            <hr/>
+            <p>CSDN付费专栏（已达成）</p>
+            <p>谷粒商城视频看完</p>
+            <p>图灵学院视频看完</p>
+            <p>独立开发一个大型分布式电商项目（至少主要功能完成）</p>
+            <p>涨粉一千（已达成）</p>
+            <p>成为高级开发工程师（已达成）</p>
+            <p>出版书籍</p>
+            <p>在一线城市拥有一套房产（一百平以上）</p>
+            <p>全国旅游（真正意义上的一次全国旅游）</p>
+            <p>实现个人财富自由</p>
+        </section>
+
+        <!-- 兴趣爱好 -->
+        <section class="work info-unit">
+            <h2>
+                <i class="fa fa-pencil" aria-hidden="true"></i>兴趣爱好</h2>
+            <hr/>
+            <p>喜欢的电影：漫威系列，隐秘而伟大</p>
+            <p>喜欢的动漫：超神学院，秦时明月</p>
+            <p>喜欢的小说：斗罗大陆，三体，三寸人间</p>
+            <p>喜欢的游戏：王者荣耀，QQ飞车</p>
+            <p>喜欢的球类运动：乒乓球，篮球，羽毛球</p>
+        </section>
+
+        <!-- 个人情况 -->
+        <section class="work info-unit">
+            <h2>
+                <i class="fa fa-pencil" aria-hidden="true"></i>个人情况</h2>
+            <hr/>
+            <p>月薪：税后二万</p>
+            <p>老家：湖南衡阳</p>
+            <p>房产：20年年底在衡阳石鼓区万阳和府购房118平</p>
+            <p>工作地点：上海黄埔区（离陆家嘴三公里）</p>
+            <p>待过的城市：衡阳，长沙，广州，深圳，佛山，上海，南昌，杭州，德清</p>
+            <p>身体素质：跑过半程马拉松</p>
+            <p>性格：亲和力强，时而努力，时而松懈，积极阳光</p>
+            <p>生活技能：会做饭，会家务</p>
+            <p>心智：比较佛系，很会谦让，原则问题也会有自己的主见</p>
+        </section>
+
+
+        <!-- 个人情况 -->
+        <section class="work info-unit">
+            <h2>
+                <i class="fa fa-pencil" aria-hidden="true"></i>自媒体</h2>
+            <hr/>
+            <p>个人网站：待定</p>
+            <p>公众号：南北踏尘</p>
+            <p>今日头条：https://www.toutiao.com/c/user/token/MS4wLjABAAAArQYj7pLVDM3Pf0Zqp1m50Be1yIbgLat5cKIobMsaHH3WORMNY3v1FzRLPp3cIRtJ/</p>
+            <p>抖音：java_wxid</p>
+            <p>快手：IAMJAVARD</p>
+            <p>小红书：1047602153</p>
+            <p>豆瓣：https://www.douban.com/</p>
+            <p>百家号：https://baijiahao.baidu.com/</p>
+            <p>企鹅号：https://om.qq.com/userAuth/index</p>
+            <p>大鱼号：https://mp.dayu.com/</p>
+            <p>贴吧：https://tieba.baidu.com/index.html</p>
+            <p>西瓜视频：https://www.ixigua.com/</p>
+            <p>趣头条：https://mp.qutoutiao.net/login</p>
+            <p>东方头条：http://mp.tt.cn/</p>
+            <p>网易号：https://mp.163.com/login.html</p>
+            <p>一点资讯：https://www.yidianzixun.com/</p>
+            <p>惠头条：http://www.cashtoutiao.com/</p>
+            <p>搜狐号：https://mp.sohu.com/mpfe/v3/login</p>
+            <p>新浪看点：http://mp.sina.com.cn</p>
+            <p>五条号：https://www.miaosong.cn/wutiaohao/</p>
+            <p>来往公众号：https://pp.laiwang.com/user/login.htm</p>
+            <p>易信公众号：http://open.yixin.im/</p>
+            <p>大风号：https://mp.ifeng.com/login</p>
+            <p>360doc个人图书馆：http://www.360doc.com/index.html</p>
+            <p>百度经验：https://jingyan.baidu.com/</p>
+            <p>百度文库：https://wenku.baidu.com/</p>
+            <p>百度知道：https://zhidao.baidu.com/</p>
+            <p>天涯：https://www.tianya.cn/</p>
+            <p>虎扑：https://www.hupu.com/</p>
+            <p>美篇：https://www.meipian.cn/</p>
+
+            <p>技术相关：</p>
+            <p>CSDN：https://blog.csdn.net/java_wxid</p>
+            <p>知乎：https://www.zhihu.com/people/javawei-xin-id</p>
+            <p>哔哩哔哩：https://space.bilibili.com/353586723</p>
+            <p>掘金：https://juejin.cn/user/3290187978253431</p>
+            <p>博客园：https://www.cnblogs.com/liaozhiwei/</p>
+            <p>腾讯云社区：https://cloud.tencent.com/developer/user/5598481</p>
+            <p>码云：https://gitee.com/java_wxid</p>
+            <p>Github：https://github.com/javaliao</p>
+            <p>开源中国：https://my.oschina.net/u/3969122</p>
+            <p>微博：https://weibo.com/7296196355/profile?topnav=1&wvr=6</p>
+            <p>马克java社区：http://www.mark-to-win.com/TeacherV2.html?id=34</p>
+            <p>InfoQ：https://www.infoq.cn/u/liaozhiwei/publish</p>
+            <p>简书：https://www.jianshu.com/u/291aeb531f8b</p>
+            <p>51cto：https://home.51cto.com/space?uid=15231602</p>
+            <p>思否：https://segmentfault.com/u/java_wxid</p>
+            <p>chinaunix：http://blog.chinaunix.net/uid/70001232.html</p>
+            <p>知识星球：https://wx.zsxq.com/dweb2/login</p>
+        </section>
+        object idletime
+    </section>
+</article>
 
 
 
-    <footer class="footer">
-        <p>© 2017 廖志伟.文档最后更新时间为
-            <time>2021年2月22日</time>.</p>
-    </footer>
+<footer class="footer">
+    <p>© 2017 廖志伟.文档最后更新时间为
+        <time>2021年2月22日</time>.</p>
+</footer>
 
-    <!-- 侧栏 -->
-    <aside>
-        <ul>
-            <li>
-                <a href="https://github.com/BoomManager/BoomManager.github.io" target="_blank">源代码</a>
-            </li>
-        </ul>
-    </aside>
+<!-- 侧栏 -->
+<aside>
+    <ul>
+        <li>
+            <a href="https://github.com/BoomManager/BoomManager.github.io" target="_blank">源代码</a>
+        </li>
+    </ul>
+</aside>
 
-    <script src="./assets/js/index.js"></script>
+<script src="./assets/js/index.js"></script>
 </body>
 
 </html>
