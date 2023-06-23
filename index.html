@@ -1,660 +1,646 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="format-detection" content="email=no" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="renderer" content="webkit">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-    <title>廖志伟</title>
-    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="assets/css/typo.css">
-    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/index.css">
-    <script>
-        function loading() {
-            document.getElementsByClassName('avatar')[0].style.display = 'block';
-            document.getElementsByClassName('loading')[0].style.display = 'none';
-        }
-    </script>
-</head>
-
-<body>
-
-<header class="header"></header>
-
-<article class="container">
-    <section class="side" id="side">
-
-        <!-- 左栏固定开关，记得及时删除这段代码 Start-->
-        <label class="switch" style="display: none;" onchange="switchFixed()">
-            <script type="text/javaScript">
-                function switchFixed(){
-                    var value = document.getElementById('side').style.position === 'fixed' ? 'absolute' : 'fixed';
-                    document.getElementById('side').style.position = value;
-                }
-            </script>
-            <input id="cb" type="checkbox">
-        </label>
-        <style>
-            @media (min-width: 	750px){
-                .switch{position:relative;display:inline-block!important;width:60px;height:34px;}
-                .switch input{display:none;}
-                .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;-webkit-transition:.4s;transition:.4s;}
-                .slider:before{position:absolute;content:"";height:26px;width:26px;left:4px;bottom:4px;background-color:white;-webkit-transition:.4s;transition:.4s;}
-                input:checked + .slider{background-color:#1abc9c;}
-                input:focus + .slider{box-shadow:0 0 1px #1abc9c;}
-                input:checked + .slider:before{-webkit-transform:translateX(26px);-ms-transform:translateX(26px);transform:translateX(26px);}.slider.round{border-radius:34px;}
-                .slider.round:before{border-radius:50%;}
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="format-detection" content="email=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="renderer" content="webkit">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+        <title>廖志伟</title>
+        <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="assets/css/typo.css">
+        <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+        <link rel="stylesheet" href="assets/css/index.css">
+        <script>
+            function loading() {
+                document.getElementsByClassName('avatar')[0].style.display = 'block';
+                document.getElementsByClassName('loading')[0].style.display = 'none';
             }
-        </style>
-        <!-- 左侧固定开关，记得及时删除这段代码 End-->
+        </script>
+    </head>
+    <body>
+        <header class="header"></header>
+        <article class="container">
+            <section class="side" id="side">
+                <!-- 左栏固定开关，记得及时删除这段代码 Start-->
+                <label class="switch" style="display: none;" onchange="switchFixed()">
+                    <script type="text/javaScript">
+                        function switchFixed(){
+                            var value = document.getElementById('side').style.position === 'fixed' ? 'absolute' : 'fixed';
+                            document.getElementById('side').style.position = value;
+                        }
+                    </script>
+                    <input id="cb" type="checkbox">
+                </label>
+                <style>
+                    @media (min-width: 	750px){
+                        .switch{position:relative;display:inline-block!important;width:60px;height:34px;}
+                        .switch input{display:none;}
+                        .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;-webkit-transition:.4s;transition:.4s;}
+                        .slider:before{position:absolute;content:"";height:26px;width:26px;left:4px;bottom:4px;background-color:white;-webkit-transition:.4s;transition:.4s;}
+                        input:checked + .slider{background-color:#1abc9c;}
+                        input:focus + .slider{box-shadow:0 0 1px #1abc9c;}
+                        input:checked + .slider:before{-webkit-transform:translateX(26px);-ms-transform:translateX(26px);transform:translateX(26px);}.slider.round{border-radius:34px;}
+                        .slider.round:before{border-radius:50%;}
+                    }
+                </style>
+                <!-- 左侧固定开关，记得及时删除这段代码 End-->
+                <!-- 个人肖像 -->
+                <section class="me">
+                    <!-- 头像照片 -->
+                    <img class="avatar" width="150px" height="150px" src="./本人.jpg">
+                    <h1 class="name">廖志伟</h1>
+                    <h4 class="info-job">Java / 上海</h4>
+                </section>
+                <!-- 基本信息 -->
+                <section class="profile info-unit">
+                    <h2>
+                        <i class="fa fa-user" aria-hidden="true"></i>基本信息</h2>
+                    <hr/>
+                    <ul>
+                        <li>
+                            <label><b>📝姓名</b></label>
+                            <span>廖志伟</span>
+                        </li>
+                        <li>
+                            <label><b>📝身高</b></label>
+                            <span>180cm</span>
+                        </li>
+                        <li>
+                            <label><b>📝出生年月日</b></label>
+                            <span>1997/04/19</span>
+                        </li>
+                        <li>
+                            <label><b>📝学历</b></label>
+                            <span>本科</span>
+                        </li>
+                        <li>
+                            <label><b>📝民族</b></label>
+                            <span>汉族</span>
+                        </li>
+                        <li>
+                            <label><b>📝现居</b></label>
+                            <span>上海</span>
+                        </li>
+                        <li>
+                            <label><b>📝家乡</b></label>
+                            <span>湖南衡阳</span>
+                        </li>
+                        <li>
+                            <label><b>📝座右铭</b></label>
+                            <span>自律决定高度</span>
+                        </li>
+                        <li>
+                            <label><b>📝职业</b></label>
+                            <span>Java高级开发工程师</span>
+                        </li>
+                    </ul>
+                </section>
+                <!-- 联系方式 -->
+                <section class="contact info-unit">
+                    <h2>
+                        <i class="fa fa-phone" aria-hidden="true"></i>联系方式</h2>
+                    <hr/>
+                    <ul>
+                        <li>
+                            <label>📝微信</label>
+                            <span>java_wxid</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <label>📝邮箱</label>
+                            <span>java_wxid@aliyun.com</span>
+                        </li>
+                    </ul>
+                </section>
+                <!--自媒体矩阵-->
+                <section class="qrcode info-unit">
+                    <h2><i class="fa fa-qrcode" aria-hidden="true"></i>自媒体矩阵</h2>
+                    📝<a href="https://www.liaozhiwei.cn/"><span>点击【主页】</span></a><br />
+                    📝<a href="https://gitee.com/java_wxid/java_wxid"><span>点击【项目】</span></a><br />
+                    📝<a href="https://bbs.csdn.net/forums/liaozhiwei"><span>点击【社区】</span></a><br />
+                    📝<a href="https://www.yuque.com/java_wxid"><span>点击【语雀】</span></a><br />
+                    📝<a href="https://gitee.com/java_wxid"><span>点击【码云】</span></a><br />
+                    📝<a href="https://www.zhihu.com/people/java_wxid"><span>点击【知乎】</span></a><br />
+                    📝<a href="https://segmentfault.com/u/java_wxid"><span>点击【思否】</span></a><br />
+                    📝<a href="https://www.jianshu.com/u/291aeb531f8b"><span>点击【简书】</span></a><br />
+                    📝<a href="https://v.kuaishou.com/hx84Bn"><span>点击【快手】</span></a><br />
+                    📝<a href="https://www.douyin.com/user/MS4wLjABAAAAymuW4SDeeylSFzL8oUMvVn50FY4X37UOeUBJB27dcv0"><span>点击【抖音】</span></a><br />
+                    📝<a href="https://blog.csdn.net/Java_programmer_liao"><span>点击【CSDN】</span></a><br />
+                    📝<a href="https://cloud.tencent.com/developer/user/5598481"><span>点击【腾讯云】</span></a><br />
+                    📝<a href="https://developer.aliyun.com/profile/yt5hnoa7p5vi2"><span>点击【阿里云】</span></a><br />
+                    📝<a href="https://bbs.huaweicloud.com/community/usersnew/id_1640920880921267"><span>点击【华为云】</span></a><br />
+                    📝<a href="https://www.cnblogs.com/liaozhiwei/"><span>点击【博客园】</span></a><br />
+                    📝<a href="https://img-blog.csdnimg.cn/f7b14fe02241434baaed687065479045.png"><span>点击【小红书】</span></a><br />
+                    📝<a href="https://media.om.qq.com/author?id=MqnvyVClU3TriUji4gP9_bvg0"><span>点击【企鹅号】</span></a><br />
+                    📝<a href="https://author.baidu.com/home?context=%7B%22app_id%22%3A%221678622734462341%22%7D&amp;wfr=bjh"><span>点击【百家号】</span></a><br />
+                    📝<a href="http://a.mp.uc.cn/media?mid=d63d204da4c4410ab897f12e10c50437"><span>点击【大鱼号】</span></a><br />
+                    📝<a href="https://mp.sohu.com/profile?xpt=ZTJlYWY3YzgtNzZmYi00NTljLTkwZjgtNGM4NmNhNDQxODVj"><span>点击【搜狐号】</span></a><br />
+                    📝<a href="http://a.mp.uc.cn/media?mid=d63d204da4c4410ab897f12e10c50437"><span>点击【大鱼号】</span></a><br />
+                    📝<a href="https://www.360kuai.com/pc/zmt?id=3001713896"><span>点击【快传号】</span></a><br />
+                    📝<a href="https://www.163.com/dy/media/T1624158133120.html"><span>点击【网易号】</span></a><br />
+                    📝<a href="https://www.9kd.com/view/20040172"><span>点击【凯迪网】</span></a><br />
+                    📝<a href="https://gitcode.net/java_wxid"><span>点击【Gitcode】</span></a><br />
+                    📝<a href="https://www.infoq.cn/u/liaozhiwei/publish"><span>点击【InfoQ】</span></a><br />
+                    📝<a href="https://blog.51cto.com/u_15241602"><span>点击【51CTO】</span></a><br />
+                    📝<a href="https://java_wxid.gitee.io/liao-zhiweis-blog"><span>点击【博客网站】</span></a><br />
+                    📝<a href="https://juejin.cn/user/3290187978253431"><span>点击【稀土掘金】</span></a><br />
+                    📝<a href="https://my.oschina.net/u/3969122"><span>点击【开源中国】</span></a><br />
+                    📝<a href="https://weibo.com/u/6435818513"><span>点击【新浪微博】</span></a><br />
+                    📝<a href="https://www.toutiao.com/c/user/token/MS4wLjABAAAArQYj7pLVDM3Pf0Zqp1m50Be1yIbgLat5cKIobMsaHH3WORMNY3v1FzRLPp3cIRtJ/"><span>点击【今日头条】</span></a><br />
+                    📝<a href="https://tieba.baidu.com/home/main?un=%E8%B8%8F%E7%A0%B4%E5%A4%A9%E5%A4%A9"><span>点击【百度贴吧】</span></a><br />
+                    📝<a href="https://space.bilibili.com/353586723"><span>点击【哔哩哔哩】</span></a><br />
+                    📝<a href="http://www.mark-to-win.com/TeacherV2.html?id=34"><span>点击【马克Java社区】</span></a><br />
+                    📝<a href="https://img-blog.csdnimg.cn/e373a24a6b41451b98f55da7c7ccdc32.jpg"><span>点击【微信公众号】</span></a><br />
+                </section>
+                <!-- 干过哪些事 -->
+                <section class="contact info-unit">
+                    <h2>
+                        <i class="fa fa-pencil" aria-hidden="true"></i>干过哪些事</h2>
+                    <hr/>
+                    <ul>
+                        <li>
+                            📝在技术文章的审核中担任过评审老师的角色、为问卷调查报告制定过题目、编写过多种产品软文、创建过个人社区和开源项目、也参与过专业课程的制定、涉足过游戏主播和比赛选手、创立过自己的公司和淘宝店、在CSDN写过八百多篇技术文章、出版过专业技术书籍、独立开发过自己的APP。
+                        </li>
+                    </ul>
+                </section>
+                <!-- 专业方向 -->
+                <section class="contact info-unit">
+                    <h2>
+                        <i class="fa fa-pencil" aria-hidden="true"></i>专业方向</h2>
+                    <hr/>
+                    <ul>
+                        <li>
+                            📝主流框架的底层源码(Spring、SpringBoot、Spring MVC、SpringCould、Mybatis、Dubbo、Zookeeper)，
+                            消息中间件底层架构原理（RabbitMQ、RockerMQ、Kafka）、Redis缓存、MySQL关系型数据库、ElasticSearch全文搜索、MongoDB非关系型数据库、分库分表ShardingSphere、设计模式、领域驱动DDD、K8S集群管理。
+                        </li>
+                    </ul>
+                </section>
+                <!-- 兴趣爱好 -->
+                <section class="contact info-unit">
+                    <h2>
+                        <i class="fa fa-pencil" aria-hidden="true"></i>兴趣爱好</h2>
+                    <hr/>
+                    <ul>
+                        <li>
+                            <p>🍊喜欢的运动：乒乓球、篮球、羽毛球、跑步、健身</p>
+                        </li>
+                        <li>
+                            <p>🍊喜欢的小说：斗罗大陆、三体、三寸人间、求魔</p>
+                        </li>
+                        <li>
+                            <p>🍊喜欢的动漫：超神学院、秦时明月、画江湖、吞噬星空</p>
+                        </li>
+                        <li>
+                            <p>🍊喜欢的游戏：王者荣耀、QQ飞车、绝地求生、部落冲突</p>
+                        </li>
+                        <li>
+                            <p>🍊喜欢的歌手：林俊杰、周杰伦、Taylor Swift、薛之谦</p>
+                        </li>
+                        <li>
+                            <p>🍊喜欢的电影：漫威系列、DC系列、速度与激情系列、吸血鬼日记系列</p>
+                        </li>
+                    </ul>
+                </section>
+                <!-- 自我评价 -->
+                <section class="contact info-unit">
+                    <h2>
+                        <i class="fa fa-pencil" aria-hidden="true"></i>自我评价/期望</h2>
+                    <hr/>
+                    <ul>
+                        <li>
+                            <p>🎉有良好的沟通，团队协作能力，工作主动，耐心强，责任心、执行力及抗压性强。</p>
+                        </li>
+                        <li>
+                            <p>🎉自律，爱学习，认真，有目标感，有使命感，努力，上进，主人翁意识。</p>
+                        </li>
+                        <li>
+                            <p>🎉为人诚恳，待人真诚，以更包容开放的心态，观人、待事、接物。</p>
+                        </li>
+                        <li>
+                            <p>🎉懂得克制自己，学会掌控人性里的欲望，抵得住花花世界的诱惑。</p>
+                        </li>
+                        <li>
+                            <p>🎉不把时间浪费在无意义的社交上，不把精力消耗在无关紧要的人身上。</p>
+                        </li>
+                        <li>
+                            <p>🎉勇于面对困难，迎接挑战，乐于学习新的知识，并对未来有充足的信心。</p>
+                        </li>
+                    </ul>
+                </section>
+                <!-- 三观 -->
+                <section class="contact info-unit">
+                    <h2>
+                        <i class="fa fa-pencil" aria-hidden="true"></i>消费观/关系观/生活观/恋爱观/婚姻观/人生观</h2>
+                    <hr/>
+                    <ul>
+                        <li>
+                            <p>🍊消费观：衡量消费是否值得，搬了几次家发现没用的东西太多了。</p>
+                        </li>
+                        <li>
+                            <p>🍊关系观：不太喜欢恋爱对方的边界不清、对待领导同事朋友会保持一定距离。</p>
+                        </li>
+                        <li>
+                            <p>🍊生活观：佛系，理性不失感性，擅长规划总结。</p>
+                        </li>
+                        <li>
+                            <p>🍊恋爱观：双方都能知足、善良、情绪稳定、乐观。</p>
+                        </li>
+                        <li>
+                            <p>🍊婚姻观：结婚的对象一定是因为喜欢才在一起的。</p>
+                        </li>
+                        <li>
+                            <p>🍊人生观：人生在世总要留下些东西，证明自己来过一趟、自由无拘束、洒脱自在。</p>
+                        </li>
+                    </ul>
+                </section>
+                <!-- 生活习惯 -->
+                <section class="contact info-unit">
+                    <h2>
+                        <i class="fa fa-pencil" aria-hidden="true"></i>生活习惯</h2>
+                    <hr/>
+                    <ul>
+                        <li>
+                            <p>🎉不抽烟、不喝酒、不嚼槟榔、不说脏话、不暴力、不逛夜店、没有纹身、没有不良嗜好。</p>
+                        </li>
+                        <li>
+                            <p>🎉早上喜欢睡到自然醒、中午会午睡、晚上12点前睡觉。</p>
+                        </li>
+                        <li>
+                            <p>🎉不能接受的食物海鲜、榴莲、木瓜。</p>
+                        </li>
+                        <li>
+                            <p>🎉不喜欢争吵、不喜欢持续散播负面能量的人。</p>
+                        </li>
+                    </ul>
+                </section>
+                <!-- 已达成的目标 -->
+                <section class="contact info-unit">
+                    <h2>
+                        <i class="fa fa-pencil" aria-hidden="true"></i>已达成的目标</h2>
+                    <hr/>
+                    <ul>
+                        <li>
+                            <p>🍊个人幕后大佬社区（已达成）</p>
+                        </li>
+                        <li>
+                            <p>🍊文章创作超过八百篇（已达成）</p>
+                        </li>
+                        <li>
+                            <p>🍊文章访问量超过一百万（已达成）</p>
+                        </li>
+                        <li>
+                            <p>🍊文章收藏次数超过一万（已达成）</p>
+                        </li>
+                        <li>
+                            <p>🍊文章评论次数超过一万（已达成）</p>
+                        </li>
+                        <li>
+                            <p>🍊CSDN博客专家（已达成）</p>
+                        </li>
+                        <li>
+                            <p>🍊51CTO专家博主（已达成）</p>
+                        </li>
+                        <li>
+                            <p>🍊阿里云专家博主（已达成）</p>
+                        </li>
+                        <li>
+                            <p>🍊技术粉丝过二万（已达成）</p>
+                        </li>
+                        <li>
+                            <p>🍊打通36个新媒体平台（已达成）</p>
+                        </li>
+                        <li>
+                            <p>🍊Java高级开发工程师（已达成）</p>
+                        </li>
+                        <li>
+                            <p>🍊Java领域优质创作者（已达成）</p>
+                        </li>
+                        <li>
+                            <p>🍊图灵学院课程学完（已达成）</p>
+                        </li>
+                    </ul>
+                </section>
+                <!-- 成长经历
+                    <section class="contact info-unit">
+                        <h2>
+                            <i class="fa fa-pencil" aria-hidden="true"></i>成长经历</h2>
+                        <hr/>
+                        <ul>
+                            <li>
+                                📝我从小在衡阳读书，直到三年级跟随父母来到广州，在越秀区的雄鹰小学、雄鹰中学完成了小学三到六年级以及初一的学习，随后又随母亲来到老家衡阳，在光华实验中学和衡阳县一中完成了初中和高中生涯。高中毕业后，也就是18岁时，受培训机构老师的忽悠，决定学习编程并加入了北大青鸟Java培训班。由于同学大多不太自律，加上老师并不怎么管理，导致我虽然学习了一年半，但编程技术并不太牢固。所幸的是，在校期间，我报考了大专和本科的自考，并且通过了考试，在2019年底的时候拿到了大专和本科的毕业证。在2017年底，培训毕业后的我，在培训机构老师和同学的陪同下来到上海寻找工作，但由于我没有学历、工作经验和面试经验，加上不会做总结，经历了五十次面试被拒后，终于在20岁时，也就是一个多月后找到了一份工作，月薪8k，可惜干了二个多月，在试用期结束前就被解雇，由于是第一次被裁，导致之后的我，在上海逗留了两个月，没有重新找工作。之后，去了佛山找父母，在顺德大良玩了三个月后，重新振作起来了。随后又去了深圳准备打工，起初，打算进工厂当大螺丝工人，但由于夜班工作而放弃，而我因为放弃夜班，导致被黑中介坑了一千元，在母亲的帮助下也只拿回了八百元。之后，重新找了一份新三板股权微信营销的工作，通过扮演高颜值的名媛，在微信上聊天，了解客户信息，包括年龄、教育背景、家庭背景、资产和座驾等，但工作了一个月后，觉得这个工作有点“上不了台面”，于是辞职。之后，参加了尚硅谷的编程培训班，重新学习Java，在996的学习制度和同学们的自律氛围下，学习了半年。加上之前一年半的学习，两次系统学习使我的技术底子更加牢固。毕业后一周，随便找了一家小公司入职，月薪税后8k，小公司的待遇和工作环境让我只工作了三个月就选择了主动离职，由于这家公司待的心累，然后回到老家衡阳又玩了三个月。在2019年9月，再次回到上海，找到了一份传统行业的Java开发，月薪税后14k，当时准备长期干下去的，可惜由于项目组解散和公司资金链断裂，我又失业了。在前老大的推荐下，我和前同事一起入职了一家大公司，位置在滴水湖，人比较少，月薪税前16k，全额缴纳社保，年终奖半个月薪资。然而，在滴水湖工作一年多后，由于长时间加班、内卷严重以及无效加班频繁，我第二次选择了主动离职。离职后大概一周左右吧，也就是在23岁时，在饿了么外包和国外项目的外包，我选择了国外项目的外包公司，因为这个项目是一个从零开始的新项目，做社交新闻类的APP的，税后月薪20k，干了接近一年，但由于项目结束和不愿外派其它城市，选择了主动离职。24岁时，我进入了一家创业公司，税后月薪从20k提高到税后28k，但在干了三个月后，因为疫情影响，又被裁了，但是通过请律师拿到4W的赔偿。被裁后又花了三个月时间填补内心，在25岁时，进入了一家外包公司，月薪税前25k，干了三个多月，但是由于外资企业工作模式和国内企业有较大差距，项目组之间调派，极其不适应，导致表现不佳，虽然试用期已过，但仍然被裁，这次虽然可以要求赔偿，但是毕竟还是自身问题比较大，就没有选择劳动仲裁。后面又因为各种原因，在上海玩了大半年，一份简历都没有投，完全不想工作，加上开销较大，房租都上万了，感觉继续在上海玩不划算，于是选择回到老家衡阳开始躺平生活。在26岁时，我在衡阳老家一边躺平，一边写书，一边写博客，调整心态，感悟人生。
+                            </li>
+                        </ul>
+                    </section>-->
+            </section>
+            <section class="main">
+                <!--个人简介-->
+                <section class="work info-unit">
+                    <h2>
+                        <i class="fa fa-pencil" aria-hidden="true"></i>个人简介</h2>
+                    <hr/>
+                    <ul>
+                        <li><span>
+                                    🌟我是廖志伟，一名Java高级开发工程师、Java领域优质创作者、CSDN博客专家、阿里云专家博主、51CTO专家博主、幕后大佬社区创始人、开源导航与开源项目贡献者、哔哩哔哩UP主、清华大学出版社作者、淘宝店家、软件公司创始人（上海云帆原信息技术有限公司）、Java课程讲师。🌟
+                            </span>
+                        </li>
+                    </ul>
+                </section>
+                <!-- 副业思路 -->
+                <section class="work info-unit">
+                    <h2>
+                        <i class="fa fa-pencil" aria-hidden="true"></i>副业思路</h2>
+                    <hr/>
+                    <ul>
+                        <li>
+                            <p>🌟思路1：开发APP的核心功能，根据需求和设计的整体架构来进行APP核心功能的开发，例如用户登录注册、好友聊天、发布朋友圈动态等等。录制APP功能实现的课程，将APP开发的过程进行录制成课程，包括APP开发的技术要点、难点等等，便于用户学习和使用。将录制的课程发布到自媒体平台中，通过图文视频的形式进行推广，吸引粉丝关注。通过推广在自媒体平台中的课程和活动来吸引粉丝，提高APP的知名度和用户数量。等到APP开发完成之后，将课程进行销售，提供APP开发的技术支持和服务。等到APP上线之后，立即去申请软著，保护自己的知识产权。然后找第三方企业，协助写高新技术企业材料，申请当地政府高新企业补贴。</p>
+                        </li>
+                        <li>
+                            <p>🌟思路2：开设淘宝店，注册并选择合适的店铺类型，上传商品信息和完善店铺装修，同时利用自媒体平台吸引流量到自己的淘宝店铺。货源可通过批发市场或厂家直接采购，也可兜售自己的书籍资料、课程视频、软件、咨询服务等。初期可选择低成本、低利润的商品吸引客流，进行长期的运营和维护，才能实现长期稳定的盈利。</p>
+                        </li>
+                        <li>
+                            <p>🌟思路3：如果想出版一本书，可以先在自己的博客上写一些相关的文章练习写作技巧，同时也能吸引到对这个领域感兴趣的人。当写的文章达到一定的量级后，可能会有出版方主动联系你，要求你写这方面的书籍。这时就要不断继续写作和修改文章，直到最终完成了一本出版的书籍。虽然这本书不一定会带来很大的收益，但出版经验会让你拥有更多的知名度和权威性。可以在百度词条上创建自己的作者页面，同时在简历中标注已出版的书籍和博客网站，以提高职业竞争力。</p>
+                        </li>
+                        <li>
+                            <p>🌟思路4：走视频流量路线，选择受众面的渠道（哔哩哔哩适合年轻人，西瓜视频适合二三线城市用户，知乎适合文艺爱好者），拍摄大众用户都喜欢的内容（搞笑、生活、健康、美食、时尚、娱乐、旅游、音乐），走高品质路线（画质、声音、内容创意、表现形式），多账号、多平台发表作品增加影响力，使用脚本做推广降低成本，通过直播打赏可以实现高盈利。</p>
+                        </li>
+                        <li>
+                            <p>🌟思路5：以个人的生活经历或者专业领域为基础，结合AI辅助写作技术，增强创作能力，提升内容质量，选择一个特定的人群或主题作为目标读者群体，以此为基础，写付费专栏文章或短篇小说，打造独特的内容，利用网络平台和社交媒体渠道，与读者互动，建立良好的口碑和品牌形象，吸引更多读者，定期更新付费专栏和短篇小说，保持内容的新鲜度和吸引力，实现收益。</p>
+                        </li>
+                        <li>
+                            <p>🌟思路6：阅读相关金融书籍、报纸、杂志，深入了解金融市场动态和投资理财知识。确定自己的学习计划和目标，明确所需学习的内容；利用互联网平台参与股票交易、基金投资等活动，实践操作技能以及风险管理的能力。记录学习和投资的过程，不断总结经验。参加金融相关行业协会的活动，学习行业内容、交流经验，拓展人脉。</p>
+                        </li>
+                        <li>
+                            <p>🌟思路7：打造产业赋能平台，明确平台的服务对象和目标市场，确定平台的核心竞争力并进行差异化定位，确定参与的方式和规则（技术合作、资金投资、资源共享），建设技术平台（包括设计和开发平台的前后端技术、构架、数据库等），根据不同用户需求和特点，提供定制化服务方案（技术支持、资金支持、资源对接、市场推广），通过各种渠道吸引用户和合作伙伴（社交媒体、广告投放、公关宣传）参与平台，建立健全的平台运营和管理机制（人力资源管理、资金管理、风险控制），确保平台的长期稳定运营。</p>
+                        </li>
+                        <li>
+                            <p>🌟思路8：打造自动化盈利流程，找到一个具有市场需求和高利润的产品或服务，例如在线课程、电子书、软件工具等。在有足够的市场需求和收益前景时，利用自己的专业知识、技能和经验，开发并生产出创新且高质量的产品或服务。制作一个优秀的销售页面并进行有效的市场营销，如SEO和社交媒体广告。利用自动化工具和平台，如电子邮件营销、自动化回复和支付处理等，来简化与客户的交互过程。建立一个网站，并在网站上实现自动化过程。进行数据分析和客户反馈，不断改进和扩大自己的产品或服务线，定期测试和优化销售策略，以提供多样化的选择和更好的客户体验。将业务升级为自动化监测和调整的在线商店，以实现更高效的盈利和成长。</p>
+                        </li>
+                        <li>
+                            <p>🌟思路9：在社交媒体上打造一个个人品牌，可以通过创建博客、制作视频、开设社交媒体账号等方式构建自己的个人品牌，通过微信群、微信公众号、小程序、APP推送等方式与关注者交流互动。通过该社群，提供有趣、实用和有价值的产品，将产品推广给目标客户群体，利用精准投放的方式吸引目标客户群体的注意。</p>
+                        </li>
+                        <li>
+                            <p>🌟思路10：
+                                深入了解自己的爱好和专业技能，并以此为基础创建个人品牌。利用社交媒体和各种在线平台，扩大品牌知名度和用户基础。与潜在用户和粉丝互动，了解他们的需求和反馈，不断调整自己的品牌策略和产品设计。通过众筹平台筹集资金，用于品牌创意和产品开发。开发低成本产品，并利用其作为品牌宣传和引流的重要手段。不断提升产品品质和吸引力，并将其打造成高利润的商业产品。</p>
+                        </li>
+                    </ul>
+                </section>
+                <!--职业技能-->
+                <section class="work info-unit">
+                    <h2>
+                        <i class="fa fa-pencil" aria-hidden="true"></i>职业技能</h2>
+                    <hr/>
+                    <ul>
+                        <li>
+                            <span>
+                                🍊具备扎实的Java基础，操作系统与虚拟机底层，CPU缓存一致性协议MESI、HTTP协议、TCPIP协议、OAUTH2协议、Fail-safe机制/Fail-fast机制、深拷贝和浅拷贝、伪共享、网络四元组。
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                🍊熟悉数据结构：数组（BaseArray、Vector）、链表（ArrayList、LinkedList、DoubleLinkedList）、栈（ArrayStack、ListStack、LinkedListStack）、队列（Queue、PrioritQueue）、树论基础与二叉树、二叉搜索树与红黑树、Btree树、Trie树、赫夫曼树、堆树、图论基础、最短路径。
+                                    算法思想：排序算法（冒泡排序、选择排序、插入排序、希尔排序、归并排序、快速排序、计数排序、基数排序）、基础数论、枚举算法、递归算法、分治算法、回溯算法、贪心算法、动态规划、二分规划、遗传算法、蚁群算法、遗传模拟退火算法。
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                🍊熟练掌握集合、JVM内存模型、内存屏障、happens-before和as-if-serial语义、类加载机制、双亲委派、垃圾回收算法、垃圾回收器、空间分配担保策略、安全点与安全区域、记忆集与卡表、JIT技术、可达性分析、强软弱虚引用、GC的过程、三色标记、跨代引用、逃逸分析、内存泄漏与溢出、
+                                class文件结构、虚拟机字节码执行引擎、栈帧局部变量表、栈帧操作数栈、动态连接、方法返回地址、方法调用（解析与分派）、有过JVM线上调优、OOM异常排查经验。
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                🍊深入理解Synchronized关键字，ThreadLocal，volatile关键字，线程的生命周期、CompletableFuture事件驱动异步回调、CountDownLatch&CyclicBarrier&Semaphore应用与原理，AtomicReference原子引用&AtomicInteger原子整型，CompareAndSwap底层原理，
+                                Executor线程池原理与源码、Lock锁的使用与原理。深入理解同步器AQS，阻塞队列BlockingQueue&非阻塞队列ConcurrentLinkedQueue&同步队列SyncQueue，Future&ForkJoin框架原理，无锁并发框架Disruptor等并发编程相关技术。
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                🍊深入理解Tomcat整体架构和处理请求流程，长连接的底层源码原理，底层分块传输和响应流程原理，NIO处理请求源码等性能优化相关技术。
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                🍊深入理解MySQL关系型数据库： InnoDB数据页结构、CheckPoint技术、AIO与刷新邻接页、行记录格式（Compact、Redundant、Compressed、Dynamic）、Named File Formats机制、表空间（段、区、页）、约束、视图、分区表、BufferPool缓存机制、filesort过程、离散读优化、
+                                ICP优化、MRR优化、全文检索、行锁、表锁、间隙锁、死锁、主键自增长实现原理、索引数据结构、SQL优化、索引失效的几种情况、聚集索引、辅助索引、覆盖索引、联合索引、FIC、OSC、Online DDL、Cardinality值、redo log、bin log、undolog、Group Commint、隔离级别、
+                                ACID底层实现原理、一致性非锁定读（MVCC的原理）、分布式事务、内部事务、SQL的执行流程、缓冲池、管理方式、重做日志刷盘策略、有MySQL调优、Apache ShardingSphere分库分表读写分离、主从复制工作原理、MySQL InnoDB Cluster高可用经验、冷备、热备、逻辑备。
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                🍊深入理解Redis缓存： 多路复用模式、单线程模型、简单字符串、链表、字典、跳跃表、压缩列表、encoding属性编码、持久化、布隆过滤器、分布式寻址算法、过期策略、内存淘汰策略、Redis与数据库的数据一致性、Redis分布式锁、热点数据缓存、哨兵模式、集群模式、
+                                多级缓存架构、并发竞争、主从架构等。 具有集群架构及高可用相关经验、熟悉各种缓存高并发的 使用场景如：缓存雪崩、缓存穿透、缓存失效。
+                            </span>
+                        </li>
 
-        <!-- 个人肖像 -->
-        <section class="me">
-            <!-- 头像照片 -->
-            <img class="avatar" width="150px" height="150px" src="./本人.jpg">
-            <h1 class="name">廖志伟</h1>
-            <h4 class="info-job">Java / 上海</h4>
+                        <li>
+                            <span>
+                                🍊RabbitMQ、RockerMQ、Kafka 三种消息中间件出现的消息可靠投递、消息丢失、消息顺序性、消息延迟、过期失效、消息队列满了、消息高可用等问题的解决方案。RabbitMQ的工作模式，RocketMQ的消息类型，Kafka消费模式、主题/分区/日志、核心总控制器以及它的选举机制、
+                                    Partition副本选举Leader机制、消费者消费消息的offset记录机制、消费者Rebalance机制、Rebalance分区分配策略、Rebalance过程、 producer发布消息机制、HW与LEO、日志分段存储、十亿消息数据线上环境规划、JVM参数设置。
 
-        </section>
+                            </span>
+                        </li>
 
-        <!-- 基本信息 -->
-        <section class="profile info-unit">
-            <h2>
-                <i class="fa fa-user" aria-hidden="true"></i>基本信息</h2>
-            <hr/>
+                        <li>
+                            <span>
+                                🍊深入理解Spring、Spring MVC、Mybatis、Spring Boot、Dubbo等开源框架的设计原理以及底层架构、研究过Spring循环依赖源码、Spring容器启动过程源码、Spring事务源码、Bean生命周期源码、Spring事务底层实现原理、Ioc容器加载过程源码、
+                                    AOP底层实现、SpringMVC执行流程源码、Spring的自动装配、Spring Boot自动装配、MyBatis的数据过操作过程源码、SQL操作执行流程源码、配置文件解析源码、Spring Boot自动装配核心源码、Dubbo服务引入与导出以及调用源码。
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                   🍊深入理解Spring Cloud分布式微服务架构：微服务构建、客户端负载均衡、服务治理、服务容错保护、声明式服务调用、API网关服务、分布式配置中心、消息总线、消息驱动、分布式服务追踪、分布式事务、流量控制。研究过Alibaba Nacos注册中心源码、
+                                    Sentinel规则持久化源码、分布式事务组件Seata内核源码。
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                   🍊深入理解Zookeeper：特性与节点数据类型、典型使用场景、选举Leader源码、集群ZAB协议与Watcher监听机制源码等。
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                    🍊深入理解ElasticSearch：核心语法、倒排索引、底层原理与分组聚合查询、具备集群高可用实战经验、集群架构原理与搜索技术深入、Java API整合ElasticSearch以及Logstash、FileBeat使用等。
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                    🍊深入理解MongoDB：基本原理、聚合操作及索引底层原理、集群模式及应用实战。
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                    🍊熟练使用Apache Spark作为基于内存计算的大数据分析引擎用于批处理、交互式查询。ETL工具将数据源抽取到HDFS作为高可靠、高吞吐量的分布式文件系统存储，通过Hive清洗、处理和计算原始数据，Hive清洗处理后的结果，将存入Hbase，海量数据随机查询场景从HBase查询数据。
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                    🍊深入理解各种高性能IO通信模型以及Netty底层数据交互源码、理解NIO与Netty线程模型有过深入研究、深入Hotspot源码与Linux内核、熟悉百万级并发服务器架构的设计。
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                🍊熟练使用设计模式：
+                                    不同营销策略的切换场景：策略模式；
+                                    对象的创建和管理场景：工厂模式；
+                                    奖励分配和活动参与场景：责任链模式；
+                                    实时消息推送、互动交流场景：发布-订阅模式；
+                                    用户的行为响应和推送通知功能场景：观察者模式；
+                                    支付场景：策略模式 + 工厂模式 + 门面模式 + 单例模式；
+                                    业务投放场景：责任链模式；
+                                    平台积分红包发放场景：装饰者模式；
+                                    订单状态场景：状态模式+观察者模式；
+                                    开具增值税发票场景： 建造者模式 + 原型模式；
+                                    商品多级分类目录场景：组合模式+访问者模式；
+                                    记录核心审计日志场景： 模板方法模式；
+                                    查询 ElasticSearch大量数据场景：迭代器模式；
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                🍊深入理解Kubernetes系统原理、核心资源、Pod原理与创建及生命周期管理、Job、Cronjob and Statefulset、Service负载均衡Ingress、Service Mesh发展历程及Istio架构、存储供应使用NFSflexvolumeCSI接口、Configmap、SecretMetric service及HPA、Wordpress应用Mysql主从PVPVCSCHPA、
+                                部署Shardingsphere、Mycat、Mysql、Redis、中间件Rocketmq、Rabbitmq、Nacos、测试生产环境整体部署及全链路测试、自动化运维平台Jenkins与Devops环境搭建、Devops自动化Jenkins上Pipeline建立和使用与部署、Bookinginfo实例部署灰度发布故障注入流量、gateway和serviceentry使用、SDS认证授权等使用、
+                                Kiali、prometheus、grafana和ELK系统、Knative Servina、Knative Eventing 核心概念及Broker、Channel and Trigger使用、Kubesphere 云平台使用、具备两地三中心与三地五中心容灾架构实战经验。
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                🍊能独立或带领团队Java工程师成员完成服务端代码的研发工作，结合业务需求给出合理的技术解决方案，改进现有模块功能，提高系统的可扩展性，封装性，稳定性。深入挖掘业务需求，可0-1设计高可用、高并发、高伸缩的分布式项目架构，环境搭建、自动化部署、服务器环境线上排查、性能评估相关经验。
+                                具备Linux常用命令、Docker容器化、本地镜像仓库、GitLab私服、Jenkins自动化部署等技术。
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                🍊拥有产品需求讨论、项目开发计划制定、控制项目风险、负责技术小组日常管理工作、进度检验与管理、任务分配、Code审查、负责指导、培训普通开发工程师、代码review、审核开发工程师的设计与研发质量等经验。具备需求分析、文档编写、原型设计等基本的文档输出能力。
+                            </span>
+                        </li>
+                    </ul>
+                </section>
+                <!-- 生活技能 -->
+                <section class="work info-unit">
+                    <h2>
+                        <i class="fa fa-pencil" aria-hidden="true"></i>生活技能</h2>
+                    <hr/>
+                    <ul>
+                        <li>
+                            <p>🎉可以做几道拿手菜：番茄炒鸡蛋、红萝卜丝炒肉、水煮白菜等</p>
+                        </li>
+                        <li>
+                            <p>🎉会做一些家务：洗衣做饭、打扫卫生、收拾房间、倒垃圾、换窗帘等</p>
+                        </li>
+                        <li>
+                            <p>🎉懂一些基本的法律常识：曾得到过劳动赔偿4W</p>
+                        </li>
+                        <li>
+                            <p>🎉懂一些基本的电脑操作知识：程序员肯定懂一点啦</p>
+                        </li>
+                        <li>
+                            <p>🎉懂一些正确的生活常识：正常人基本都会懂一点</p>
+                        </li>
+                        <li>
+                            <p>🎉懂一些紧急情况下的逃生、求生知识</p>
+                        </li>
+                        <li>
+                            <p>🎉懂一点心理学的知识：博弈论</p>
+                        </li>
+                        <li>
+                            <p>🎉懂一些正确的理财常识：基金相关的</p>
+                        </li>
+                        <li>
+                            <p>🎉能够高效的在网上找资源：程序员肯定啦</p>
+                        </li>
+                        <li>
+                            <p>🎉有自己的兴趣爱好</p>
+                        </li>
+                        <li>
+                            <p>🎉保持积极向上生活态度</p>
+                        </li>
+                        <li>
+                            <p>🎉能够定期做总结和规划</p>
+                        </li>
+                    </ul>
+                </section>
+                <!-- 待提升的技能 -->
+                <section class="work info-unit">
+                    <h2>
+                        <i class="fa fa-pencil" aria-hidden="true"></i>待提升的技能</h2>
+                    <hr/>
+                    <ul>
+                        <li>
+                            <p>🌟跑步、羽毛球、健身、唱歌、绘画、街舞、表演、辩论、音乐、摄影、剪辑</p>
+                        </li>
+                        <li>
+                            <p>🌟提升专业知识、职业技能、英语、沟通能力、耐心、学习前端知识做全栈开发</p>
+                        </li>
+                        <li>
+                            <p>🌟减脂、练腹肌、胸肌、肱二头肌、练腰、练核心力量</p>
+                        </li>
+                        <li>
+                            <p>🌟养胃、养肝、养肾、健脾、护眼、护肤、护腰、护颈</p>
+                        </li>
+                        <li>
+                            <p>🌟多接触异性、多和高层次人群交流、提升眼界</p>
+                        </li>
+                    </ul>
+                </section>
+                <!-- 未达成的目标 -->
+                <section class="work info-unit">
+                    <h2>
+                        <i class="fa fa-pencil" aria-hidden="true"></i>未达成的目标</h2>
+                    <hr/>
+                    <ul>
+                        <li>
+                            <p>🌟文章点赞次数超过一万（9,251/10000）</p>
+                        </li>
+                        <li>
+                            <p>🌟CSDN全站排名前一百名（最靠近的一次是134名）</p>
+                        </li>
+                        <li>
+                            <p>🌟社交类APP研发成功（研发中）</p>
+                        </li>
+                        <li>
+                            <p>🌟还清老家的房贷（还有四十万房贷）</p>
+                        </li>
+                        <li>
+                            <p>🌟娶个媳妇生个娃（单身求偶状态）</p>
+                        </li>
+                        <li>
+                            <p>🌟独立出版专业书籍（写书中）</p>
+                        </li>
+                        <li>
+                            <p>🌟实现个人财富自由（还在做梦）</p>
+                        </li>
+                        <li>
+                            <p>🌟眼里有光（感悟中）</p>
+                        </li>
+                        <li>
+                            <p>🌟八块腹肌（腹肌太难练了）</p>
+                        </li>
+                    </ul>
+                </section>
+            </section>
+        </article>
+        <footer class="footer">
+            <p>© 2023 廖志伟.文档最后更新时间为
+                <time>2023年06月23日</time>.</p>
+        </footer>
+        <!-- 侧栏 -->
+        <aside>
             <ul>
                 <li>
-                    <label><b>📝姓名</b></label>
-                    <span>廖志伟</span>
-                </li>
-                <li>
-                    <label><b>📝身高</b></label>
-                    <span>180cm</span>
-                </li>
-                <li>
-                    <label><b>📝出生年月日</b></label>
-                    <span>1997/04/19</span>
-                </li>
-                <li>
-                    <label><b>📝学历</b></label>
-                    <span>本科</span>
-                </li>
-                <li>
-                    <label><b>📝民族</b></label>
-                    <span>汉族</span>
-                </li>
-                <li>
-                    <label><b>📝现居</b></label>
-                    <span>上海</span>
-                </li>
-                <li>
-                    <label><b>📝家乡</b></label>
-                    <span>湖南衡阳</span>
-                </li>
-                <li>
-                    <label><b>📝座右铭</b></label>
-                    <span>自律决定高度</span>
-                </li>
-                <li>
-                    <label><b>📝职业</b></label>
-                    <span>Java高级开发工程师</span>
+                    <a href="https://www.liaozhiwei.cn/" target="_blank">个人主页</a>
                 </li>
             </ul>
-        </section>
-
-        <!-- 联系方式 -->
-        <section class="contact info-unit">
-            <h2>
-                <i class="fa fa-phone" aria-hidden="true"></i>联系方式</h2>
-            <hr/>
-            <ul>
-                <li>
-                    <label>📝邮箱</label>
-                    <span>java_wxid@aliyun.com</span>
-                </li>
-            </ul>
-        </section>
-
-        <!-- 干过哪些事 -->
-        <section class="contact info-unit">
-            <h2>
-                <i class="fa fa-pencil" aria-hidden="true"></i>干过哪些事</h2>
-            <hr/>
-            <ul>
-                <li>
-                    📝在技术文章的审核中担任过评审老师的角色、为问卷调查报告制定过题目、编写过多种产品软文、创建过个人社区和开源项目、也参与过专业课程的制定、涉足过游戏主播和比赛选手、创立过自己的公司和淘宝店、在CSDN写过八百多篇技术文章、出版过专业技术书籍、独立开发过自己的APP。
-                </li>
-            </ul>
-        </section>
-	<!-- 专业方向 -->
-        <section class="contact info-unit">
-            <h2>
-                <i class="fa fa-pencil" aria-hidden="true"></i>专业方向</h2>
-            <hr/>
-            <ul>
-                <li>
-                    📝主流框架的底层源码(Spring、SpringBoot、Spring MVC、SpringCould、Mybatis、Dubbo、Zookeeper)，
-                    消息中间件底层架构原理（RabbitMQ、RockerMQ、Kafka）、Redis缓存、MySQL关系型数据库、ElasticSearch全文搜索、MongoDB非关系型数据库、分库分表ShardingSphere、设计模式、领域驱动DDD、K8S集群管理。
-                </li>
-            </ul>
-        </section>
-	<!-- 兴趣爱好 -->
-        <section class="contact info-unit">
-            <h2>
-                <i class="fa fa-pencil" aria-hidden="true"></i>兴趣爱好</h2>
-            <hr/>
-            <ul>
-                <li>
-                    <p>🍊喜欢的运动：乒乓球、篮球、羽毛球、跑步、健身</p>
-                </li>
-                <li>
-                    <p>🍊喜欢的小说：斗罗大陆、三体、三寸人间、求魔</p>
-                </li>
-                <li>
-                    <p>🍊喜欢的动漫：超神学院、秦时明月、画江湖、吞噬星空</p>
-                </li>
-                <li>
-                    <p>🍊喜欢的游戏：王者荣耀、QQ飞车、绝地求生、部落冲突</p>
-                </li>
-                <li>
-                    <p>🍊喜欢的歌手：林俊杰、周杰伦、Taylor Swift、薛之谦</p>
-                </li>
-                <li>
-                    <p>🍊喜欢的电影：漫威系列、DC系列、速度与激情系列、吸血鬼日记系列</p>
-                </li>
-            </ul>
-        </section>
-
-        <!-- 自我评价 -->
-        <section class="contact info-unit">
-            <h2>
-                <i class="fa fa-pencil" aria-hidden="true"></i>自我评价/期望</h2>
-            <hr/>
-            <ul>
-                <li>
-                    <p>🎉有良好的沟通，团队协作能力，工作主动，耐心强，责任心、执行力及抗压性强。</p>
-                </li>
-                <li>
-                    <p>🎉自律，爱学习，认真，有目标感，有使命感，努力，上进，主人翁意识。</p>
-                </li>
-                <li>
-                    <p>🎉为人诚恳，待人真诚，以更包容开放的心态，观人、待事、接物。</p>
-                </li>
-                <li>
-                    <p>🎉懂得克制自己，学会掌控人性里的欲望，抵得住花花世界的诱惑。</p>
-                </li>
-                <li>
-                    <p>🎉不把时间浪费在无意义的社交上，不把精力消耗在无关紧要的人身上。</p>
-                </li>
-                <li>
-                    <p>🎉勇于面对困难，迎接挑战，乐于学习新的知识，并对未来有充足的信心。</p>
-                </li>
-            </ul>
-        </section>
-
-	    
-	<!-- 三观 -->
-        <section class="contact info-unit">
-            <h2>
-                <i class="fa fa-pencil" aria-hidden="true"></i>消费观/关系观/生活观/恋爱观/婚姻观/人生观</h2>
-            <hr/>
-            <ul>
-                <li>
-                    <p>🍊消费观：衡量消费是否值得，搬了几次家发现没用的东西太多了。</p>
-                </li>
-		<li>
-                    <p>🍊关系观：不太喜欢恋爱对方的边界不清、对待领导同事朋友会保持一定距离。</p>
-                </li>    
-		<li>
-                    <p>🍊生活观：佛系，理性不失感性，擅长规划总结。</p>
-                </li>     
-		<li>
-                    <p>🍊恋爱观：双方都能知足、善良、情绪稳定、乐观。</p>
-                </li>
-		<li>
-                    <p>🍊婚姻观：结婚的对象一定是因为喜欢才在一起的。</p>
-                </li>  
-		<li>
-                    <p>🍊人生观：人生在世总要留下些东西，证明自己来过一趟、自由无拘束、洒脱自在。</p>
-                </li>       
-            </ul>
-        </section>
-	<!-- 生活习惯 -->
-        <section class="contact info-unit">
-            <h2>
-                <i class="fa fa-pencil" aria-hidden="true"></i>生活习惯</h2>
-            <hr/>
-            <ul>
-                <li>
-                    <p>🎉不抽烟、不喝酒、不嚼槟榔、不说脏话、不暴力、不逛夜店、没有纹身、没有不良嗜好。</p>
-                </li>
-		<li>
-                    <p>🎉早上喜欢睡到自然醒、中午会午睡、晚上12点前睡觉。</p>
-                </li>    
-		<li>
-                    <p>🎉不能接受的食物海鲜、榴莲、木瓜。</p>
-                </li>     
-		<li>
-                    <p>🎉不喜欢争吵、不喜欢持续散播负面能量的人。</p>
-                </li> 
-            </ul>
-        </section>    
-      
-	<!-- 成长经历 
-        <section class="contact info-unit">
-            <h2>
-                <i class="fa fa-pencil" aria-hidden="true"></i>成长经历</h2>
-            <hr/>
-            <ul>
-                <li>
-                    📝我从小在衡阳读书，直到三年级跟随父母来到广州，在越秀区的雄鹰小学、雄鹰中学完成了小学三到六年级以及初一的学习，随后又随母亲来到老家衡阳，在光华实验中学和衡阳县一中完成了初中和高中生涯。高中毕业后，也就是18岁时，受培训机构老师的忽悠，决定学习编程并加入了北大青鸟Java培训班。由于同学大多不太自律，加上老师并不怎么管理，导致我虽然学习了一年半，但编程技术并不太牢固。所幸的是，在校期间，我报考了大专和本科的自考，并且通过了考试，在2019年底的时候拿到了大专和本科的毕业证。在2017年底，培训毕业后的我，在培训机构老师和同学的陪同下来到上海寻找工作，但由于我没有学历、工作经验和面试经验，加上不会做总结，经历了五十次面试被拒后，终于在20岁时，也就是一个多月后找到了一份工作，月薪8k，可惜干了二个多月，在试用期结束前就被解雇，由于是第一次被裁，导致之后的我，在上海逗留了两个月，没有重新找工作。之后，去了佛山找父母，在顺德大良玩了三个月后，重新振作起来了。随后又去了深圳准备打工，起初，打算进工厂当大螺丝工人，但由于夜班工作而放弃，而我因为放弃夜班，导致被黑中介坑了一千元，在母亲的帮助下也只拿回了八百元。之后，重新找了一份新三板股权微信营销的工作，通过扮演高颜值的名媛，在微信上聊天，了解客户信息，包括年龄、教育背景、家庭背景、资产和座驾等，但工作了一个月后，觉得这个工作有点“上不了台面”，于是辞职。之后，参加了尚硅谷的编程培训班，重新学习Java，在996的学习制度和同学们的自律氛围下，学习了半年。加上之前一年半的学习，两次系统学习使我的技术底子更加牢固。毕业后一周，随便找了一家小公司入职，月薪税后8k，小公司的待遇和工作环境让我只工作了三个月就选择了主动离职，由于这家公司待的心累，然后回到老家衡阳又玩了三个月。在2019年9月，再次回到上海，找到了一份传统行业的Java开发，月薪税后14k，当时准备长期干下去的，可惜由于项目组解散和公司资金链断裂，我又失业了。在前老大的推荐下，我和前同事一起入职了一家大公司，位置在滴水湖，人比较少，月薪税前16k，全额缴纳社保，年终奖半个月薪资。然而，在滴水湖工作一年多后，由于长时间加班、内卷严重以及无效加班频繁，我第二次选择了主动离职。离职后大概一周左右吧，也就是在23岁时，在饿了么外包和国外项目的外包，我选择了国外项目的外包公司，因为这个项目是一个从零开始的新项目，做社交新闻类的APP的，税后月薪20k，干了接近一年，但由于项目结束和不愿外派其它城市，选择了主动离职。24岁时，我进入了一家创业公司，税后月薪从20k提高到税后28k，但在干了三个月后，因为疫情影响，又被裁了，但是通过请律师拿到4W的赔偿。被裁后又花了三个月时间填补内心，在25岁时，进入了一家外包公司，月薪税前25k，干了三个多月，但是由于外资企业工作模式和国内企业有较大差距，项目组之间调派，极其不适应，导致表现不佳，虽然试用期已过，但仍然被裁，这次虽然可以要求赔偿，但是毕竟还是自身问题比较大，就没有选择劳动仲裁。后面又因为各种原因，在上海玩了大半年，一份简历都没有投，完全不想工作，加上开销较大，房租都上万了，感觉继续在上海玩不划算，于是选择回到老家衡阳开始躺平生活。在26岁时，我在衡阳老家一边躺平，一边写书，一边写博客，调整心态，感悟人生。
-                </li>
-            </ul>
-        </section>-->
-        <section class="qrcode info-unit">
-            <h2><i class="fa fa-qrcode" aria-hidden="true"></i>自媒体矩阵</h2>
-            📝<a href="https://www.liaozhiwei.cn/"><span>点击【主页】</span></a><br />
-            📝<a href="https://gitee.com/java_wxid/java_wxid"><span>点击【项目】</span></a><br />
-            📝<a href="https://bbs.csdn.net/forums/liaozhiwei"><span>点击【社区】</span></a><br />
-            📝<a href="https://www.yuque.com/java_wxid"><span>点击【语雀】</span></a><br />
-            📝<a href="https://gitee.com/java_wxid"><span>点击【码云】</span></a><br />
-            📝<a href="https://www.zhihu.com/people/java_wxid"><span>点击【知乎】</span></a><br />
-            📝<a href="https://segmentfault.com/u/java_wxid"><span>点击【思否】</span></a><br />
-            📝<a href="https://www.jianshu.com/u/291aeb531f8b"><span>点击【简书】</span></a><br />
-            📝<a href="https://v.kuaishou.com/hx84Bn"><span>点击【快手】</span></a><br />
-            📝<a href="https://www.douyin.com/user/MS4wLjABAAAAymuW4SDeeylSFzL8oUMvVn50FY4X37UOeUBJB27dcv0"><span>点击【抖音】</span></a><br />
-            📝<a href="https://blog.csdn.net/Java_programmer_liao"><span>点击【CSDN】</span></a><br />
-            📝<a href="https://cloud.tencent.com/developer/user/5598481"><span>点击【腾讯云】</span></a><br />
-            📝<a href="https://developer.aliyun.com/profile/yt5hnoa7p5vi2"><span>点击【阿里云】</span></a><br />
-            📝<a href="https://bbs.huaweicloud.com/community/usersnew/id_1640920880921267"><span>点击【华为云】</span></a><br />
-            📝<a href="https://www.cnblogs.com/liaozhiwei/"><span>点击【博客园】</span></a><br />
-            📝<a href="https://img-blog.csdnimg.cn/f7b14fe02241434baaed687065479045.png"><span>点击【小红书】</span></a><br />
-            📝<a href="https://media.om.qq.com/author?id=MqnvyVClU3TriUji4gP9_bvg0"><span>点击【企鹅号】</span></a><br />
-            📝<a href="https://author.baidu.com/home?context=%7B%22app_id%22%3A%221678622734462341%22%7D&amp;wfr=bjh"><span>点击【百家号】</span></a><br />
-            📝<a href="http://a.mp.uc.cn/media?mid=d63d204da4c4410ab897f12e10c50437"><span>点击【大鱼号】</span></a><br />
-            📝<a href="https://mp.sohu.com/profile?xpt=ZTJlYWY3YzgtNzZmYi00NTljLTkwZjgtNGM4NmNhNDQxODVj"><span>点击【搜狐号】</span></a><br />
-            📝<a href="http://a.mp.uc.cn/media?mid=d63d204da4c4410ab897f12e10c50437"><span>点击【大鱼号】</span></a><br />
-            📝<a href="https://www.360kuai.com/pc/zmt?id=3001713896"><span>点击【快传号】</span></a><br />
-            📝<a href="https://www.163.com/dy/media/T1624158133120.html"><span>点击【网易号】</span></a><br />
-            📝<a href="https://www.9kd.com/view/20040172"><span>点击【凯迪网】</span></a><br />
-            📝<a href="https://gitcode.net/java_wxid"><span>点击【Gitcode】</span></a><br />
-            📝<a href="https://www.infoq.cn/u/liaozhiwei/publish"><span>点击【InfoQ】</span></a><br />
-            📝<a href="https://blog.51cto.com/u_15241602"><span>点击【51CTO】</span></a><br />
-            📝<a href="https://java_wxid.gitee.io/liao-zhiweis-blog"><span>点击【博客网站】</span></a><br />
-            📝<a href="https://juejin.cn/user/3290187978253431"><span>点击【稀土掘金】</span></a><br />
-            📝<a href="https://my.oschina.net/u/3969122"><span>点击【开源中国】</span></a><br />
-            📝<a href="https://weibo.com/u/6435818513"><span>点击【新浪微博】</span></a><br />
-            📝<a href="https://www.toutiao.com/c/user/token/MS4wLjABAAAArQYj7pLVDM3Pf0Zqp1m50Be1yIbgLat5cKIobMsaHH3WORMNY3v1FzRLPp3cIRtJ/"><span>点击【今日头条】</span></a><br />
-            📝<a href="https://tieba.baidu.com/home/main?un=%E8%B8%8F%E7%A0%B4%E5%A4%A9%E5%A4%A9"><span>点击【百度贴吧】</span></a><br />
-            📝<a href="https://space.bilibili.com/353586723"><span>点击【哔哩哔哩】</span></a><br />
-            📝<a href="http://www.mark-to-win.com/TeacherV2.html?id=34"><span>点击【马克Java社区】</span></a><br />
-            📝<a href="https://img-blog.csdnimg.cn/e373a24a6b41451b98f55da7c7ccdc32.jpg"><span>点击【微信公众号】</span></a><br />
-        </section>
-
-
-    </section>
-
-    <section class="main">
-
-        <!--个人简介-->
-        <section class="work info-unit">
-            <h2>
-                <i class="fa fa-pencil" aria-hidden="true"></i>个人简介</h2>
-            <hr/>
-            <ul>
-                <li><span>
-                            🌟我是廖志伟，一名Java高级开发工程师、Java领域优质创作者、CSDN博客专家、阿里云专家博主、51CTO专家博主、幕后大佬社区创始人、开源导航与开源项目贡献者、哔哩哔哩UP主、清华大学出版社作者、淘宝店家、软件公司创始人（上海云帆原信息技术有限公司）、Java课程讲师。🌟
-                    </span>
-                </li>
-            </ul>
-        </section>
-	    
-        <!-- 副业思路 -->
-        <section class="work info-unit">
-            <h2>
-                <i class="fa fa-pencil" aria-hidden="true"></i>副业思路</h2>
-            <hr/>
-            <ul>
-                <li>
-                    <p>🌟思路1：开发APP的核心功能，根据需求和设计的整体架构来进行APP核心功能的开发，例如用户登录注册、好友聊天、发布朋友圈动态等等。录制APP功能实现的课程，将APP开发的过程进行录制成课程，包括APP开发的技术要点、难点等等，便于用户学习和使用。将录制的课程发布到自媒体平台中，通过图文视频的形式进行推广，吸引粉丝关注。通过推广在自媒体平台中的课程和活动来吸引粉丝，提高APP的知名度和用户数量。等到APP开发完成之后，将课程进行销售，提供APP开发的技术支持和服务。等到APP上线之后，立即去申请软著，保护自己的知识产权。然后找第三方企业，协助写高新技术企业材料，申请当地政府高新企业补贴。</p>
-                </li>
-                <li>
-                    <p>🌟思路2：开设淘宝店，注册并选择合适的店铺类型，上传商品信息和完善店铺装修，同时利用自媒体平台吸引流量到自己的淘宝店铺。货源可通过批发市场或厂家直接采购，也可兜售自己的书籍资料、课程视频、软件、咨询服务等。初期可选择低成本、低利润的商品吸引客流，进行长期的运营和维护，才能实现长期稳定的盈利。</p>
-                </li>
-                <li>
-                    <p>🌟思路3：如果想出版一本书，可以先在自己的博客上写一些相关的文章练习写作技巧，同时也能吸引到对这个领域感兴趣的人。当写的文章达到一定的量级后，可能会有出版方主动联系你，要求你写这方面的书籍。这时就要不断继续写作和修改文章，直到最终完成了一本出版的书籍。虽然这本书不一定会带来很大的收益，但出版经验会让你拥有更多的知名度和权威性。可以在百度词条上创建自己的作者页面，同时在简历中标注已出版的书籍和博客网站，以提高职业竞争力。</p>
-                </li>
-                <li>
-                    <p>🌟思路4：走视频流量路线，选择受众面的渠道（哔哩哔哩适合年轻人，西瓜视频适合二三线城市用户，知乎适合文艺爱好者），拍摄大众用户都喜欢的内容（搞笑、生活、健康、美食、时尚、娱乐、旅游、音乐），走高品质路线（画质、声音、内容创意、表现形式），多账号、多平台发表作品增加影响力，使用脚本做推广降低成本，通过直播打赏可以实现高盈利。</p>
-                </li>
-                <li>
-                    <p>🌟思路5：以个人的生活经历或者专业领域为基础，结合AI辅助写作技术，增强创作能力，提升内容质量，选择一个特定的人群或主题作为目标读者群体，以此为基础，写付费专栏文章或短篇小说，打造独特的内容，利用网络平台和社交媒体渠道，与读者互动，建立良好的口碑和品牌形象，吸引更多读者，定期更新付费专栏和短篇小说，保持内容的新鲜度和吸引力，实现收益。</p>
-                </li>
-                <li>
-                    <p>🌟思路6：阅读相关金融书籍、报纸、杂志，深入了解金融市场动态和投资理财知识。确定自己的学习计划和目标，明确所需学习的内容；利用互联网平台参与股票交易、基金投资等活动，实践操作技能以及风险管理的能力。记录学习和投资的过程，不断总结经验。参加金融相关行业协会的活动，学习行业内容、交流经验，拓展人脉。</p>
-                </li>
-                <li>
-                    <p>🌟思路7：打造产业赋能平台，明确平台的服务对象和目标市场，确定平台的核心竞争力并进行差异化定位，确定参与的方式和规则（技术合作、资金投资、资源共享），建设技术平台（包括设计和开发平台的前后端技术、构架、数据库等），根据不同用户需求和特点，提供定制化服务方案（技术支持、资金支持、资源对接、市场推广），通过各种渠道吸引用户和合作伙伴（社交媒体、广告投放、公关宣传）参与平台，建立健全的平台运营和管理机制（人力资源管理、资金管理、风险控制），确保平台的长期稳定运营。</p>
-                </li>
-                <li>
-                    <p>🌟思路8：打造自动化盈利流程，找到一个具有市场需求和高利润的产品或服务，例如在线课程、电子书、软件工具等。在有足够的市场需求和收益前景时，利用自己的专业知识、技能和经验，开发并生产出创新且高质量的产品或服务。制作一个优秀的销售页面并进行有效的市场营销，如SEO和社交媒体广告。利用自动化工具和平台，如电子邮件营销、自动化回复和支付处理等，来简化与客户的交互过程。建立一个网站，并在网站上实现自动化过程。进行数据分析和客户反馈，不断改进和扩大自己的产品或服务线，定期测试和优化销售策略，以提供多样化的选择和更好的客户体验。将业务升级为自动化监测和调整的在线商店，以实现更高效的盈利和成长。</p>
-                </li>
-                <li>
-                    <p>🌟思路9：在社交媒体上打造一个个人品牌，可以通过创建博客、制作视频、开设社交媒体账号等方式构建自己的个人品牌，通过微信群、微信公众号、小程序、APP推送等方式与关注者交流互动。通过该社群，提供有趣、实用和有价值的产品，将产品推广给目标客户群体，利用精准投放的方式吸引目标客户群体的注意。</p>
-                </li>
-                <li>
-                    <p>🌟思路10：
-深入了解自己的爱好和专业技能，并以此为基础创建个人品牌。利用社交媒体和各种在线平台，扩大品牌知名度和用户基础。与潜在用户和粉丝互动，了解他们的需求和反馈，不断调整自己的品牌策略和产品设计。通过众筹平台筹集资金，用于品牌创意和产品开发。开发低成本产品，并利用其作为品牌宣传和引流的重要手段。不断提升产品品质和吸引力，并将其打造成高利润的商业产品。</p>
-                </li>
-            </ul>
-        </section>
-        <!--职业技能-->
-        <section class="work info-unit">
-            <h2>
-                <i class="fa fa-pencil" aria-hidden="true"></i>职业技能</h2>
-            <hr/>
-            <ul>
-                <li>
-                    <span>
-				        🍊具备扎实的Java基础，操作系统与虚拟机底层，CPU缓存一致性协议MESI、HTTP协议、TCPIP协议、OAUTH2协议、Fail-safe机制/Fail-fast机制、深拷贝和浅拷贝、伪共享、网络四元组。
-                    </span>
-                </li>
-                <li>
-                    <span>
-				        🍊熟悉数据结构：数组（BaseArray、Vector）、链表（ArrayList、LinkedList、DoubleLinkedList）、栈（ArrayStack、ListStack、LinkedListStack）、队列（Queue、PrioritQueue）、树论基础与二叉树、二叉搜索树与红黑树、Btree树、Trie树、赫夫曼树、堆树、图论基础、最短路径。
-                            算法思想：排序算法（冒泡排序、选择排序、插入排序、希尔排序、归并排序、快速排序、计数排序、基数排序）、基础数论、枚举算法、递归算法、分治算法、回溯算法、贪心算法、动态规划、二分与HashMap、HashSet与TreeSet。
-                    </span>
-                </li>
-                <li>
-                    <span>
-				        🍊熟练掌握集合、JVM内存模型、内存屏障、happens-before和as-if-serial语义、类加载机制、双亲委派、垃圾回收算法、垃圾回收器、空间分配担保策略、安全点与安全区域、记忆集与卡表、JIT技术、可达性分析、强软弱虚引用、GC的过程、三色标记、跨代引用、逃逸分析、内存泄漏与溢出、
-                        class文件结构、虚拟机字节码执行引擎、栈帧局部变量表、栈帧操作数栈、动态连接、方法返回地址、方法调用（解析与分派）、有过JVM线上调优、OOM异常排查经验。
-                    </span>
-                </li>
-                <li>
-                    <span>
-				        🍊深入理解Synchronized关键字，ThreadLocal，volatile关键字，线程的生命周期、CompletableFuture事件驱动异步回调、CountDownLatch&CyclicBarrier&Semaphore应用与原理，AtomicReference原子引用&AtomicInteger原子整型，CompareAndSwap底层原理，
-                        Executor线程池原理与源码、Lock锁的使用与原理。深入理解同步器AQS，阻塞队列BlockingQueue&非阻塞队列ConcurrentLinkedQueue&同步队列SyncQueue，Future&ForkJoin框架原理，无锁并发框架Disruptor等并发编程相关技术。
-                    </span>
-                </li>
-                <li>
-                    <span>
-				        🍊深入理解Tomcat整体架构和处理请求流程，长连接的底层源码原理，底层分块传输和响应流程原理，NIO处理请求源码等性能优化相关技术。
-                    </span>
-                </li>
-                <li>
-					<span>
-				        🍊深入理解MySQL关系型数据库： InnoDB数据页结构、CheckPoint技术、AIO与刷新邻接页、行记录格式（Compact、Redundant、Compressed、Dynamic）、Named File Formats机制、表空间（段、区、页）、约束、视图、分区表、BufferPool缓存机制、filesort过程、离散读优化、
-                        ICP优化、MRR优化、全文检索、行锁、表锁、间隙锁、死锁、主键自增长实现原理、索引数据结构、SQL优化、索引失效的几种情况、聚集索引、辅助索引、覆盖索引、联合索引、FIC、OSC、Online DDL、Cardinality值、redo log、bin log、undolog、Group Commint、隔离级别、
-                        ACID底层实现原理、一致性非锁定读（MVCC的原理）、分布式事务、内部事务、SQL的执行流程、缓冲池、管理方式、重做日志刷盘策略、有MySQL调优、Apache ShardingSphere分库分表读写分离、主从复制工作原理、MySQL InnoDB Cluster高可用经验、冷备、热备、逻辑备。
-					</span>
-                </li>
-                <li>
-                    <span>
-                        🍊深入理解Redis缓存： 多路复用模式、单线程模型、简单字符串、链表、字典、跳跃表、压缩列表、encoding属性编码、持久化、布隆过滤器、分布式寻址算法、过期策略、内存淘汰策略、Redis与数据库的数据一致性、Redis分布式锁、热点数据缓存、哨兵模式、集群模式、
-                        多级缓存架构、并发竞争、主从架构等。 具有集群架构及高可用相关经验、熟悉各种缓存高并发的 使用场景如：缓存雪崩、缓存穿透、缓存失效。
-                    </span>
-                </li>
-
-                <li>
-                    <span>
-				        🍊RabbitMQ、RockerMQ、Kafka 三种消息中间件出现的消息可靠投递、消息丢失、消息顺序性、消息延迟、过期失效、消息队列满了、消息高可用等问题的解决方案。RabbitMQ的工作模式，RocketMQ的消息类型，Kafka消费模式、主题/分区/日志、核心总控制器以及它的选举机制、
-                            Partition副本选举Leader机制、消费者消费消息的offset记录机制、消费者Rebalance机制、Rebalance分区分配策略、Rebalance过程、 producer发布消息机制、HW与LEO、日志分段存储、十亿消息数据线上环境规划、JVM参数设置。
-
-                    </span>
-                </li>
-
-                <li>
-                    <span>
-                        🍊深入理解Spring、Spring MVC、Mybatis、Spring Boot、Dubbo等开源框架的设计原理以及底层架构、研究过Spring循环依赖源码、Spring容器启动过程源码、Spring事务源码、Bean生命周期源码、Spring事务底层实现原理、Ioc容器加载过程源码、
-                            AOP底层实现、SpringMVC执行流程源码、Spring的自动装配、Spring Boot自动装配、MyBatis的数据过操作过程源码、SQL操作执行流程源码、配置文件解析源码、Spring Boot自动装配核心源码、Dubbo服务引入与导出以及调用源码。
-                    </span>
-                </li>
-                <li>
-                    <span>
-                           🍊深入理解Spring Cloud分布式微服务架构：微服务构建、客户端负载均衡、服务治理、服务容错保护、声明式服务调用、API网关服务、分布式配置中心、消息总线、消息驱动、分布式服务追踪、分布式事务、流量控制。研究过Alibaba Nacos注册中心源码、
-                            Sentinel规则持久化源码、分布式事务组件Seata内核源码。
-                    </span>
-                </li>
-                <li>
-                    <span>
-                           🍊深入理解Zookeeper：特性与节点数据类型、典型使用场景、选举Leader源码、集群ZAB协议与Watcher监听机制源码等。
-                    </span>
-                </li>
-                <li>
-                    <span>
-                            🍊深入理解ElasticSearch：核心语法、倒排索引、底层原理与分组聚合查询、具备集群高可用实战经验、集群架构原理与搜索技术深入、Java API整合ElasticSearch以及Logstash、FileBeat使用等。
-                    </span>
-                </li>
-                <li>
-                    <span>
-                            🍊深入理解MongoDB：基本原理、聚合操作及索引底层原理、集群模式及应用实战。
-                    </span>
-                </li>
-                <li>
-                    <span>
-                            🍊熟练使用Apache Spark作为基于内存计算的大数据分析引擎用于批处理、交互式查询。ETL工具将数据源抽取到HDFS作为高可靠、高吞吐量的分布式文件系统存储，通过Hive清洗、处理和计算原始数据，Hive清洗处理后的结果，将存入Hbase，海量数据随机查询场景从HBase查询数据。
-                    </span>
-                </li>
-                <li>
-                    <span>
-                            🍊深入理解各种高性能IO通信模型以及Netty底层数据交互源码、理解NIO与Netty线程模型有过深入研究、深入Hotspot源码与Linux内核、熟悉百万级并发服务器架构的设计。
-                    </span>
-                </li>
-                <li>
-                    <span>
-				        🍊熟练使用设计模式：支付场景：策略模式 + 工厂模式 + 门面模式 + 单例模式；
-                            业务投放场景：责任链模式；
-                            平台积分红包发放场景：装饰者模式；
-                            订单状态场景：状态模式+观察者模式；
-                            开具增值税发票场景： 建造者模式 + 原型模式；
-                            商品多级分类目录场景：组合模式+访问者模式；
-                            记录核心审计日志场景： 模板方法模式；
-                            查询 ElasticSearch大量数据场景：迭代器模式；
-                    </span>
-                </li>
-                <li>
-                    <span>
-                        🍊深入理解Kubernetes系统原理、核心资源、Pod原理与创建及生命周期管理、Job、Cronjob and Statefulset、Service负载均衡Ingress、Service Mesh发展历程及Istio架构、存储供应使用NFSflexvolumeCSI接口、Configmap、SecretMetric service及HPA、Wordpress应用Mysql主从PVPVCSCHPA、
-                        部署Shardingsphere、Mycat、Mysql、Redis、中间件Rocketmq、Rabbitmq、Nacos、测试生产环境整体部署及全链路测试、自动化运维平台Jenkins与Devops环境搭建、Devops自动化Jenkins上Pipeline建立和使用与部署、Bookinginfo实例部署灰度发布故障注入流量、gateway和serviceentry使用、SDS认证授权等使用、
-                        Kiali、prometheus、grafana和ELK系统、Knative Servina、Knative Eventing 核心概念及Broker、Channel and Trigger使用、Kubesphere 云平台使用、具备两地三中心与三地五中心容灾架构实战经验。
-                    </span>
-                </li>
-                <li>
-                    <span>
-                        🍊能独立或带领团队Java工程师成员完成服务端代码的研发工作，结合业务需求给出合理的技术解决方案，改进现有模块功能，提高系统的可扩展性，封装性，稳定性。深入挖掘业务需求，可0-1设计高可用、高并发、高伸缩的分布式项目架构，环境搭建、自动化部署、服务器环境线上排查、性能评估相关经验。
-                        具备Linux常用命令、Docker容器化、本地镜像仓库、GitLab私服、Jenkins自动化部署等技术。
-                    </span>
-                </li>
-                <li>
-                    <span>
-                        🍊拥有产品需求讨论、项目开发计划制定、控制项目风险、负责技术小组日常管理工作、进度检验与管理、任务分配、Code审查、负责指导、培训普通开发工程师、代码review、审核开发工程师的设计与研发质量等经验。具备需求分析、文档编写、原型设计等基本的文档输出能力。
-                    </span>
-                </li>
-            </ul>
-        </section>
-        <!-- 生活技能 -->
-        <section class="work info-unit">
-            <h2>
-                <i class="fa fa-pencil" aria-hidden="true"></i>生活技能</h2>
-            <hr/>
-            <ul>
-                <li>
-                    <p>🎉可以做几道拿手菜：番茄炒鸡蛋、红萝卜丝炒肉、水煮白菜等</p>
-                </li>
-                <li>
-                    <p>🎉会做一些家务：洗衣做饭、打扫卫生、收拾房间、倒垃圾、换窗帘等</p>
-                </li>
-                <li>
-                    <p>🎉懂一些基本的法律常识</p>
-                </li>
-                <li>
-                    <p>🎉懂一些基本的电脑操作知识</p>
-                </li>
-                <li>
-                    <p>🎉懂一些正确的生活常识</p>
-                </li>
-                <li>
-                    <p>🎉懂一些紧急情况下的逃生、求生知识</p>
-                </li>
-                <li>
-                    <p>🎉懂一点心理学的知识</p>
-                </li>
-                <li>
-                    <p>🎉懂一些正确的理财常识</p>
-                </li>
-                <li>
-                    <p>🎉能够高效的在网上找资源</p>
-                </li>
-                <li>
-                    <p>🎉有自己的兴趣爱好</p>
-                </li>
-                <li>
-                    <p>🎉保持积极向上生活态度</p>
-                </li>
-                <li>
-                    <p>🎉能够定期做总结和规划</p>
-                </li>
-            </ul>
-        </section>
-        <!-- 待提升的技能 -->
-        <section class="work info-unit">
-            <h2>
-                <i class="fa fa-pencil" aria-hidden="true"></i>待提升的技能</h2>
-            <hr/>
-            <ul>
-                <li>
-                    <p>🌟跑步、羽毛球、健身、唱歌、绘画、街舞、表演、辩论、音乐、摄影、剪辑</p>
-                </li>
-                <li>
-                    <p>🌟提升专业知识、职业技能、英语、沟通能力、耐心、学习前端知识做全栈开发</p>
-                </li>
-                <li>
-                    <p>🌟减脂、练腹肌、胸肌、肱二头肌、练腰、练核心力量</p>
-                </li>
-                <li>
-                    <p>🌟养胃、养肝、养肾、健脾、护眼、护肤、护腰、护颈</p>
-                </li>
-                <li>
-                    <p>🌟多接触异性、多和高层次人群交流、提升眼界</p>
-                </li>
-            </ul>
-        </section>
-        <!-- 已达成的目标 -->
-        <section class="work info-unit">
-            <h2>
-                <i class="fa fa-pencil" aria-hidden="true"></i>已达成的目标</h2>
-            <hr/>
-            <ul>
-                <li>
-                    <p>🍊个人社区（幕后大佬）（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊文章创作超过八百篇（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊文章访问量超过一百万（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊文章收藏次数超过一万（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊文章评论次数超过一万（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊CSDN博客专家（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊51CTO专家博主（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊阿里云专家博主（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊技术粉丝过万（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊打通36个新媒体平台（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊Java高级开发工程师（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊Java领域优质创作者（已达成）</p>
-                </li>
-		<li>
-                    <p>🍊图灵学院课程学完（已达成）</p>
-                </li>
-            </ul>
-        </section>
-
-        <!-- 未达成的目标 -->
-        <section class="work info-unit">
-            <h2>
-                <i class="fa fa-pencil" aria-hidden="true"></i>未达成的目标</h2>
-            <hr/>
-            <ul>
-                <li>
-                    <p>🌟文章点赞次数超过一万（9,251/10000）</p>
-                </li>
-                <li>
-                    <p>🌟CSDN全站排名前一百名（最靠近的一次是134名）</p>
-                </li>
-                <li>
-                    <p>🌟社交类APP研发成功（研发中）</p>
-                </li>
-                <li>
-                    <p>🌟还清老家的房贷（还有四十万房贷）</p>
-                </li>
-                <li>
-                    <p>🌟娶个媳妇生个娃（单身求偶状态）</p>
-                </li>
-                <li>
-                    <p>🌟独立出版专业书籍（写书中）</p>
-                </li>
-                <li>
-                    <p>🌟实现个人财富自由（还在做梦）</p>
-                </li>
-		<li>
-                    <p>🌟眼里有光（感悟中）</p>
-                </li>
-		<li>
-                    <p>🌟八块腹肌（腹肌太难练了）</p>
-                </li>
-            </ul>
-        </section>
-
-
-        </section>  
-</article>
-
-
-<footer class="footer">
-    <p>© 2023 廖志伟.文档最后更新时间为
-        <time>2023年06月23日</time>.</p>
-</footer>
-
-<!-- 侧栏 -->
-<aside>
-    <ul>
-        <li>
-            <a href="https://www.liaozhiwei.cn/" target="_blank">个人主页</a>
-        </li>
-    </ul>
-</aside>
-
-<script src="./assets/js/index.js"></script>
-</body>
-
+        </aside>
+        <script src="./assets/js/index.js"></script>
+    </body>
 </html>
