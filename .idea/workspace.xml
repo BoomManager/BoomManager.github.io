@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ece679b-070a-4c56-b52e-cce18fcb0a66" name="Default Changelist" comment="调整">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,7 +43,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1741054079843</updated>
-      <workItem from="1741054081304" duration="898000" />
+      <workItem from="1741054081304" duration="1210000" />
     </task>
     <task id="LOCAL-00001" summary="调整">
       <created>1741054262758</created>
@@ -51,7 +52,14 @@
       <option name="project" value="LOCAL" />
       <updated>1741054262758</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="调整">
+      <created>1741055295919</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1741055295919</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
