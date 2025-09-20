@@ -20,22 +20,305 @@
     <link rel="stylesheet" href="assets/css/typo.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         function loading() {
             document.getElementsByClassName('avatar')[0].style.display = 'block';
             document.getElementsByClassName('loading')[0].style.display = 'none';
         }
+
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // 创建交叉观察器实例 - 用于卡片动画
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '100px 0px'
+            });
+
+            // 观察所有卡片元素
+            document.querySelectorAll('.card').forEach(card => {
+                observer.observe(card);
+            });
+
+            // 鼠标跟随效果
+            const follower = document.querySelector('.cursor-follower');
+            if (follower) {
+                document.addEventListener('mousemove', function(e) {
+                    follower.style.left = e.clientX + 'px';
+                    follower.style.top = e.clientY + 'px';
+                });
+
+                // 为交互元素添加鼠标跟随效果
+                document.querySelectorAll('a, button, .skill-tag').forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        follower.classList.add('hover');
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        follower.classList.remove('hover');
+                    });
+                });
+            }
+
+            {{ edit_3 }}
+            // 移除点击事件，保留分类标题的鼠标样式提示
+            document.querySelectorAll('.category-header').forEach(header => {
+                // 仅保留鼠标样式提示，移除点击展开逻辑
+                header.style.cursor = 'pointer';
+            });
+            {{ edit_3 }}
+
+
+
+            // 导航目录功能
+            document.querySelectorAll('.toc-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const targetText = this.getAttribute('data-target');
+                    const targetElement = document.querySelector(`.card h2:contains('${targetText}')`).closest('.card');
+
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 20,
+                            behavior: 'smooth'
+                        });
+
+                        document.querySelectorAll('.toc-item').forEach(i => i.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
+            });
+
+            // 监听滚动更新目录激活状态
+            window.addEventListener('scroll', function() {
+                const sections = document.querySelectorAll('.main .card');
+                let currentSectionId = '';
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (window.pageYOffset >= (sectionTop - 100)) {
+                        currentSectionId = section.querySelector('h2').textContent.trim();
+                    }
+                });
+
+                document.querySelectorAll('.toc-item').forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('data-target') === currentSectionId) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+
+            // 数字增长动画
+            const counters = document.querySelectorAll('.counter');
+            const speed = 200;
+
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = +counter.getAttribute('data-target');
+                        counter.innerText = target.toLocaleString();
+                        counterObserver.unobserve(counter);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counters.forEach(counter => {
+                counterObserver.observe(counter);
+            });
+
+            // 夜间模式切换
+            const themeSwitch = document.getElementById('themeSwitch');
+            const body = document.body;
+
+            if (localStorage.getItem('theme') === 'dark' ||
+                (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                body.classList.add('dark-mode');
+                themeSwitch.innerHTML = '<i class="fa fa-sun-o" aria-hidden="true"></i>';
+            }
+
+
+
+            // 背景粒子效果
+            const canvas = document.getElementById('particlesCanvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let particlesArray = [];
+                let mouse = { x: null, y: null, radius: 150 };
+
+                function resizeCanvas() {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                }
+
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+
+                window.addEventListener('mousemove', function(e) {
+                    mouse.x = e.x;
+                    mouse.y = e.y;
+                });
+
+                class Particle {
+                    constructor() {
+                        this.x = Math.random() * canvas.width;
+                        this.y = Math.random() * canvas.height;
+                        this.size = Math.random() * 3 + 1;
+                        this.speedX = Math.random() * 0.5 - 0.25;
+                        this.speedY = Math.random() * 0.5 - 0.25;
+                        this.color = body.classList.contains('dark-mode') ? '#38bdf8' : '#1abc9c';
+                        this.alpha = 0.1;
+                    }
+
+                    update() {
+                        this.x += this.speedX;
+                        this.y += this.speedY;
+
+                        if (this.x > canvas.width) this.x = 0;
+                        if (this.x < 0) this.x = canvas.width;
+                        if (this.y > canvas.height) this.y = 0;
+                        if (this.y < 0) this.y = canvas.height;
+
+                        const dx = mouse.x - this.x;
+                        const dy = mouse.y - this.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        this.alpha = distance < mouse.radius ? 0.8 : Math.max(this.alpha - 0.01, 0.1);
+                    }
+
+                    draw() {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fillStyle = `${this.color}${Math.round(this.alpha * 255).toString(16).padStart(2, '0')}`;
+                        ctx.fill();
+                    }
+                }
+
+                function initParticles() {
+                    particlesArray = [];
+                    const particleCount = Math.min(Math.floor(canvas.width * canvas.height / 15000), 100);
+
+                    for (let i = 0; i < particleCount; i++) {
+                        particlesArray.push(new Particle());
+                    }
+                }
+
+                function animateParticles() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    for (let i = 0; i < particlesArray.length; i++) {
+                        particlesArray[i].update();
+                        particlesArray[i].draw();
+                    }
+
+                    requestAnimationFrame(animateParticles);
+                }
+
+                initParticles();
+                animateParticles();
+            }
+        });
+
+        // 滚动进度条功能
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            const progressBar = document.getElementById("progressBar");
+            if (progressBar) progressBar.style.width = scrolled + "%";
+        };
+
+        // 已达成目标 - 数据统计功能（纯模拟数据版）
+        document.addEventListener('DOMContentLoaded', function() {
+            // 直接定义模拟数据
+            const mockData = {
+                articleCount: 1452,  // 修正格式错误，使用正确数字
+                viewCount: 1248400,   // 添加访问量数据
+                favoriteCount: 20170,
+                commentCount: 10959,
+                likeCount: 17049
+            };
+
+            // 更新统计数据UI
+            const updateStatsUI = (stats) => {
+                // 数字增长动画
+                const animateValue = (id, start, end, duration) => {
+                    const obj = document.getElementById(id);
+                    if (!obj) return;
+
+                    let startTimestamp = null;
+                    const step = (timestamp) => {
+                        if (!startTimestamp) startTimestamp = timestamp;
+                        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+
+                        if (id === 'viewCount') {
+                            obj.innerText = Math.floor(progress * (end - start) + start).toLocaleString();
+                        } else {
+                            obj.innerText = Math.floor(progress * (end - start) + start);
+                        }
+
+                        if (progress < 1) {
+                            window.requestAnimationFrame(step);
+                        }
+                    };
+                    window.requestAnimationFrame(step);
+                };
+
+                // 应用动画到各个统计值
+                animateValue('articleCount', 0, stats.articleCount || 0, 1500);
+                animateValue('viewCount', 0, stats.viewCount || 0, 2000);
+                animateValue('favoriteCount', 0, stats.favoriteCount || 0, 1500);
+                animateValue('commentCount', 0, stats.commentCount || 0, 1500);
+                animateValue('likeCount', 0, stats.likeCount || 0, 1500);
+            };
+
+            // 直接使用模拟数据更新UI，无加载状态和延迟
+            updateStatsUI(mockData);
+        });
+
     </script>
 </head>
 
 <body>
+    <!-- 滚动进度条容器 -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- 鼠标跟随效果元素 -->
+    <div class="cursor-follower"></div>
+
+    <!-- 夜间模式切换 -->
+    <div class="theme-switch" id="themeSwitch">
+        <i class="fa fa-moon-o" aria-hidden="true"></i>
+    </div>
+
+    <!-- 导航目录 -->
+    <div class="toc-container">
+        <div class="toc-title">目录导航</div>
+        <ul class="toc-list">
+            <li class="toc-item" data-target="个人简介">个人简介</li>
+            <li class="toc-item" data-target="职业技能">职业技能</li>
+            <li class="toc-item" data-target="副业思路">副业思路</li>
+            <li class="toc-item" data-target="持续计划">持续计划</li>
+            <li class="toc-item" data-target="自我评价/期望">自我评价</li>
+            <li class="toc-item" data-target="兴趣爱好">兴趣爱好</li>
+            <li class="toc-item" data-target="已达成的目标">已达成目标</li>
+        </ul>
+    </div>
 
 <header class="header"></header>
 
 <article class="container">
     <section class="side" id="side">
-
-        <!-- 左栏固定开关，记得及时删除这段代码 Start-->
+        <!-- 左栏固定开关 -->
         <label class="switch" style="display: none;" onchange="switchFixed()">
             <script type="text/javaScript">
                 function switchFixed(){
@@ -46,7 +329,749 @@
             <input id="cb" type="checkbox">
         </label>
         <style>
-            @media (min-width: 	750px){
+            /* 全局样式 */
+            body {
+                background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                background-attachment: fixed;
+                background-size: cover;
+                min-height: 100vh;
+                margin: 0;
+                padding: 0;
+            }
+
+            /* 滚动条样式 */
+            ::-webkit-scrollbar {
+                width: 8px;
+                height: 8px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 4px;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: #1abc9c;
+                border-radius: 4px;
+            }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #16a085;
+            }
+            /* 生活习惯 样式优化 */
+            .habits-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 15px;
+                margin-top: 15px;
+            }
+
+            .habit-card {
+                background-color: rgba(52, 152, 219, 0.05);
+                border-radius: 8px;
+                padding: 15px;
+                display: flex;
+                align-items: flex-start;
+                transition: all 0.3s ease;
+                border-left: 3px solid transparent;
+            }
+
+            .habit-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+                border-left-color: #3498db;
+                background-color: rgba(52, 152, 219, 0.1);
+            }
+
+            .habit-icon {
+                font-size: 20px;
+                color: #3498db;
+                margin-right: 12px;
+                margin-top: 3px;
+                width: 30px;
+                text-align: center;
+            }
+
+            .habit-content p {
+                margin: 0;
+                line-height: 1.6;
+            }
+
+            /* 夜间模式适配 */
+            body.dark-mode .habit-card {
+                background-color: rgba(96, 165, 250, 0.05);
+            }
+
+            body.dark-mode .habit-card:hover {
+                background-color: rgba(96, 165, 250, 0.1);
+                border-left-color: #60a5fa;
+            }
+
+            body.dark-mode .habit-icon {
+                color: #60a5fa;
+            }
+
+            /* 滚动进度条 */
+            .progress-container {
+                width: 100%;
+                height: 3px;
+                background: transparent;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 100;
+            }
+
+            .progress-bar {
+                height: 3px;
+                background: #1abc9c;
+                width: 0%;
+            }
+
+            /* 鼠标跟随效果 */
+            .cursor-follower {
+                position: fixed;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                background: rgba(26, 188, 156, 0.1);
+                pointer-events: none;
+                z-index: 9999;
+                transform: translate(-50%, -50%);
+                transition: transform 0.2s ease, width 0.3s ease, height 0.3s ease;
+                mix-blend-mode: multiply;
+            }
+
+            .cursor-follower.hover {
+                width: 80px;
+                height: 80px;
+                background: rgba(26, 188, 156, 0.2);
+            }
+
+            /* 卡片样式 */
+            .card {
+                background-color: #fff;
+                border-radius: 12px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.08);
+                padding: 24px;
+                margin-bottom: 24px;
+                transition: all 0.3s ease;
+                border-left: 4px solid #1abc9c;
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            .card.animate {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            }
+
+            /* 标题样式 */
+            .card h2 {
+                color: #333;
+                font-size: 18px;
+                margin-top: 0;
+                padding-bottom: 8px;
+                border-bottom: 1px solid #f0f0f0;
+                margin-bottom: 16px;
+            }
+
+            .card h2 i {
+                transition: transform 0.3s ease;
+                margin-right: 8px;
+            }
+
+            .card:hover h2 i {
+                transform: rotate(15deg);
+                color: #1abc9c;
+            }
+
+            /* 列表样式 */
+            .card ul {
+                padding-left: 20px;
+                margin-bottom: 0;
+            }
+
+            .card li {
+                margin-bottom: 12px;
+                line-height: 1.6;
+                transition: all 0.3s ease;
+                padding: 5px 8px;
+                border-radius: 4px;
+                cursor: default;
+            }
+
+            {{ edit_2 }}
+            /* 主内容区列表项悬浮效果 */
+            .main .card li:hover {
+                background-color: rgba(26, 188, 156, 0.1);
+                transform: translateX(5px);
+            }
+
+            /* 夜间模式下的列表项悬浮效果 */
+            body.dark-mode .main .card li:hover {
+                background-color: rgba(56, 189, 248, 0.1);
+            }
+            {{ edit_2 }}
+
+            /* 链接样式 */
+            .card a {
+                color: #1abc9c;
+                text-decoration: none;
+                transition: color 0.2s ease;
+                position: relative;
+            }
+
+            .card a::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: -2px;
+                left: 0;
+                background-color: #16a085;
+                transition: width 0.3s ease;
+            }
+
+            .card a:hover::after {
+                width: 100%;
+            }
+
+            /* 头像区域 */
+            .me.card {
+                text-align: center;
+                padding: 30px 20px;
+                border-left: none;
+            }
+
+            .name {
+                color: #2c3e50;
+                margin: 15px 0 5px;
+            }
+
+            .info-job {
+                color: #7f8c8d;
+                font-weight::normal;
+                margin: 0;
+            }
+
+            .category-details {
+                padding: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease; /* 确保过渡属性正确设置 */
+                background-color: #f9f9f9;
+                position: relative; /* 添加定位 */
+                z-index: 2; /* 确保详情在雷达图之上 */
+            }
+
+
+            .skill-category {
+                margin-bottom: 15px;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+                transition: all 0.3s ease;
+            }
+
+            /* 添加悬浮效果 - 修改为标准CSS语法 */
+            .skill-category:hover {
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+            /* 悬浮时展开详情 */
+            .skill-category:hover .category-details {
+                max-height: 2000px;
+            }
+
+            /* 悬浮时旋转图标 */
+            .skill-category:hover .category-icon {
+                transform: rotate(45deg);
+            }
+
+            /* 展开状态 */
+            .skill-category.active .category-header {
+                background-color: rgba(26, 188, 156, 0.2);
+            }
+
+            .skill-category.active .category-header h3 {
+                color: #16a085;
+            }
+
+            .skill-category.active .category-icon {
+                transform: rotate(45deg);
+            }
+
+            .skill-category.active .category-details {
+                padding: 0;
+                max-height: 2000px;
+            }
+
+            .category-header {
+                background-color: rgba(26, 188, 156, 0.1);
+                padding: 12px 15px;
+                cursor: pointer;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                transition: all 0.3s ease;
+            }
+
+            .category-details {
+                padding: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease; /* 确保过渡属性正确设置 */
+                background-color: #f9f9f9;
+            }
+
+            .category-header h3 {
+                margin: 0;
+                font-size: 16px;
+                color: #333;
+                transition: all 0.3s ease;
+            }
+
+            .category-icon {
+                font-size: 18px;
+                font-weight: bold;
+                transition: transform 0.3s ease;
+                color: #1abc9c;
+            }
+
+            .category-details p {
+                margin: 0;
+                padding: 15px;
+                line-height: 1.6;
+                font-size: 14px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .category-details p:last-child {
+                border-bottom: none;
+            }
+
+
+            /* 夜间模式适配 */
+            body.dark-mode .category-header {
+                background-color: rgba(56, 189, 248, 0.1);
+            }
+
+            body.dark-mode .category-header h3 {
+                color: #e5e7eb;
+            }
+
+            body.dark-mode .category-icon {
+                color: #38bdf8;
+            }
+
+            body.dark-mode .skill-category.active .category-header {
+                background-color: rgba(56, 189, 248, 0.2);
+            }
+
+            body.dark-mode .skill-category.active .category-header h3 {
+                color: #38bdf8;
+            }
+
+            body.dark-mode .category-details {
+                background-color: #2d3748;
+            }
+
+            body.dark-mode .category-details p {
+                border-bottom-color: #4a5568;
+            }
+
+
+            /* 目标进度条样式 */
+            .goal-list {
+                list-style: none;
+                padding: 0;
+            }
+
+            .goal-item {
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .goal-name {
+                flex: 0 0 220px;
+            }
+
+            .goal-progress {
+                flex: 1;
+                height: 10px;
+                background-color: #f0f0f0;
+                border-radius: 5px;
+                overflow: hidden;
+            }
+
+            .goal-bar {
+                height: 100%;
+                background: linear-gradient(90deg, #1abc9c, #16a085);
+                border-radius: 5px;
+                transition: width 1.5s ease;
+            }
+
+            .goal-percent {
+                flex: 0 0 50px;
+                text-align: right;
+                font-weight: bold;
+                color: #16a085;
+            }
+            /* 数据统计样式 */
+            .stats-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 15px;
+                margin: 20px 0;
+            }
+
+            .stat-card {
+                background-color: rgba(26, 188, 156, 0.05);
+                border-radius: 10px;
+                padding: 15px;
+                text-align: center;
+                transition: all 0.3s ease;
+            }
+
+            .stat-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+                background-color: rgba(26, 188, 156, 0.1);
+            }
+
+            .stat-icon {
+                font-size: 24px;
+                color: #1abc9c;
+                margin-bottom: 10px;
+            }
+
+            .stat-content h3 {
+                margin: 0 0 10px;
+                font-size: 16px;
+                color: #333;
+            }
+
+            .stat-value {
+                font-size: 28px;
+                font-weight: bold;
+                color: #16a085;
+                margin: 5px 0;
+            }
+
+            .stat-label {
+                color: #7f8c8d;
+                font-size: 14px;
+            }
+
+            .data-source {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 20px;
+                padding-top: 15px;
+                border-top: 1px dashed #eee;
+                font-size: 14px;
+            }
+
+            .refresh-btn {
+                background-color: #1abc9c;
+                color: white;
+                border: none;
+                border-radius: 20px;
+                padding: 5px 15px;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .refresh-btn:hover {
+                background-color: #16a085;
+                transform: scale(1.05);
+            }
+
+            /* 夜间模式适配 */
+            body.dark-mode .stat-card {
+                background-color: rgba(56, 189, 248, 0.05);
+            }
+
+            body.dark-mode .stat-card:hover {
+                background-color: rgba(56, 189, 248, 0.1);
+            }
+
+            body.dark-mode .stat-icon {
+                color: #38bdf8;
+            }
+
+            body.dark-mode .stat-content h3 {
+                color: #f3f4f6;
+            }
+
+            body.dark-mode .stat-value {
+                color: #38bdf8;
+            }
+
+            body.dark-mode .data-source {
+                border-top-color: #374151;
+            }
+
+            /* 导航目录样式 */
+            .toc-container {
+                position: fixed;
+                right: 20px;
+                top: 50%;
+                transform: translateY(-50%);
+                background: rgba(255, 255, 255, 0.9);
+                border-radius: 10px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                padding: 15px 10px;
+                z-index: 999;
+                transition: all 0.3s ease;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+
+            .toc-title {
+                font-size: 14px;
+                font-weight: bold;
+                margin-bottom: 10px;
+                padding: 0 10px;
+                color: #16a085;
+            }
+
+            .toc-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .toc-item {
+                padding: 5px 10px;
+                margin-bottom: 5px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 13px;
+                transition: all 0.2s ease;
+                white-space: nowrap;
+            }
+
+            .toc-item:hover, .toc-item.active {
+                background: #1abc9c;
+                color: white;
+            }
+            /* 干过哪些事 样式优化 */
+            .achievements-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 15px;
+                margin-top: 15px;
+            }
+
+            .achievement-card {
+                background-color: rgba(26, 188, 156, 0.05);
+                border-radius: 8px;
+                padding: 15px;
+                display: flex;
+                align-items: flex-start;
+                transition: all 0.3s ease;
+                border-left: 3px solid transparent;
+            }
+
+            .achievement-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+                border-left-color: #1abc9c;
+                background-color: rgba(26, 188, 156, 0.1);
+            }
+
+            .achievement-icon {
+                font-size: 20px;
+                color: #1abc9c;
+                margin-right: 12px;
+                margin-top: 3px;
+                width: 30px;
+                text-align: center;
+            }
+
+            .achievement-content p {
+                margin: 0;
+                line-height: 1.6;
+            }
+
+            /* 夜间模式适配 */
+            body.dark-mode .achievement-card {
+                background-color: rgba(56, 189, 248, 0.05);
+            }
+
+            body.dark-mode .achievement-card:hover {
+                background-color: rgba(56, 189, 248, 0.1);
+                border-left-color: #38bdf8;
+            }
+
+            body.dark-mode .achievement-icon {
+                color: #38bdf8;
+            }
+
+            /* 夜间模式样式 */
+            body.dark-mode {
+                background: linear-gradient(135deg, #1a2a3a 0%, #111827 100%);
+                color: #e5e7eb;
+            }
+
+            body.dark-mode .card {
+                background-color: #1f2937;
+                border-left-color: #38bdf8;
+            }
+
+            body.dark-mode .skill-tag {
+                background: rgba(56, 189, 248, 0.1);
+                color: #38bdf8;
+            }
+
+            body.dark-mode .skill-tag:hover {
+                background: #38bdf8;
+            }
+
+            body.dark-mode .goal-bar {
+                background: linear-gradient(90deg, #38bdf8, #0ea5e9);
+            }
+
+            body.dark-mode .goal-percent {
+                color: #38bdf8;
+            }
+
+            body.dark-mode .card h2 {
+                color: #f3f4f6;
+                border-bottom-color: #374151;
+            }
+
+            body.dark-mode a {
+                color: #38bdf8;
+            }
+
+            body.dark-mode a::after {
+                background-color: #0ea5e9;
+            }
+
+            body.dark-mode .toc-container {
+                background: rgba(31, 41, 55, 0.9);
+            }
+
+            body.dark-mode .toc-title {
+                color: #38bdf8;
+            }
+
+            /* 夜间模式切换按钮 */
+            .theme-switch {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: white;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                cursor: pointer;
+                z-index: 1000;
+                transition: all 0.3s ease;
+            }
+
+            .theme-switch:hover {
+                transform: scale(1.1);
+            }
+
+            .theme-switch i {
+                font-size: 20px;
+                color: #16a085;
+            }
+
+            body.dark-mode .theme-switch {
+                background: #1f2937;
+            }
+
+            body.dark-mode .theme-switch i {
+                color: #38bdf8;
+            }
+
+            /* 容器样式 */
+            .container {
+                display: flex;
+                gap: 20px;
+                padding: 20px;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            .side, .main {
+                flex: 1;
+                min-width: 0;
+            }
+
+            /* 响应式调整 */
+            @media (max-width: 1024px) {
+                .toc-container {
+                    right: 10px;
+                    padding: 10px 5px;
+                }
+
+                .toc-item {
+                    font-size: 12px;
+                    padding: 3px 8px;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .container {
+                    flex-direction: column;
+                }
+
+                .goal-item {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+
+                .goal-name {
+                    flex: none;
+                    margin-bottom: 5px;
+                }
+
+                .goal-percent {
+                    flex: none;
+                    align-self: flex-end;
+                    margin-top: -20px;
+                }
+
+                .toc-container {
+                    bottom: 20px;
+                    top: auto;
+                    right: 50%;
+                    transform: translateX(50%);
+                    width: calc(100% - 40px);
+                    max-height: 200px;
+                    overflow-x: auto;
+                    overflow-y: hidden;
+                }
+
+                .toc-list {
+                    display: flex;
+                    gap: 5px;
+                    width: max-content;
+                    padding: 5px;
+                }
+            }
+
+            @media (min-width: 750px){
                 .switch{position:relative;display:inline-block!important;width:60px;height:34px;}
                 .switch input{display:none;}
                 .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;-webkit-transition:.4s;transition:.4s;}
@@ -57,18 +1082,16 @@
                 .slider.round:before{border-radius:50%;}
             }
         </style>
-        <!-- 左侧固定开关，记得及时删除这段代码 End-->
 
         <!-- 个人肖像 -->
-        <section class="me">
-            <!-- 头像照片 -->
+        <section class="me card">
             <img class="avatar" width="100%" height="100%" src="./本人.jpg">
             <h1 class="name">廖志伟</h1>
             <h4 class="info-job">Java / 上海</h4>
-
         </section>
+
         <!-- 基本信息 -->
-        <section class="profile info-unit">
+        <section class="profile info-unit card">
             <h2>
                 <i class="fa fa-user" aria-hidden="true"></i>基本信息</h2>
             <hr/>
@@ -121,11 +1144,11 @@
                     <label><b>开源项目</b></label>
                     <a href="https://gitee.com/java_wxid/java_wxid" target="_blank">Java程序员廖志伟</a>
                 </li>
-
             </ul>
         </section>
+
         <!-- 联系方式 -->
-        <section class="contact info-unit">
+        <section class="contact info-unit card">
             <h2>
                 <i class="fa fa-phone" aria-hidden="true"></i>联系方式</h2>
             <hr/>
@@ -138,8 +1161,9 @@
             <label>微信号</label>
             <img class="avatar" width="100%" height="100%" src="./微信号.jpg">
         </section>
+
         <!-- 自媒体矩阵 -->
-        <section class="qrcode info-unit">
+        <section class="qrcode info-unit card">
             <h2><i class="fa fa-qrcode" aria-hidden="true"></i>自媒体矩阵</h2>
             🍊<a href="https://www.liaozhiwei.cn/"><span>点击【主页】</span></a><br />
             🍊<a href="https://gitee.com/java_wxid/java_wxid"><span>点击【项目】</span></a><br />
@@ -147,9 +1171,7 @@
             🍊<a href="https://www.yuque.com/java_wxid"><span>点击【语雀】</span></a><br />
             🍊<a href="https://gitee.com/java_wxid"><span>点击【码云】</span></a><br />
             🍊<a href="https://www.zhihu.com/people/java_wxid"><span>点击【知乎】</span></a><br />
-<!--            🍊<a href="https://segmentfault.com/u/java_wxid"><span>点击【思否】</span></a><br />-->
             🍊<a href="https://www.jianshu.com/u/291aeb531f8b"><span>点击【简书】</span></a><br />
-<!--            🍊<a href="https://v.kuaishou.com/hx84Bn"><span>点击【快手】</span></a><br />-->
             🍊<a href="https://www.douyin.com/user/MS4wLjABAAAAymuW4SDeeylSFzL8oUMvVn50FY4X37UOeUBJB27dcv0"><span>点击【抖音】</span></a><br />
             🍊<a href="https://liaozhiwei.blog.csdn.net/"><span>点击【CSDN】</span></a><br />
             🍊<a href="https://cloud.tencent.com/developer/user/5598481"><span>点击【腾讯云】</span></a><br />
@@ -161,7 +1183,6 @@
             🍊<a href="https://author.baidu.com/home?context=%7B%22app_id%22%3A%221678622734462341%22%7D&amp;wfr=bjh"><span>点击【百家号】</span></a><br />
             🍊<a href="http://a.mp.uc.cn/media?mid=d63d204da4c4410ab897f12e10c50437"><span>点击【大鱼号】</span></a><br />
             🍊<a href="https://mp.sohu.com/profile?xpt=ZTJlYWY3YzgtNzZmYi00NTljLTkwZjgtNGM4NmNhNDQxODVj"><span>点击【搜狐号】</span></a><br />
-            🍊<a href="http://a.mp.uc.cn/media?mid=d63d204da4c4410ab897f12e10c50437"><span>点击【大鱼号】</span></a><br />
             🍊<a href="https://www.360kuai.com/pc/zmt?id=3001713896"><span>点击【快传号】</span></a><br />
             🍊<a href="https://www.163.com/dy/media/T1624158133120.html"><span>点击【网易号】</span></a><br />
             🍊<a href="https://www.9kd.com/view/20040172"><span>点击【凯迪网】</span></a><br />
@@ -169,103 +1190,138 @@
 	        🍊<a href="https://github.com/javawxid"><span>点击【GitHub】</span></a><br />
             🍊<a href="https://www.infoq.cn/u/liaozhiwei/publish"><span>点击【InfoQ】</span></a><br />
             🍊<a href="https://blog.51cto.com/u_15241602"><span>点击【51CTO】</span></a><br />
-<!--            🍊<a href="https://java_wxid.gitee.io/liao-zhiweis-blog"><span>点击【博客网站】</span></a><br />-->
             🍊<a href="https://juejin.cn/user/3290187978253431"><span>点击【稀土掘金】</span></a><br />
-<!--            🍊<a href="https://my.oschina.net/u/3969122"><span>点击【开源中国】</span></a><br />-->
             🍊<a href="https://www.toutiao.com/c/user/token/MS4wLjABAAAArQYj7pLVDM3Pf0Zqp1m50Be1yIbgLat5cKIobMsaHH3WORMNY3v1FzRLPp3cIRtJ/"><span>点击【今日头条】</span></a><br />
             🍊<a href="https://tieba.baidu.com/home/main?id=tb.1.cd3f2863.TkzPCu_Kn1RjV89k8IWXXw&fr=userbar"><span>点击【百度贴吧】</span></a><br />
             🍊<a href="https://space.bilibili.com/353586723"><span>点击【哔哩哔哩】</span></a><br />
             🍊<a href="http://www.mark-to-win.com/TeacherV2.html?id=34"><span>点击【马克Java社区】</span></a><br />
         </section>
+
         <!-- 干过哪些事 -->
-        <section class="contact info-unit">
+        <section class="contact info-unit card">
             <h2>
                 <i class="fa fa-pencil" aria-hidden="true"></i>干过哪些事</h2>
             <hr/>
-            <ul>
-                <li>
-                    📝在技术文章的审核中担任过评审老师的角色、为问卷调查报告制定过题目、编写过多种产品软文、创建过个人社区和开源项目、也参与过专业课程的制定与视频录制、涉足过游戏主播和比赛选手、创立过自己的公司和淘宝店、在CSDN写过一千多篇技术文章、出版过专业技术书籍、独立开发过自己的APP、跑过十五公里、徒步爬过衡山、有过三个月减肥20斤的经历、小学弄哭过英语老师、入职场后当着老板的面吐槽直属领导、怼过各级别的领导（最大高我四个级别）、被裁员后成功拿到四万劳动赔偿。
-                </li>
-            </ul>
+
+            <!-- 优化为卡片式布局 -->
+            <div class="achievements-container">
+                <div class="achievement-card">
+                    <div class="achievement-icon"><i class="fa fa-graduation-cap"></i></div>
+                    <div class="achievement-content">
+                        <p>在技术文章的审核中担任过评审老师的角色</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon"><i class="fa fa-list-alt"></i></div>
+                    <div class="achievement-content">
+                        <p>为问卷调查报告制定过题目</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon"><i class="fa fa-file-text"></i></div>
+                    <div class="achievement-content">
+                        <p>编写过多种产品软文</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon"><i class="fa fa-users"></i></div>
+                    <div class="achievement-content">
+                        <p>创建过个人社区和开源项目</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon"><i class="fa fa-graduation-cap"></i></div>
+                    <div class="achievement-content">
+                        <p>参与过专业课程的制定与视频录制</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon"><i class="fa fa-gamepad"></i></div>
+                    <div class="achievement-content">
+                        <p>涉足过游戏主播和比赛选手</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon"><i class="fa fa-briefcase"></i></div>
+                    <div class="achievement-content">
+                        <p>创立过自己的公司和淘宝店</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon"><i class="fa fa-pencil"></i></div>
+                    <div class="achievement-content">
+                        <p>在CSDN写过一千多篇技术文章</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon"><i class="fa fa-book"></i></div>
+                    <div class="achievement-content">
+                        <p>出版过专业技术书籍</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon"><i class="fa fa-mobile"></i></div>
+                    <div class="achievement-content">
+                        <p>独立开发过自己的APP</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon"><i class="fa fa-running"></i></div>
+                    <div class="achievement-content">
+                        <p>跑过十五公里、徒步爬过衡山</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon"><i class="fa fa-balance-scale"></i></div>
+                    <div class="achievement-content">
+                        <p>有过三个月减肥20斤的经历</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon"><i class="fa fa-bolt"></i></div>
+                    <div class="achievement-content">
+                        <p>小学弄哭过英语老师</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon"><i class="fa fa-bullhorn"></i></div>
+                    <div class="achievement-content">
+                        <p>入职场后当着老板的面吐槽直属领导</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon"><i class="fa fa-gavel"></i></div>
+                    <div class="achievement-content">
+                        <p>怼过各级别的领导（最大高我四个级别）</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon"><i class="fa fa-check-circle"></i></div>
+                    <div class="achievement-content">
+                        <p>被裁员后成功拿到四万劳动赔偿</p>
+                    </div>
+                </div>
+            </div>
         </section>
-        <!-- 专业方向 -->
-        <section class="contact info-unit">
-            <h2>
-                <i class="fa fa-pencil" aria-hidden="true"></i>专业方向</h2>
-            <hr/>
-            <ul>
-                <li>
-                    📝主流框架的底层源码(Spring、SpringBoot、Spring MVC、SpringCould、Mybatis、Dubbo、Zookeeper)，
-                    消息中间件底层架构原理（RabbitMQ、RocketMQ、Kafka）、Redis缓存、MySQL关系型数据库、ElasticSearch全文搜索、MongoDB非关系型数据库、分库分表ShardingSphere、设计模式、领域驱动DDD、Kubernetes容器编排。
-                </li>
-            </ul>
-        </section>
-        <!-- 生活习惯 -->
-        <section class="contact info-unit">
-            <h2>
-                <i class="fa fa-pencil" aria-hidden="true"></i>生活习惯</h2>
-            <hr/>
-            <ul>
-                <li>
-                    <p>🎉不抽烟、不喝酒、不嚼槟榔、不说脏话、不暴力、不逛夜店、没有纹身、没有不良嗜好、异性朋友少、圈子干净。早上喜欢睡到自然醒、中午会午睡、晚上12点前睡觉。不能接受的食物海鲜、榴莲、木瓜，喜欢吃辣的、甜的、汤、肉食。</p>
-                </li>
-            </ul>
-        </section>
-        <!-- 已达成的目标 -->
-        <section class="contact info-unit">
-            <h2>
-                <i class="fa fa-pencil" aria-hidden="true"></i>已达成的目标</h2>
-            <hr/>
-            <ul>
-                <li>
-                    <p>🍊个人幕后大佬社区（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊文章创作超过一千篇（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊文章访问量超过一百万（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊文章收藏次数超过一万（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊文章评论次数超过一万（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊文章点赞次数超过一万（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊CSDN博客专家（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊51CTO专家博主（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊阿里云专家博主（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊技术粉丝过二万（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊打通35个新媒体平台（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊Java资深开发工程师（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊Java领域优质创作者（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊图灵学院课程学完（已达成）</p>
-                </li>
-                <li>
-                    <p>🍊独立出版图书（已达成）</p>
-                </li>
-            </ul>
-        </section>
+
+
         <!-- 独立出版图书 -->
-        <section class="contact info-unit">
+        <section class="contact info-unit card">
             <h2>
                 <i class="fa fa-pencil" aria-hidden="true"></i>独立出版图书</h2>
             <hr/>
@@ -287,10 +1343,81 @@
                 </li>
             </ul>
         </section>
+
+        <!-- 生活习惯 -->
+        <section class="contact info-unit card">
+            <h2>
+                <i class="fa fa-pencil" aria-hidden="true"></i>生活习惯</h2>
+            <hr/>
+
+            <!-- 优化为卡片式布局 -->
+            <div class="habits-container">
+                <!-- 健康习惯 -->
+                <div class="habit-card">
+                    <div class="habit-icon"><i class="fa fa-heartbeat"></i></div>
+                    <div class="habit-content">
+                        <p>不抽烟、不喝酒、不嚼槟榔、不说脏话、不暴力</p>
+                    </div>
+                </div>
+
+                <div class="habit-card">
+                    <div class="habit-icon"><i class="fa fa-moon-o"></i></div>
+                    <div class="habit-content">
+                        <p>不逛夜店、没有纹身、没有不良嗜好</p>
+                    </div>
+                </div>
+
+                <div class="habit-card">
+                    <div class="habit-icon"><i class="fa fa-users"></i></div>
+                    <div class="habit-content">
+                        <p>异性朋友少、圈子干净</p>
+                    </div>
+                </div>
+
+                <!-- 作息习惯 -->
+                <div class="habit-card">
+                    <div class="habit-icon"><i class="fa fa-sun-o"></i></div>
+                    <div class="habit-content">
+                        <p>早上喜欢睡到自然醒</p>
+                    </div>
+                </div>
+
+                <div class="habit-card">
+                    <div class="habit-icon"><i class="fa fa-bed"></i></div>
+                    <div class="habit-content">
+                        <p>中午会午睡</p>
+                    </div>
+                </div>
+
+                <div class="habit-card">
+                    <div class="habit-icon"><i class="fa fa-clock-o"></i></div>
+                    <div class="habit-content">
+                        <p>晚上12点前睡觉</p>
+                    </div>
+                </div>
+
+                <!-- 饮食习惯 -->
+                <div class="habit-card">
+                    <div class="habit-icon"><i class="fa fa-times-circle"></i></div>
+                    <div class="habit-content">
+                        <p>不能接受的食物：海鲜、榴莲、木瓜</p>
+                    </div>
+                </div>
+
+                <div class="habit-card">
+                    <div class="habit-icon"><i class="fa fa-check-circle"></i></div>
+                    <div class="habit-content">
+                        <p>喜欢吃：辣的、甜的、汤、肉食</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </section>
+
     <section class="main">
         <!--个人简介-->
-        <section class="work info-unit">
+        <section class="work info-unit card">
             <h2>
                 <i class="fa fa-pencil" aria-hidden="true"></i>个人简介</h2>
             <hr/>
@@ -303,191 +1430,252 @@
                             Apache Spark大数据分析引擎、HDFS高吞吐量的分布式文件系统存储，Hive类SQL的引擎、HBase大数据非关系型数据库。
                     </span>
                 </li>
-<!--                <li>
-                    <label><b>自我介绍</b></label>
-                    <a href="https://git.io/typing-svg"><img src="
-                        https://readme-typing-svg.herokuapp.com/?font=Fira+Code&pause=1&random=false&width=10000&lines=%E6%88%91%E6%98%AF%E5%BB%96%E5%BF%97%E4%BC%9F%EF%BC%8C%E4%B8%80%E5%90%8DJava%E5%BC%80%E5%8F%91%E5%B7%A5%E7%A8%8B%E5%B8%88%EF%BC%8C%E3%80%8AJava%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%E2%80%94%E2%80%94%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%A4%A7%E5%9E%8B%E4%BA%92%E8%81%94%E7%BD%91%E4%BC%81%E4%B8%9A%E9%80%9A%E7%94%A8%E6%8A%80%E6%9C%AF%E3%80%8B%EF%BC%88%E5%9F%BA%E7%A1%80%E7%AF%87%EF%BC%89%E3%80%81%EF%BC%88%E8%BF%9B%E9%98%B6%E7%AF%87%EF%BC%89%E3%80%81%EF%BC%88%E6%9E%B6%E6%9E%84%E7%AF%87%EF%BC%89%E4%BD%9C%E8%80%85%E3%80%81%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6%E5%87%BA%E7%89%88%E7%A4%BE%E7%AD%BE%E7%BA%A6%E4%BD%9C%E5%AE%B6%E3%80%81Java%E9%A2%86%E5%9F%9F%E4%BC%98%E8%B4%A8%E5%88%9B%E4%BD%9C%E8%80%85;CSDN%E5%8D%9A%E5%AE%A2%E4%B8%93%E5%AE%B6%E3%80%81%E9%98%BF%E9%87%8C%E4%BA%91%E4%B8%93%E5%AE%B6%E5%8D%9A%E4%B8%BB%E3%80%8151CTO%E4%B8%93%E5%AE%B6%E5%8D%9A%E4%B8%BB%E3%80%81%E4%BA%A7%E5%93%81%E8%BD%AF%E6%96%87%E4%B8%93%E4%B8%9A%E5%86%99%E6%89%8B%E3%80%81%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0%E8%AF%84%E5%AE%A1%E8%80%81%E5%B8%88%E3%80%81%E6%8A%80%E6%9C%AF%E7%B1%BB%E9%97%AE%E5%8D%B7%E8%B0%83%E6%9F%A5%E8%AE%BE%E8%AE%A1%E5%B8%88%E3%80%81%E5%B9%95%E5%90%8E%E5%A4%A7%E4%BD%AC%E7%A4%BE%E5%8C%BA%E5%88%9B%E5%A7%8B%E4%BA%BA%E3%80%81%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E8%B4%A1%E7%8C%AE%E8%80%85%E3%80%81%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9UP%E4%B8%BB;%E6%8B%A5%E6%9C%89%E5%A4%9A%E5%B9%B4%E4%B8%80%E7%BA%BF%E7%A0%94%E5%8F%91%E5%92%8C%E5%9B%A2%E9%98%9F%E7%AE%A1%E7%90%86%E7%BB%8F%E9%AA%8C%EF%BC%8C%E7%A0%94%E7%A9%B6%E8%BF%87%E4%B8%BB%E6%B5%81%E6%A1%86%E6%9E%B6%E7%9A%84%E5%BA%95%E5%B1%82%E6%BA%90%E7%A0%81%EF%BC%88Spring%E3%80%81SpringBoot%E3%80%81SpringMVC%E3%80%81SpringCloud%E3%80%81Mybatis%E3%80%81Dubbo%E3%80%81Zookeeper%EF%BC%89;%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6(RabbitMQ%E3%80%81RocketMQ%E3%80%81Kafka)%E3%80%81Redis%E7%BC%93%E5%AD%98%E3%80%81MySQL%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E3%80%81ElasticSearch%E5%85%A8%E6%96%87%E6%90%9C%E7%B4%A2%E3%80%81MongoDB%E9%9D%9E%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E3%80%81ShardingSphere%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB;%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E3%80%81%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8DDD%E3%80%81%E5%AE%B9%E5%99%A8%E7%BC%96%E6%8E%92Kubernetes%E7%AD%89%E3%80%82%E4%B8%8D%E5%AE%9A%E6%9C%9F%E5%88%86%E4%BA%AB%E9%AB%98%E5%B9%B6%E5%8F%91%E3%80%81%E9%AB%98%E5%8F%AF%E7%94%A8%E3%80%81%E9%AB%98%E6%80%A7%E8%83%BD%E3%80%81%E5%BE%AE%E6%9C%8D%E5%8A%A1%E3%80%81%E5%88%86%E5%B8%83%E5%BC%8F%E3%80%81%E6%B5%B7%E9%87%8F%E6%95%B0%E6%8D%AE%E3%80%81%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E3%80%81%E4%BA%91%E5%8E%9F%E7%94%9F%E3%80%81%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E3%80%81%E4%BA%A7%E5%93%81%E6%80%9D%E7%BB%B4%E3%80%81%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B%E3%80%81%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1;%E6%B1%82%E8%81%8C%E9%9D%A2%E8%AF%95%E3%80%81%E5%89%AF%E4%B8%9A%E6%80%9D%E7%BB%B4%E3%80%81%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF%E7%AD%89%E5%86%85%E5%AE%B9%E3%80%82%E6%AC%A2%E8%BF%8E%E5%A4%A7%E5%AE%B6%E5%8A%A0%E6%88%91%E5%BE%AE%E4%BF%A1%E5%92%A8%E8%AF%A2,%E5%BE%AE%E4%BF%A1%E5%8F%B7%EF%BC%9ASeniorRD
-                    " alt="Typing SVG" /></a>
-                </li>-->
+                <li>
+		            <span>
+                             主导网站/APP服务器端核心架构设计，基于微服务架构落地系统分层（业务层、服务层、数据层）。
+                    </span>
+                </li>
+                <li>
+		            <span>
+                             有阿里云/腾讯云/AWS部署经验，部署过高并发可伸缩的多节点大集群项目、有全球化多地域多活部署经验。
+                    </span>
+                </li>
+                <li>
+		            <span>
+                             制定团队技术规范（如代码规范、接口文档规范、数据库设计规范），代码Review指导初级开发提升技术能力。
+                    </span>
+                </li>
+                <li>
+		            <span>
+                             输出架构设计文档（含技术选型、模块划分、接口定义、容错方案），确保架构满足高可用（99.99% SLA）、高并发（峰值QPS≥100000）、可扩展（支持业务模块弹性扩缩容）要求。
+                    </span>
+                </li>
+                <li>
+		            <span>
+                             主导核心系统的测试方案设计（含单元测试、集成测试、压力测试），配置自动化部署CI/CD流程（GitLab+Jenkins），
+编写自动化部署Shell脚本，保障系统灰度发布与全量上线零故障
+                </li>
+                <li>
+		            <span>
+                             牵头解决研发过程中的核心技术难点，包括但不限于：高并发下的接口响应延迟优化（目标RT≤100ms）、数据库与缓存
+一致性保障、数据库慢查询优化（SQL执行效率提升50%以上）、系统安全防护（防SQL注入、XSS攻击、接口鉴权）、设
+计支撑亿级数据量的分区表（使用Sharding-JDBC实现分库分表，掌握分片策略与数据迁移方案）等
+                </li>
             </ul>
         </section>
+
         <!--职业技能-->
-        <section class="work info-unit">
+        <section class="work info-unit card">
             <h2>
                 <i class="fa fa-pencil" aria-hidden="true"></i>职业技能</h2>
             <hr/>
-            <ul>
-                <li>
-                    <span>
-				        🍊具备扎实的Java基础，操作系统与虚拟机底层，CPU缓存一致性协议MESI、HTTP协议、TCPIP协议、OAUTH2协议、Fail-safe机制/Fail-fast机制、深拷贝和浅拷贝、伪共享、网络四元组。
-                    </span>
-                </li>
-                <li>
-                    <span>
-				        🍊熟悉数据结构：数组（BaseArray、Vector）、链表（ArrayList、LinkedList、DoubleLinkedList）、栈（ArrayStack、ListStack、LinkedListStack）、队列（Queue、PrioritQueue）、树论基础与二叉树、二叉搜索树与红黑树、Btree树、Trie树、赫夫曼树、堆树、图论基础、最短路径。
-                            算法思想：排序算法（冒泡排序、选择排序、插入排序、希尔排序、归并排序、快速排序、计数排序、基数排序）、基础数论、枚举算法、递归算法、分治算法、回溯算法、贪心算法、动态规划、二分与HashMap、HashSet与TreeSet。
-                    </span>
-                </li>
-                <li>
-                    <span>
-				        🍊熟练掌握集合、JVM内存模型、内存屏障、happens-before和as-if-serial语义、类加载机制、双亲委派、垃圾回收算法、垃圾回收器、空间分配担保策略、安全点与安全区域、记忆集与卡表、JIT技术、可达性分析、强软弱虚引用、GC的过程、三色标记、跨代引用、逃逸分析、内存泄漏与溢出、
-                        class文件结构、虚拟机字节码执行引擎、栈帧局部变量表、栈帧操作数栈、动态连接、方法返回地址、方法调用（解析与分派）、有过JVM线上调优、OOM异常排查经验。
-                    </span>
-                </li>
-                <li>
-                    <span>
-				        🍊深入理解Synchronized关键字，ThreadLocal，volatile关键字，线程的生命周期、CompletableFuture事件驱动异步回调、CountDownLatch&CyclicBarrier&Semaphore应用与原理，AtomicReference原子引用&AtomicInteger原子整型，CompareAndSwap底层原理，
-                        Executor线程池原理与源码、Lock锁的使用与原理。深入理解同步器AQS，阻塞队列BlockingQueue&非阻塞队列ConcurrentLinkedQueue&同步队列SyncQueue，Future&ForkJoin框架原理，无锁并发框架Disruptor等并发编程相关技术。
-                    </span>
-                </li>
-                <li>
-                    <span>
-				        🍊深入理解Tomcat整体架构和处理请求流程，长连接的底层源码原理，底层分块传输和响应流程原理，NIO处理请求源码等性能优化相关技术。
-                    </span>
-                </li>
-                <li>
-					<span>
-				        🍊深入理解MySQL关系型数据库： InnoDB数据页结构、CheckPoint技术、AIO与刷新邻接页、行记录格式（Compact、Redundant、Compressed、Dynamic）、Named File Formats机制、表空间（段、区、页）、约束、视图、分区表、BufferPool缓存机制、filesort过程、离散读优化、
-                        ICP优化、MRR优化、全文检索、行锁、表锁、间隙锁、死锁、主键自增长实现原理、索引数据结构、SQL优化、索引失效的几种情况、聚集索引、辅助索引、覆盖索引、联合索引、FIC、OSC、Online DDL、Cardinality值、redo log、bin log、undolog、Group Commint、隔离级别、
-                        ACID底层实现原理、一致性非锁定读（MVCC的原理）、分布式事务、内部事务、SQL的执行流程、缓冲池、管理方式、重做日志刷盘策略、有MySQL调优、Apache ShardingSphere分库分表读写分离、主从复制工作原理、MySQL InnoDB Cluster高可用经验、冷备、热备、逻辑备。
-					</span>
-				</li>
-                <li>
-                    <span>
-                        🍊深入理解Redis缓存： 多路复用模式、单线程模型、简单字符串、链表、字典、跳跃表、压缩列表、encoding属性编码、持久化、布隆过滤器、分布式寻址算法、过期策略、内存淘汰策略、Redis与数据库的数据一致性、Redis分布式锁、热点数据缓存、哨兵模式、集群模式、
-                        多级缓存架构、并发竞争、主从架构等。 具有集群架构及高可用相关经验、熟悉各种缓存高并发的 使用场景如：缓存雪崩、缓存穿透、缓存失效。
-                    </span>
-                </li>
 
-                        <li>
-                            <span>
-                                🍊RabbitMQ、RocketMQ、Kafka 三种消息中间件出现的消息可靠投递、消息丢失、消息顺序性、消息延迟、过期失效、消息队列满了、消息高可用等问题的解决方案。RabbitMQ的工作模式，RocketMQ的消息类型，Kafka消费模式、主题/分区/日志、核心总控制器以及它的选举机制、
-                                    Partition副本选举Leader机制、消费者消费消息的offset记录机制、消费者Rebalance机制、Rebalance分区分配策略、Rebalance过程、 producer发布消息机制、HW与LEO、日志分段存储、十亿消息数据线上环境规划、JVM参数设置。
+            <!-- 分类技能展示 -->
+            <div class="skill-categories">
+                <!-- Java基础与底层 -->
+                <div class="skill-category">
+                    <div class="category-header">
+                        <h3>Java基础与底层原理</h3>
+                        <div class="category-icon">+</div>
+                    </div>
+                    <div class="category-details">
+                        <p>🍊具备扎实的Java基础，操作系统与虚拟机底层，CPU缓存一致性协议MESI、HTTP协议、TCPIP协议、OAUTH2协议、Fail-safe机制/Fail-fast机制、深拷贝和浅拷贝、伪共享、网络四元组。</p>
+                    </div>
+                </div>
 
-                            </span>
-                        </li>
+                <!-- 数据结构与算法 -->
+                <div class="skill-category">
+                    <div class="category-header">
+                        <h3>数据结构与算法</h3>
+                        <div class="category-icon">+</div>
+                    </div>
+                    <div class="category-details">
+                        <p>🍊熟悉数据结构：数组（BaseArray、Vector）、链表（ArrayList、LinkedList、DoubleLinkedList）、栈（ArrayStack、ListStack、LinkedListStack）、队列（Queue、PrioritQueue）、树论基础与二叉树、二叉搜索树与红黑树、Btree树、Trie树、赫夫曼树、堆树、图论基础、最短路径。 算法思想：排序算法（冒泡排序、选择排序、插入排序、希尔排序、归并排序、快速排序、计数排序、基数排序）、基础数论、枚举算法、递归算法、分治算法、回溯算法、贪心算法、动态规划、二分与HashMap、HashSet与TreeSet。</p>
+                    </div>
+                </div>
 
-                        <li>
-                            <span>
-                                🍊深入理解Spring、Spring MVC、Mybatis、Spring Boot、Dubbo等开源框架的设计原理以及底层架构、研究过Spring循环依赖源码、Spring容器启动过程源码、Spring事务源码、Bean生命周期源码、Spring事务底层实现原理、Ioc容器加载过程源码、
-                                    AOP底层实现、SpringMVC执行流程源码、Spring的自动装配、Spring Boot自动装配、MyBatis的数据过操作过程源码、SQL操作执行流程源码、配置文件解析源码、Spring Boot自动装配核心源码、Dubbo服务引入与导出以及调用源码。
-                            </span>
-                        </li>
-                        <li>
-                            <span>
-                                   🍊深入理解Spring Cloud分布式微服务架构：微服务构建、客户端负载均衡、服务治理、服务容错保护、声明式服务调用、API网关服务、分布式配置中心、消息总线、消息驱动、分布式服务追踪、分布式事务、流量控制。研究过Alibaba Nacos注册中心源码、
-                                    Sentinel规则持久化源码、分布式事务组件Seata内核源码。
-                            </span>
-                        </li>
-                        <li>
-                            <span>
-                                   🍊深入理解Zookeeper：特性与节点数据类型、典型使用场景、选举Leader源码、集群ZAB协议与Watcher监听机制源码等。
-                            </span>
-                        </li>
-                        <li>
-                            <span>
-                                    🍊深入理解ElasticSearch：核心语法、倒排索引、底层原理与分组聚合查询、具备集群高可用实战经验、集群架构原理与搜索技术深入、Java API整合ElasticSearch以及Logstash、FileBeat使用等。
-                            </span>
-                        </li>
-                        <li>
-                            <span>
-                                    🍊深入理解MongoDB：基本原理、聚合操作及索引底层原理、集群模式及应用实战。
-                            </span>
-                        </li>
-                        <li>
-                            <span>
-                                    🍊熟练使用Apache Spark作为基于内存计算的大数据分析引擎用于批处理、交互式查询。ETL工具将数据源抽取到HDFS作为高可靠、高吞吐量的分布式文件系统存储，通过Hive清洗、处理和计算原始数据，Hive清洗处理后的结果，将存入Hbase，海量数据随机查询场景从HBase查询数据。
-                            </span>
-                        </li>
-                        <li>
-                            <span>
-                                    🍊深入理解各种高性能IO通信模型以及Netty底层数据交互源码、理解NIO与Netty线程模型有过深入研究、深入Hotspot源码与Linux内核、熟悉百万级并发服务器架构的设计。
-                            </span>
-                        </li>
-                        <li>
-                            <span>
-                                🍊熟练使用设计模式：
-                                    不同营销策略的切换场景：策略模式；
-                                    对象的创建和管理场景：工厂模式；
-                                    奖励分配和活动参与场景：责任链模式；
-                                    实时消息推送、互动交流场景：发布-订阅模式；
-                                    用户的行为响应和推送通知功能场景：观察者模式；
-                                    支付场景：策略模式 + 工厂模式 + 门面模式 + 单例模式；
-                                    业务投放场景：责任链模式；
-                                    平台积分红包发放场景：装饰者模式；
-                                    订单状态场景：状态模式+观察者模式；
-                                    开具增值税发票场景： 建造者模式 + 原型模式；
-                                    商品多级分类目录场景：组合模式+访问者模式；
-                                    记录核心审计日志场景： 模板方法模式；
-                                    查询 ElasticSearch大量数据场景：迭代器模式；
-                            </span>
-                        </li>
-                        <li>
-                            <span>
-                                🍊深入理解Kubernetes系统原理、核心资源、Pod原理与创建及生命周期管理、Job、Cronjob and Statefulset、Service负载均衡Ingress、Service Mesh发展历程及Istio架构、存储供应使用NFSflexvolumeCSI接口、Configmap、SecretMetric service及HPA、Wordpress应用Mysql主从PVPVCSCHPA、
-                                部署Shardingsphere、Mycat、Mysql、Redis、中间件Rocketmq、Rabbitmq、Nacos、测试生产环境整体部署及全链路测试、自动化运维平台Jenkins与Devops环境搭建、Devops自动化Jenkins上Pipeline建立和使用与部署、Bookinginfo实例部署灰度发布故障注入流量、gateway和serviceentry使用、SDS认证授权等使用、
-                                Kiali、prometheus、grafana和ELK系统、Knative Servina、Knative Eventing 核心概念及Broker、Channel and Trigger使用、Kubesphere 云平台使用、具备两地三中心与三地五中心容灾架构实战经验。
-                            </span>
-                        </li>
-                        <li>
-                            <span>
-                                🍊能独立或带领团队Java工程师成员完成服务端代码的研发工作，结合业务需求给出合理的技术解决方案，改进现有模块功能，提高系统的可扩展性，封装性，稳定性。深入挖掘业务需求，可0-1设计高可用、高并发、高伸缩的分布式项目架构，环境搭建、自动化部署、服务器环境线上排查、性能评估相关经验。
-                                具备Linux常用命令、Docker容器化、本地镜像仓库、GitLab私服、Jenkins自动化部署等技术。
-                            </span>
-                        </li>
-                        <li>
-                            <span>
-                                🍊拥有产品需求讨论、项目开发计划制定、控制项目风险、负责技术小组日常管理工作、进度检验与管理、任务分配、Code审查、负责指导、培训普通开发工程师、代码review、审核开发工程师的设计与研发质量等经验。具备需求分析、文档编写、原型设计等基本的文档输出能力。
-                            </span>
-                        </li>
-                    </ul>
+                <!-- JVM与性能调优 -->
+                <div class="skill-category">
+                    <div class="category-header">
+                        <h3>JVM与性能调优</h3>
+                        <div class="category-icon">+</div>
+                    </div>
+                    <div class="category-details">
+                        <p>🍊熟练掌握集合、JVM内存模型、内存屏障、happens-before和as-if-serial语义、类加载机制、双亲委派、垃圾回收算法、垃圾回收器、空间分配担保策略、安全点与安全区域、记忆集与卡表、JIT技术、可达性分析、强软弱虚引用、GC的过程、三色标记、跨代引用、逃逸分析、内存泄漏与溢出、 class文件结构、虚拟机字节码执行引擎、栈帧局部变量表、栈帧操作数栈、动态连接、方法返回地址、方法调用（解析与分派）、有过JVM线上调优、OOM异常排查经验。</p>
+                    </div>
+                </div>
+
+                <!-- 并发编程 -->
+                <div class="skill-category">
+                    <div class="category-header">
+                        <h3>并发编程</h3>
+                        <div class="category-icon">+</div>
+                    </div>
+                    <div class="category-details">
+                        <p>🍊深入理解Synchronized关键字，ThreadLocal，volatile关键字，线程的生命周期、CompletableFuture事件驱动异步回调、CountDownLatch&CyclicBarrier&Semaphore应用与原理，AtomicReference原子引用&AtomicInteger原子整型，CompareAndSwap底层原理， Executor线程池原理与源码、Lock锁的使用与原理。深入理解同步器AQS，阻塞队列BlockingQueue&非阻塞队列ConcurrentLinkedQueue&同步队列SyncQueue，Future&ForkJoin框架原理，无锁并发框架Disruptor等并发编程相关技术。</p>
+                    </div>
+                </div>
+
+                <!-- Web容器与网络 -->
+                <div class="skill-category">
+                    <div class="category-header">
+                        <h3>Web容器与网络编程</h3>
+                        <div class="category-icon">+</div>
+                    </div>
+                    <div class="category-details">
+                        <p>🍊深入理解Tomcat整体架构和处理请求流程，长连接的底层源码原理，底层分块传输和响应流程原理，NIO处理请求源码等性能优化相关技术。</p>
+                    </div>
+                </div>
+
+                <!-- MySQL数据库 -->
+                <div class="skill-category">
+                    <div class="category-header">
+                        <h3>关系型数据库(MySQL)</h3>
+                        <div class="category-icon">+</div>
+                    </div>
+                    <div class="category-details">
+                        <p>🍊深入理解MySQL关系型数据库： InnoDB数据页结构、CheckPoint技术、AIO与刷新邻接页、行记录格式（Compact、Redundant、Compressed、Dynamic）、Named File Formats机制、表空间（段、区、页）、约束、视图、分区表、BufferPool缓存机制、filesort过程、离散读优化、 ICP优化、MRR优化、全文检索、行锁、表锁、间隙锁、死锁、主键自增长实现原理、索引数据结构、SQL优化、索引失效的几种情况、聚集索引、辅助索引、覆盖索引、联合索引、FIC、OSC、Online DDL、Cardinality值、redo log、bin log、undolog、Group Commint、隔离级别、 ACID底层实现原理、一致性非锁定读（MVCC的原理）、分布式事务、内部事务、SQL的执行流程、缓冲池、管理方式、重做日志刷盘策略、有MySQL调优、Apache ShardingSphere分库分表读写分离、主从复制工作原理、MySQL InnoDB Cluster高可用经验、冷备、热备、逻辑备。</p>
+                    </div>
+                </div>
+
+                <!-- Redis缓存 -->
+                <div class="skill-category">
+                    <div class="category-header">
+                        <h3>缓存技术(Redis)</h3>
+                        <div class="category-icon">+</div>
+                    </div>
+                    <div class="category-details">
+                        <p>🍊深入理解Redis缓存： 多路复用模式、单线程模型、简单字符串、链表、字典、跳跃表、压缩列表、encoding属性编码、持久化、布隆过滤器、分布式寻址算法、过期策略、内存淘汰策略、Redis与数据库的数据一致性、Redis分布式锁、热点数据缓存、哨兵模式、集群模式、 多级缓存架构、并发竞争、主从架构等。 具有集群架构及高可用相关经验、熟悉各种缓存高并发的 使用场景如：缓存雪崩、缓存穿透、缓存失效。</p>
+                    </div>
+                </div>
+
+                <!-- 消息中间件 -->
+                <div class="skill-category">
+                    <div class="category-header">
+                        <h3>消息中间件</h3>
+                        <div class="category-icon">+</div>
+                    </div>
+                    <div class="category-details">
+                        <p>🍊RabbitMQ、RocketMQ、Kafka 三种消息中间件出现的消息可靠投递、消息丢失、消息顺序性、消息延迟、过期失效、消息队列满了、消息高可用等问题的解决方案。RabbitMQ的工作模式，RocketMQ的消息类型，Kafka消费模式、主题/分区/日志、核心总控制器以及它的选举机制、 Partition副本选举Leader机制、消费者消费消息的offset记录机制、消费者Rebalance机制、Rebalance分区分配策略、Rebalance过程、 producer发布消息机制、HW与LEO、日志分段存储、十亿消息数据线上环境规划、JVM参数设置。</p>
+                    </div>
+                </div>
+
+                <!-- Spring生态 -->
+                <div class="skill-category">
+                    <div class="category-header">
+                        <h3>主流框架(Spring生态)</h3>
+                        <div class="category-icon">+</div>
+                    </div>
+                    <div class="category-details">
+                        <p>🍊深入理解Spring、Spring MVC、Mybatis、Spring Boot、Dubbo等开源框架的设计原理以及底层架构、研究过Spring循环依赖源码、Spring容器启动过程源码、Spring事务源码、Bean生命周期源码、Spring事务底层实现原理、Ioc容器加载过程源码、 AOP底层实现、SpringMVC执行流程源码、Spring的自动装配、Spring Boot自动装配、MyBatis的数据过操作过程源码、SQL操作执行流程源码、配置文件解析源码、Spring Boot自动装配核心源码、Dubbo服务引入与导出以及调用源码。</p>
+                    </div>
+                </div>
+
+                <!-- 微服务架构 -->
+                <div class="skill-category">
+                    <div class="category-header">
+                        <h3>微服务架构(Spring Cloud)</h3>
+                        <div class="category-icon">+</div>
+                    </div>
+                    <div class="category-details">
+                        <p>🍊深入理解Spring Cloud分布式微服务架构：微服务构建、客户端负载均衡、服务治理、服务容错保护、声明式服务调用、API网关服务、分布式配置中心、消息总线、消息驱动、分布式服务追踪、分布式事务、流量控制。研究过Alibaba Nacos注册中心源码、 Sentinel规则持久化源码、分布式事务组件Seata内核源码。</p>
+                    </div>
+                </div>
+
+                <!-- 分布式协调服务 -->
+                <div class="skill-category">
+                    <div class="category-header">
+                        <h3>分布式协调服务(Zookeeper)</h3>
+                        <div class="category-icon">+</div>
+                    </div>
+                    <div class="category-details">
+                        <p>🍊深入理解Zookeeper：特性与节点数据类型、典型使用场景、选举Leader源码、集群ZAB协议与Watcher监听机制源码等。</p>
+                    </div>
+                </div>
+
+                <!-- 搜索引擎 -->
+                <div class="skill-category">
+                    <div class="category-header">
+                        <h3>搜索引擎(ElasticSearch)</h3>
+                        <div class="category-icon">+</div>
+                    </div>
+                    <div class="category-details">
+                        <p>🍊深入理解ElasticSearch：核心语法、倒排索引、底层原理与分组聚合查询、具备集群高可用实战经验、集群架构原理与搜索技术深入、Java API整合ElasticSearch以及Logstash、FileBeat使用等。</p>
+                    </div>
+                </div>
+
+                <!-- NoSQL数据库 -->
+                <div class="skill-category">
+                    <div class="category-header">
+                        <h3>NoSQL数据库(MongoDB)</h3>
+                        <div class="category-icon">+</div>
+                    </div>
+                    <div class="category-details">
+                        <p>🍊深入理解MongoDB：基本原理、聚合操作及索引底层原理、集群模式及应用实战。</p>
+                    </div>
+                </div>
+
+                <!-- 大数据技术 -->
+                <div class="skill-category">
+                    <div class="category-header">
+                        <h3>大数据技术栈</h3>
+                        <div class="category-icon">+</div>
+                    </div>
+                    <div class="category-details">
+                        <p>🍊熟练使用Apache Spark作为基于内存计算的大数据分析引擎用于批处理、交互式查询。ETL工具将数据源抽取到HDFS作为高可靠、高吞吐量的分布式文件系统存储，通过Hive清洗、处理和计算原始数据，Hive清洗处理后的结果，将存入Hbase，海量数据随机查询场景从HBase查询数据。</p>
+                    </div>
+                </div>
+
+                <!-- 高性能IO -->
+                <div class="skill-category">
+                    <div class="category-header">
+                        <h3>高性能IO与通信</h3>
+                        <div class="category-icon">+</div>
+                    </div>
+                    <div class="category-details">
+                        <p>🍊深入理解各种高性能IO通信模型以及Netty底层数据交互源码、理解NIO与Netty线程模型有过深入研究、深入Hotspot源码与Linux内核、熟悉百万级并发服务器架构的设计。</p>
+                    </div>
+                </div>
+
+                <!-- 设计模式 -->
+                <div class="skill-category">
+                    <div class="category-header">
+                        <h3>设计模式实践</h3>
+                        <div class="category-icon">+</div>
+                    </div>
+                    <div class="category-details">
+                        <p>🍊熟练使用设计模式： 不同营销策略的切换场景：策略模式； 对象的创建和管理场景：工厂模式； 奖励分配和活动参与场景：责任链模式； 实时消息推送、互动交流场景：发布-订阅模式； 用户的行为响应和推送通知功能场景：观察者模式； 支付场景：策略模式 + 工厂模式 + 门面模式 + 单例模式； 业务投放场景：责任链模式； 平台积分红包发放场景：装饰者模式； 订单状态场景：状态模式+观察者模式； 开具增值税发票场景： 建造者模式 + 原型模式； 商品多级分类目录场景：组合模式+访问者模式； 记录核心审计日志场景： 模板方法模式； 查询 ElasticSearch大量数据场景：迭代器模式；</p>
+                    </div>
+                </div>
+
+                <!-- 容器与云原生 -->
+                <div class="skill-category">
+                    <div class="category-header">
+                        <h3>容器与云原生</h3>
+                        <div class="category-icon">+</div>
+                    </div>
+                    <div class="category-details">
+                        <p>🍊深入理解Kubernetes系统原理、核心资源、Pod原理与创建及生命周期管理、Job、Cronjob and Statefulset、Service负载均衡Ingress、Service Mesh发展历程及Istio架构、存储供应使用NFSflexvolumeCSI接口、Configmap、SecretMetric service及HPA、Wordpress应用Mysql主从PVPVCSCHPA、 部署Shardingsphere、Mycat、Mysql、Redis、中间件Rocketmq、Rabbitmq、Nacos、测试生产环境整体部署及全链路测试、自动化运维平台Jenkins与Devops环境搭建、Devops自动化Jenkins上Pipeline建立和使用与部署、Bookinginfo实例部署灰度发布故障注入流量、gateway和serviceentry使用、SDS认证授权等使用、 Kiali、prometheus、grafana和ELK系统、Knative Servina、Knative Eventing 核心概念及Broker、Channel and Trigger使用、Kubesphere 云平台使用、具备两地三中心与三地五中心容灾架构实战经验。</p>
+                    </div>
+                </div>
+
+                <!-- 项目管理与架构设计 -->
+                <div class="skill-category">
+                    <div class="category-header">
+                        <h3>项目管理与架构设计</h3>
+                        <div class="category-icon">+</div>
+                    </div>
+                    <div class="category-details">
+                        <p>🍊能独立或带领团队Java工程师成员完成服务端代码的研发工作，结合业务需求给出合理的技术解决方案，改进现有模块功能，提高系统的可扩展性，封装性，稳定性。深入挖掘业务需求，可0-1设计高可用、高并发、高伸缩的分布式项目架构，环境搭建、自动化部署、服务器环境线上排查、性能评估相关经验。 具备Linux常用命令、Docker容器化、本地镜像仓库、GitLab私服、Jenkins自动化部署等技术。</p>
+                        <p>🍊拥有产品需求讨论、项目开发计划制定、控制项目风险、负责技术小组日常管理工作、进度检验与管理、任务分配、Code审查、负责指导、培训普通开发工程师、代码review、审核开发工程师的设计与研发质量等经验。具备需求分析、文档编写、原型设计等基本的文档输出能力。</p>
+                    </div>
+                </div>
+            </div>
         </section>
-<!--        &lt;!&ndash; 生活技能 &ndash;&gt;
-        <section class="work info-unit">
-            <h2>
-                <i class="fa fa-pencil" aria-hidden="true"></i>生活技能</h2>
-            <hr/>
-            <ul>
-                <li>
-                    <p>🎉可以做几道拿手菜：番茄炒鸡蛋、红萝卜丝炒肉、水煮白菜等</p>
-                </li>
-                <li>
-                    <p>🎉会做一些家务：洗衣做饭、打扫卫生、收拾房间、倒垃圾、换窗帘等</p>
-                </li>
-                <li>
-                    <p>🎉懂一些基本的法律常识：曾得到过劳动赔偿4W</p>
-                </li>
-                <li>
-                    <p>🎉懂一些基本的电脑操作知识：程序员肯定懂一点啦</p>
-                </li>
-                <li>
-                    <p>🎉懂一些正确的生活常识：正常人基本都会懂一点</p>
-                </li>
-                <li>
-                    <p>🎉懂一些紧急情况下的逃生、求生知识</p>
-                </li>
-                <li>
-                    <p>🎉懂一点心理学的知识：博弈论</p>
-                </li>
-                <li>
-                    <p>🎉懂一些正确的理财常识：基金相关的</p>
-                </li>
-                <li>
-                    <p>🎉能够高效的在网上找资源：搜商还是具备滴</p>
-                </li>
-                <li>
-                    <p>🎉有自己的兴趣爱好：一直都有自己的事情可以做</p>
-                </li>
-                <li>
-                    <p>🎉保持积极向上生活态度</p>
-                </li>
-                <li>
-                    <p>🎉能够定期做总结和规划</p>
-                </li>
-            </ul>
-        </section>-->
+
+
 	<!-- 副业思路 -->
-        <section class="work info-unit">
+        <section class="work info-unit card">
             <h2>
                 <i class="fa fa-pencil" aria-hidden="true"></i>副业思路</h2>
             <hr/>
@@ -520,12 +1708,13 @@
                     <p>🌎思路9：钱生钱，每个月都去存大额银行存单，复利模式，稳健为主。</p>
                 </li>
 		        <li>
-                    <p>🌎思路10：利用AI工具大幅度提高工作效率，雇佣员工使用AI工具大批量的创作，获取收益赚钱。</p>
+                    <p>🌎思路10：利用AI工具大幅度提高工作效率，雇佣员工使用AI工具大批量的创作，获取收益赚钱。例如通过AI大模型生成文章内容，定时任务跑自动发文章获取流量，文章开头给上付费课程链接，后面只要提升转化率，就可以有收益了。</p>
                 </li>
             </ul>
         </section>
+
         <!-- 持续计划 -->
-        <section class="work info-unit">
+        <section class="work info-unit card">
             <h2>
                 <i class="fa fa-pencil" aria-hidden="true"></i>持续计划</h2>
             <hr/>
@@ -562,37 +1751,9 @@
                 </li>
             </ul>
         </section>
-        <!-- 未达成的目标 -->
-        <section class="work info-unit">
-            <h2>
-                <i class="fa fa-pencil" aria-hidden="true"></i>未达成的目标</h2>
-            <hr/>
-            <ul>
-                <li>
-                    <p>🍊CSDN全站排名前一百名（最靠近的一次是121名）</p>
-                </li>
-                <li>
-                    <p>🍊APP研发成功（研发中）</p>
-                </li>
-                <li>
-                    <p>🍊还清房贷（还有三十多万要还）</p>
-                </li>
-                <li>
-                    <p>🍊娶个媳妇生个娃（单身状态）</p>
-                </li>
-                <li>
-                    <p>🍊实现个人财富自由（计划35岁躺平）</p>
-                </li>
-                <li>
-                    <p>🍊眼里有光（发现生活的美）</p>
-                </li>
-                <li>
-                    <p>🍊八块腹肌（腹肌太难练了）</p>
-                </li>
-            </ul>
-        </section>
-<!--        &lt;!&ndash; 自我评价 &ndash;&gt;
-        <section class="contact info-unit">
+
+        <!-- 自我评价 -->
+        <section class="contact info-unit card">
             <h2>
                 <i class="fa fa-pencil" aria-hidden="true"></i>自我评价/期望</h2>
             <hr/>
@@ -617,8 +1778,9 @@
                 </li>
             </ul>
         </section>
-        &lt;!&ndash; 兴趣爱好 &ndash;&gt;
-        <section class="contact info-unit">
+
+        <!-- 兴趣爱好 -->
+        <section class="contact info-unit card">
             <h2>
                 <i class="fa fa-pencil" aria-hidden="true"></i>兴趣爱好</h2>
             <hr/>
@@ -643,55 +1805,85 @@
                 </li>
             </ul>
         </section>
-        &lt;!&ndash; 三观 &ndash;&gt;
-        <section class="contact info-unit">
+
+        <!-- 已达成的目标 -->
+        <section class="work info-unit card">
             <h2>
-                <i class="fa fa-pencil" aria-hidden="true"></i>消费观/关系观/生活观/恋爱观/婚姻观/人生观/世界观</h2>
+                <i class="fa fa-trophy" aria-hidden="true"></i>已达成的目标</h2>
             <hr/>
-            <ul>
-                <li>
-                    <p>🔥消费观：衡量消费是否值得，搬了几次家发现没用的东西太多了。</p>
-                </li>
-                <li>
-                    <p>🔥关系观：不太喜欢恋爱对方的边界不清、对待领导同事朋友也会保持一定边界。</p>
-                </li>
-                <li>
-                    <p>🔥生活观：佛系，理性不失感性，擅长规划总结。不喜欢争吵、不喜欢持续散播负面能量的人、视频、文章、小说等。</p>
-                </li>
-                <li>
-                    <p>🔥恋爱观：双方能进行有效的沟通、知足、善良、乐观、情绪稳定、通情达理。</p>
-                </li>
-                <li>
-                    <p>🔥婚姻观：结婚的对象一定是因为喜欢才在一起的，能陪你走到最后的才是对的人，而她一定在我的规划里。</p>
-                </li>
-                <li>
-                    <p>🔥人生观：人生在世总要留下些东西，证明自己来过一趟、自由无拘束、洒脱自在。人生苦短，也要让自己开开心心的。</p>
-                </li>
-                <li>
-                    <p>🔥世界观：这个世界有太多令人愤怒却无力改变的事情，而我能做的则是在能力范围内改变一些事情，让自己变得开心。</p>
-                </li>
-            </ul>
-        </section>-->
-        <!--				<section class="contact info-unit" style="width:100%; height:4000px;">-->
-        <!--                    <h2>-->
-        <!--                        <i class="fa fa-pencil" aria-hidden="true"></i>简历模板(PC端在线浏览，移动端需文件下载浏览)</h2>-->
-        <!--                    <hr/>-->
-        <!--                    <iframe src="廖志伟_本科_Java开发_六年_离职__17717299170-简历模板.pdf" id="iframepage" scrolling="no" onload="windowSize()" style="width:100%; height:100%;"></iframe>-->
-        <!--                </section>-->
+
+            <!-- 实时数据统计区域 -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa fa-file-text-o"></i></div>
+                    <div class="stat-content">
+                        <h3>文章创作</h3>
+                        <div class="stat-value" id="articleCount">0</div>
+                        <div class="stat-label">篇</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa fa-eye"></i></div>
+                    <div class="stat-content">
+                        <h3>文章访问量</h3>
+                        <div class="stat-value" id="viewCount">0</div>
+                        <div class="stat-label">次</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa fa-star-o"></i></div>
+                    <div class="stat-content">
+                        <h3>文章收藏</h3>
+                        <div class="stat-value" id="favoriteCount">0</div>
+                        <div class="stat-label">次</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa fa-comment-o"></i></div>
+                    <div class="stat-content">
+                        <h3>文章评论</h3>
+                        <div class="stat-value" id="commentCount">0</div>
+                        <div class="stat-label">次</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa fa-thumbs-o-up"></i></div>
+                    <div class="stat-content">
+                        <h3>文章点赞</h3>
+                        <div class="stat-value" id="likeCount">0</div>
+                        <div class="stat-label">次</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="data-source">
+                <p>数据来源: <a href="https://blog.csdn.net/java_wxid" target="_blank">CSDN博客</a></p>
+            </div>
+        </section>
+
     </section>
 </article>
-        <footer class="footer">
-            <p>© 2025 廖志伟.文档最后更新时间为
-                <time>2025年3月04日</time>.</p>
-        </footer>
-        <!-- 侧栏 -->
-        <aside>
-            <ul>
-                <li>
-                    <a href="https://www.liaozhiwei.cn/" target="_blank">个人主页</a>
-                </li>
-            </ul>
-        </aside>
-        <script src="./assets/js/index.js"></script>
-    </body>
+
+<!-- 背景粒子效果 -->
+<canvas id="particlesCanvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1;"></canvas>
+
+<footer class="footer">
+    <p>© 2025 廖志伟.文档最后更新时间为
+        <time>2025年9月20日</time>.</p>
+</footer>
+
+<aside>
+    <ul>
+        <li>
+            <a href="https://www.liaozhiwei.cn/" target="_blank">个人主页</a>
+        </li>
+    </ul>
+</aside>
+
+<script src="./assets/js/index.js"></script>
+</body>
 </html>
