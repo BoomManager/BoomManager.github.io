@@ -407,7 +407,7 @@
             <li class="toc-item" data-target="持续计划">持续计划</li>
             <li class="toc-item" data-target="自我评价/期望">自我评价</li>
             <li class="toc-item" data-target="兴趣爱好">兴趣爱好</li>
-            <li class="toc-item" data-target="已达成的目标">已达成目标</li>
+            <li class="toc-item" data-target="写文成果">写文成果</li>
         </ul>
     </div>
 
@@ -434,6 +434,30 @@
                 min-height: 100vh;
                 margin: 0;
                 padding: 0;
+            }
+            .category-header h3 {
+                margin: 0;
+                font-size: 16px;
+                color: #333;
+                transition: all 0.3s ease;
+            }
+
+            /* 新增：技能分类图标样式 */
+            .category-header h3 i {
+                margin-right: 8px;
+                transition: transform 0.3s ease;
+            }
+
+            /* 新增：悬浮时图标旋转效果 */
+            .skill-category:hover .category-header h3 i {
+                transform: rotate(15deg);
+            }
+
+            .category-icon {
+                font-size: 18px;
+                font-weight: bold;
+                transition: transform 0.3s ease;
+                color: #1abc9c;
             }
 
             /* 滚动条样式 */
@@ -1390,11 +1414,12 @@
                 </div>
 
                 <div class="achievement-card">
-                    <div class="achievement-icon"><i class="fa fa-running"></i></div>
+                    <div class="achievement-icon"><i class="fa fa-bolt"></i></div>
                     <div class="achievement-content">
                         <p>跑过十五公里、徒步爬过衡山</p>
                     </div>
                 </div>
+
 
                 <div class="achievement-card">
                     <div class="achievement-icon"><i class="fa fa-balance-scale"></i></div>
@@ -1537,6 +1562,7 @@
             <hr/>
             <ul>
                 <li>
+		            <i class="fa fa-user-circle" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
 		            <span>
                             我是廖志伟，一名Java资深开发工程师、Java领域优质创作者、CSDN博客专家、51CTO专家博主、幕后大佬社区创始人、开源导航与开源项目贡献者、哔哩哔哩UP主等头衔。
                             拥有多年一线研发经验，参与并主导过多个互联网产品研发和系统架构搭建，研究过主流框架的底层源码(Spring、SpringBoot、Spring MVC、SpringCloud、Mybatis、Dubbo、Zookeeper)，
@@ -1545,31 +1571,37 @@
                     </span>
                 </li>
                 <li>
+		            <i class="fa fa-sitemap" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
 		            <span>
                              主导网站/APP服务器端核心架构设计，基于微服务架构落地系统分层（业务层、服务层、数据层）。
                     </span>
                 </li>
                 <li>
+		            <i class="fa fa-cloud" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
 		            <span>
                              有阿里云/腾讯云/AWS部署经验，部署过高并发可伸缩的多节点大集群项目、有全球化多地域多活部署经验。
                     </span>
                 </li>
                 <li>
+		            <i class="fa fa-list-alt" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
 		            <span>
                              制定团队技术规范（如代码规范、接口文档规范、数据库设计规范），代码Review指导初级开发提升技术能力。
                     </span>
                 </li>
                 <li>
+		            <i class="fa fa-file-text" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
 		            <span>
                              输出架构设计文档（含技术选型、模块划分、接口定义、容错方案），确保架构满足高可用（99.99% SLA）、高并发（峰值QPS≥100000）、可扩展（支持业务模块弹性扩缩容）要求。
                     </span>
                 </li>
                 <li>
+		            <i class="fa fa-cogs" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
 		            <span>
                              主导核心系统的测试方案设计（含单元测试、集成测试、压力测试），配置自动化部署CI/CD流程（GitLab+Jenkins），
 编写自动化部署Shell脚本，保障系统灰度发布与全量上线零故障
                 </li>
                 <li>
+		            <i class="fa fa-wrench" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
 		            <span>
                              牵头解决研发过程中的核心技术难点，包括但不限于：高并发下的接口响应延迟优化（目标RT≤100ms）、数据库与缓存
 一致性保障、数据库慢查询优化（SQL执行效率提升50%以上）、系统安全防护（防SQL注入、XSS攻击、接口鉴权）、设
@@ -1589,7 +1621,7 @@
                 <!-- Java基础与底层 -->
                 <div class="skill-category">
                     <div class="category-header">
-                        <h3>Java基础与底层原理</h3>
+                        <h3><i class="fa fa-coffee"></i> Java基础与底层原理</h3>
                         <div class="category-icon">+</div>
                     </div>
                     <div class="category-details">
@@ -1600,7 +1632,7 @@
                 <!-- 数据结构与算法 -->
                 <div class="skill-category">
                     <div class="category-header">
-                        <h3>数据结构与算法</h3>
+                        <h3><i class="fa fa-sitemap"></i> 数据结构与算法</h3>
                         <div class="category-icon">+</div>
                     </div>
                     <div class="category-details">
@@ -1611,7 +1643,7 @@
                 <!-- JVM与性能调优 -->
                 <div class="skill-category">
                     <div class="category-header">
-                        <h3>JVM与性能调优</h3>
+                        <h3><i class="fa fa-tachometer"></i> JVM与性能调优</h3>
                         <div class="category-icon">+</div>
                     </div>
                     <div class="category-details">
@@ -1622,7 +1654,7 @@
                 <!-- 并发编程 -->
                 <div class="skill-category">
                     <div class="category-header">
-                        <h3>并发编程</h3>
+                        <h3><i class="fa fa-code-fork"></i> 并发编程</h3>
                         <div class="category-icon">+</div>
                     </div>
                     <div class="category-details">
@@ -1630,10 +1662,10 @@
                     </div>
                 </div>
 
-                <!-- Web容器与网络 -->
+                <!-- Web容器与网络编程 -->
                 <div class="skill-category">
                     <div class="category-header">
-                        <h3>Web容器与网络编程</h3>
+                        <h3><i class="fa fa-server"></i> Web容器与网络编程</h3>
                         <div class="category-icon">+</div>
                     </div>
                     <div class="category-details">
@@ -1644,7 +1676,7 @@
                 <!-- MySQL数据库 -->
                 <div class="skill-category">
                     <div class="category-header">
-                        <h3>关系型数据库(MySQL)</h3>
+                        <h3><i class="fa fa-database"></i> 关系型数据库(MySQL)</h3>
                         <div class="category-icon">+</div>
                     </div>
                     <div class="category-details">
@@ -1655,7 +1687,7 @@
                 <!-- Redis缓存 -->
                 <div class="skill-category">
                     <div class="category-header">
-                        <h3>缓存技术(Redis)</h3>
+                        <h3><i class="fa fa-bolt"></i> 缓存技术(Redis)</h3>
                         <div class="category-icon">+</div>
                     </div>
                     <div class="category-details">
@@ -1666,7 +1698,7 @@
                 <!-- 消息中间件 -->
                 <div class="skill-category">
                     <div class="category-header">
-                        <h3>消息中间件</h3>
+                        <h3><i class="fa fa-exchange"></i> 消息中间件</h3>
                         <div class="category-icon">+</div>
                     </div>
                     <div class="category-details">
@@ -1674,10 +1706,10 @@
                     </div>
                 </div>
 
-                <!-- Spring生态 -->
+                <!-- 主流框架(Spring生态) -->
                 <div class="skill-category">
                     <div class="category-header">
-                        <h3>主流框架(Spring生态)</h3>
+                        <h3><i class="fa fa-leaf"></i> 主流框架(Spring生态)</h3>
                         <div class="category-icon">+</div>
                     </div>
                     <div class="category-details">
@@ -1685,10 +1717,10 @@
                     </div>
                 </div>
 
-                <!-- 微服务架构 -->
+                <!-- 微服务架构(Spring Cloud) -->
                 <div class="skill-category">
                     <div class="category-header">
-                        <h3>微服务架构(Spring Cloud)</h3>
+                        <h3><i class="fa fa-puzzle-piece"></i> 微服务架构(Spring Cloud)</h3>
                         <div class="category-icon">+</div>
                     </div>
                     <div class="category-details">
@@ -1696,10 +1728,10 @@
                     </div>
                 </div>
 
-                <!-- 分布式协调服务 -->
+                <!-- 分布式协调服务(Zookeeper) -->
                 <div class="skill-category">
                     <div class="category-header">
-                        <h3>分布式协调服务(Zookeeper)</h3>
+                        <h3><i class="fa fa-link"></i> 分布式协调服务(Zookeeper)</h3>
                         <div class="category-icon">+</div>
                     </div>
                     <div class="category-details">
@@ -1707,10 +1739,10 @@
                     </div>
                 </div>
 
-                <!-- 搜索引擎 -->
+                <!-- 搜索引擎(ElasticSearch) -->
                 <div class="skill-category">
                     <div class="category-header">
-                        <h3>搜索引擎(ElasticSearch)</h3>
+                        <h3><i class="fa fa-search"></i> 搜索引擎(ElasticSearch)</h3>
                         <div class="category-icon">+</div>
                     </div>
                     <div class="category-details">
@@ -1718,10 +1750,10 @@
                     </div>
                 </div>
 
-                <!-- NoSQL数据库 -->
+                <!-- NoSQL数据库(MongoDB) -->
                 <div class="skill-category">
                     <div class="category-header">
-                        <h3>NoSQL数据库(MongoDB)</h3>
+                        <h3><i class="fa fa-table"></i> NoSQL数据库(MongoDB)</h3>
                         <div class="category-icon">+</div>
                     </div>
                     <div class="category-details">
@@ -1729,10 +1761,10 @@
                     </div>
                 </div>
 
-                <!-- 大数据技术 -->
+                <!-- 大数据技术栈 -->
                 <div class="skill-category">
                     <div class="category-header">
-                        <h3>大数据技术栈</h3>
+                        <h3><i class="fa fa-bar-chart"></i> 大数据技术栈</h3>
                         <div class="category-icon">+</div>
                     </div>
                     <div class="category-details">
@@ -1740,10 +1772,10 @@
                     </div>
                 </div>
 
-                <!-- 高性能IO -->
+                <!-- 高性能IO与通信 -->
                 <div class="skill-category">
                     <div class="category-header">
-                        <h3>高性能IO与通信</h3>
+                        <h3><i class="fa fa-exchange"></i> 高性能IO与通信</h3>
                         <div class="category-icon">+</div>
                     </div>
                     <div class="category-details">
@@ -1751,10 +1783,10 @@
                     </div>
                 </div>
 
-                <!-- 设计模式 -->
+                <!-- 设计模式实践 -->
                 <div class="skill-category">
                     <div class="category-header">
-                        <h3>设计模式实践</h3>
+                        <h3><i class="fa fa-cubes"></i> 设计模式实践</h3>
                         <div class="category-icon">+</div>
                     </div>
                     <div class="category-details">
@@ -1765,7 +1797,7 @@
                 <!-- 容器与云原生 -->
                 <div class="skill-category">
                     <div class="category-header">
-                        <h3>容器与云原生</h3>
+                        <h3><i class="fa fa-cloud"></i> 容器与云原生</h3>
                         <div class="category-icon">+</div>
                     </div>
                     <div class="category-details">
@@ -1776,7 +1808,7 @@
                 <!-- 项目管理与架构设计 -->
                 <div class="skill-category">
                     <div class="category-header">
-                        <h3>项目管理与架构设计</h3>
+                        <h3><i class="fa fa-sitemap"></i> 项目管理与架构设计</h3>
                         <div class="category-icon">+</div>
                     </div>
                     <div class="category-details">
@@ -1787,42 +1819,51 @@
             </div>
         </section>
 
-
-	<!-- 副业思路 -->
+        <!-- 副业思路 -->
         <section class="work info-unit card">
             <h2>
                 <i class="fa fa-pencil" aria-hidden="true"></i>副业思路</h2>
             <hr/>
             <ul>
                 <li>
-                    <p>🌎思路1：开发一款APP，将开发APP的功能实现录制成课程，发布到自媒体平台中（图文视频推广)，引流推广吸引粉丝，可以卖课。等到APP核心功能开发完成之后，马上去申请软著，然后写高新技术企业材料，申请政府高兴企业补贴。</p>
+                    <i class="fa fa-code" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>思路1：开发一款APP，将开发APP的功能实现录制成课程，发布到自媒体平台中（图文视频推广)，引流推广吸引粉丝，可以卖课。等到APP核心功能开发完成之后，马上去申请软著，然后写高新技术企业材料，申请政府高兴企业补贴。</span>
                 </li>
                 <li>
-                    <p>🌎思路2：自媒体平台引流到自己的淘宝店铺、APP、私域，可以卖课程，也可以卖一些其他商品。去找一些比较便宜的货源，在自己的渠道里卖，前期选择一些低利润的商品让自己渠道火起来，后期再上架一些高利润的商品。</p>
+                    <i class="fa fa-shopping-cart" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>思路2：自媒体平台引流到自己的淘宝店铺、APP、私域，可以卖课程，也可以卖一些其他商品。去找一些比较便宜的货源，在自己的渠道里卖，前期选择一些低利润的商品让自己渠道火起来，后期再上架一些高利润的商品。</span>
                 </li>
                 <li>
-                    <p>🌎思路3：先在博客上写一些文章，练练手，同时吸引技术粉丝，达到一定程度后会有图书编辑找上门，找你写书，这个时候就需要你不断的写文章，修改文章，直到出版，出版后你的书不一定会大火，但是写过书的人会有一定知名度和权威性，至少百度词条你至少可以写个某书的作者吧，再者可以在简历上写你出版书籍和博客网站，提高自己的职业竞争力。</p>
+                    <i class="fa fa-file-text" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>思路3：先在博客上写一些文章，练练手，同时吸引技术粉丝，达到一定程度后会有图书编辑找上门，找你写书，这个时候就需要你不断的写文章，修改文章，直到出版，出版后你的书不一定会大火，但是写过书的人会有一定知名度和权威性，至少百度词条你至少可以写个某书的作者吧，再者可以在简历上写你出版书籍和博客网站，提高自己的职业竞争力。</span>
                 </li>
                 <li>
-                    <p>🌎思路4：走视频流量路线，选择受众面的渠道，拍一些大众用户都喜欢的东西，走高品质路线，多账号，多平台，发表作品。一开始没那么高的粉丝和流量，可以使用脚本做推广，收费的好像有一辞脚本，就是给你的视频引流。</p>
+                    <i class="fa fa-video-camera" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>思路4：走视频流量路线，选择受众面的渠道，拍一些大众用户都喜欢的东西，走高品质路线，多账号，多平台，发表作品。一开始没那么高的粉丝和流量，可以使用脚本做推广，收费的好像有一辞脚本，就是给你的视频引流。</span>
                 </li>
                 <li>
-                    <p>🌎思路5：写付费专栏文章，录制付费音频，付费视频在多平台投放。</p>
+                    <i class="fa fa-lock" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>思路5：写付费专栏文章，录制付费音频，付费视频在多平台投放。</span>
                 </li>
                 <li>
-                    <p>🌎思路6：搭建自动化流水线，将自己的时间精力抽离出来，通过自动化进行盈利。可以是软件层面的自动化调用接口输出文章，也可以是线下实体店由员工负责的流水线。</p>
+                    <i class="fa fa-cogs" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>思路6：搭建自动化流水线，将自己的时间精力抽离出来，通过自动化进行盈利。可以是软件层面的自动化调用接口输出文章，也可以是线下实体店由员工负责的流水线。</span>
                 </li>
 		        <li>
-                    <p>🌎思路7：做赋能平台，根据实际情况，搭建平台，给别人服务，平台可以是自己的微信群、公众号、APP、网站等，通过赋能别人做大做强。例如，相亲网站，求职平台等。</p>
+                    <i class="fa fa-globe" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>思路7：做赋能平台，根据实际情况，搭建平台，给别人服务，平台可以是自己的微信群、公众号、APP、网站等，通过赋能别人做大做强。例如，相亲网站，求职平台等。</span>
                 </li>
 		        <li>
-                    <p>🌎思路8：成为中间商，利用自身资源和信息差，赚取利润，例如，为一方提供服务的人找客户抽取提成或者赚差价等。</p>
+                    <i class="fa fa-exchange" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>思路8：成为中间商，利用自身资源和信息差，赚取利润，例如，为一方提供服务的人找客户抽取提成或者赚差价等。</span>
                 </li>
-		        <li>
-                    <p>🌎思路9：钱生钱，每个月都去存大额银行存单，复利模式，稳健为主。</p>
+                <li>
+                    <i class="fa fa-university" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>思路9：钱生钱，每个月都去存大额银行存单，复利模式，稳健为主。</span>
                 </li>
-		        <li>
-                    <p>🌎思路10：利用AI工具大幅度提高工作效率，雇佣员工使用AI工具大批量的创作，获取收益赚钱。例如通过AI大模型生成文章内容，定时任务跑自动发文章获取流量，文章开头给上付费课程链接，后面只要提升转化率，就可以有收益了。</p>
+                <li>
+                    <i class="fa fa-microchip" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>思路10：利用AI工具大幅度提高工作效率，雇佣员工使用AI工具大批量的创作，获取收益赚钱。例如通过AI大模型生成文章内容，定时任务跑自动发文章获取流量，文章开头给上付费课程链接，后面只要提升转化率，就可以有收益了。</span>
                 </li>
             </ul>
         </section>
@@ -1834,34 +1875,44 @@
             <hr/>
             <ul>
                 <li>
-                    <p>🌟资金情况：每周一次投资和消费总结</p>
+                    <i class="fa fa-money" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>资金情况：每周一次投资和消费总结</span>
                 </li>
                 <li>
-                    <p>🌟优质信息：每周看看在行、知识星球、微信公众号</p>
+                    <i class="fa fa-newspaper-o" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>优质信息：每周看看在行、知识星球、微信公众号</span>
                 </li>
                 <li>
-                    <p>🌟提前保养：养胃、养肝、养肾、健脾、护眼、护肤、护腰、护颈</p>
+                    <i class="fa fa-heartbeat" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>提前保养：养胃、养肝、养肾、健脾、护眼、护肤、护腰、护颈</span>
                 </li>
                 <li>
-                    <p>🌟持续输出：自媒体持续输出文字内容、视音频创作（视频课程、书籍章节）</p>
+                    <i class="fa fa-pencil-square-o" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>持续输出：自媒体持续输出文字内容、视音频创作（视频课程、书籍章节）</span>
                 </li>
                 <li>
-                    <p>🌟提升口才：多接触异性、多和高层次人群交流、提升眼界、学会沟通表达</p>
+                    <i class="fa fa-comments" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>提升口才：多接触异性、多和高层次人群交流、提升眼界、学会沟通表达</span>
                 </li>
                 <li>
-                    <p>🌟编码加强：整理出版的书籍代码、持续研发软件（提升编码能力、打造独立平台）</p>
+                    <i class="fa fa-code" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>编码加强：整理出版的书籍代码、持续研发软件（提升编码能力、打造独立平台）</span>
                 </li>
                 <li>
-                    <p>🌟兴趣爱好：辩论、摄影、剪辑、演讲、唱歌、绘画、街舞、篮球、乒乓球、羽毛球</p>
+                    <i class="fa fa-smile-o" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>兴趣爱好：辩论、摄影、剪辑、演讲、唱歌、绘画、街舞、篮球、乒乓球、羽毛球</span>
                 </li>
                 <li>
-                    <p>🌟锻炼身体：早起跑步/燃脂运动减脂、晚上练腹肌、胸肌、肱二头肌、练腰、练核心力量、练握力、练腕力</p>
+                    <i class="fa fa-fire" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>锻炼身体：早起跑步/燃脂运动减脂、晚上练腹肌、胸肌、肱二头肌、练腰、练核心力量、练握力、练腕力</span>
                 </li>
                 <li>
-                    <p>🌟自律人生：戒断视频、游戏、小说、躺在床上不玩手机、睡觉前总结和冥想（提升注意力、专注度）</p>
+                    <i class="fa fa-check-square-o" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>自律人生：戒断视频、游戏、小说、躺在床上不玩手机、睡觉前总结和冥想（提升注意力、专注度）</span>
                 </li>
                 <li>
-                    <p>🌟增强能力：提升专业知识、熟练职业技能、持续总结面试题、英语词汇、学习数据结构和算法（提升逻辑思维）</p>
+                    <i class="fa fa-graduation-cap" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>增强能力：提升专业知识、熟练职业技能、持续总结面试题、英语词汇、学习数据结构和算法（提升逻辑思维）</span>
                 </li>
             </ul>
         </section>
@@ -1873,22 +1924,28 @@
             <hr/>
             <ul>
                 <li>
-                    <p>🎉有良好的沟通，团队协作能力，工作主动，耐心强，责任心、执行力及抗压性强。</p>
+                    <i class="fa fa-users" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>有良好的沟通，团队协作能力，工作主动，耐心强，责任心、执行力及抗压性强。</span>
                 </li>
                 <li>
-                    <p>🎉自律，爱学习，认真，有目标感，有使命感，努力，上进，主人翁意识。</p>
+                    <i class="fa fa-graduation-cap" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>自律，爱学习，认真，有目标感，有使命感，努力，上进，主人翁意识。</span>
                 </li>
                 <li>
-                    <p>🎉为人诚恳，待人真诚，以更包容开放的心态，观人、待事、接物。</p>
+                    <i class="fa fa-handshake-o" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>为人诚恳，待人真诚，以更包容开放的心态，观人、待事、接物。</span>
                 </li>
                 <li>
-                    <p>🎉懂得克制自己，学会掌控人性里的欲望，抵得住花花世界的诱惑。</p>
+                    <i class="fa fa-balance-scale" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>懂得克制自己，学会掌控人性里的欲望，抵得住花花世界的诱惑。</span>
                 </li>
                 <li>
-                    <p>🎉不把时间浪费在无意义的社交上，不把精力消耗在无关紧要的人身上。</p>
+                    <i class="fa fa-bullseye" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>不把时间浪费在无意义的社交上，不把精力消耗在无关紧要的人身上。</span>
                 </li>
                 <li>
-                    <p>🎉勇于面对困难，迎接挑战，乐于学习新的知识，并对未来有充足的信心。</p>
+                    <i class="fa fa-rocket" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>勇于面对困难，迎接挑战，乐于学习新的知识，并对未来有充足的信心。</span>
                 </li>
             </ul>
         </section>
@@ -1900,30 +1957,36 @@
             <hr/>
             <ul>
                 <li>
-                    <p>🌥 喜欢的运动：乒乓球、篮球、羽毛球、跑步、健身</p>
+                    <i class="fa fa-futbol-o" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>喜欢的运动：乒乓球、篮球、羽毛球、跑步、健身</span>
                 </li>
                 <li>
-                    <p>🌥 喜欢的小说：斗罗大陆、三体、三寸人间、求魔</p>
+                    <i class="fa fa-book" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>喜欢的小说：斗罗大陆、三体、三寸人间、求魔</span>
                 </li>
                 <li>
-                    <p>🌥 喜欢的动漫：超神学院、秦时明月、画江湖、吞噬星空</p>
+                    <i class="fa fa-television" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>喜欢的动漫：超神学院、秦时明月、画江湖、吞噬星空</span>
                 </li>
                 <li>
-                    <p>🌥 喜欢的游戏：王者荣耀、QQ飞车、绝地求生、部落冲突</p>
+                    <i class="fa fa-gamepad" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>喜欢的游戏：王者荣耀、QQ飞车、绝地求生、部落冲突</span>
                 </li>
                 <li>
-                    <p>🌥 喜欢的歌手：林俊杰、周杰伦、Taylor Swift、薛之谦</p>
+                    <i class="fa fa-music" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>喜欢的歌手：林俊杰、周杰伦、Taylor Swift、薛之谦</span>
                 </li>
                 <li>
-                    <p>🌥 喜欢的电影：漫威系列、DC系列、速度与激情系列、吸血鬼日记系列</p>
+                    <i class="fa fa-film" aria-hidden="true" style="margin-right: 8px; color: #1abc9c;"></i>
+                    <span>喜欢的电影：漫威系列、DC系列、速度与激情系列、吸血鬼日记系列</span>
                 </li>
             </ul>
         </section>
 
-        <!-- 已达成的目标 -->
+        <!-- 写文成果 -->
         <section class="work info-unit card">
             <h2>
-                <i class="fa fa-trophy" aria-hidden="true"></i>已达成的目标</h2>
+                <i class="fa fa-trophy" aria-hidden="true"></i>写文成果</h2>
             <hr/>
 
             <!-- 实时数据统计区域 -->
