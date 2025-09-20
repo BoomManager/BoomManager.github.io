@@ -67,15 +67,64 @@
                 });
             }
 
-            {{ edit_3 }}
-            // 移除点击事件，保留分类标题的鼠标样式提示
-            document.querySelectorAll('.category-header').forEach(header => {
-                // 仅保留鼠标样式提示，移除点击展开逻辑
-                header.style.cursor = 'pointer';
-            });
-            {{ edit_3 }}
+            // 目录导航功能 - 统一实现
+            function initTocNavigation() {
+                // 目录项点击事件 - 滚动到对应章节
+                const tocItems = document.querySelectorAll('.toc-item');
 
+                tocItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        const targetText = this.getAttribute('data-target');
+                        let targetElement = null;
 
+                        // 使用文本匹配查找目标章节（替代:contains选择器）
+                        document.querySelectorAll('.info-unit.card h2').forEach(h2 => {
+                            if (h2.textContent.trim() === targetText) {
+                                targetElement = h2.closest('.info-unit.card');
+                            }
+                        });
+
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80, // 偏移量，避免被固定元素遮挡
+                                behavior: 'smooth'
+                            });
+
+                            // 更新活跃状态
+                            tocItems.forEach(i => i.classList.remove('active'));
+                            this.classList.add('active');
+                        }
+                    });
+                });
+
+                // 滚动监听 - 自动高亮当前章节
+                window.addEventListener('scroll', function() {
+                    const sections = document.querySelectorAll('.info-unit.card');
+                    let currentSectionId = '';
+                    const scrollPosition = window.scrollY + 100; // 增加偏移量判断
+
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop;
+                        const sectionBottom = sectionTop + section.offsetHeight;
+
+                        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                            currentSectionId = section.querySelector('h2').textContent.trim();
+                        }
+                    });
+
+                    // 更新目录活跃状态
+                    tocItems.forEach(item => {
+                        if (item.getAttribute('data-target') === currentSectionId) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    });
+                });
+            }
+
+            // 初始化目录导航
+            initTocNavigation();
 
             // 导航目录功能
             document.querySelectorAll('.toc-item').forEach(item => {
@@ -237,6 +286,50 @@
 
         // 已达成目标 - 数据统计功能（纯模拟数据版）
         document.addEventListener('DOMContentLoaded', function() {
+            // 目录项点击事件 - 滚动到对应章节
+            const tocItems = document.querySelectorAll('.toc-item');
+            tocItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const targetElement = document.querySelector(`section:has(h2:contains('${targetId}'))`);
+
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80, // 偏移量，避免被固定元素遮挡
+                            behavior: 'smooth' // 平滑滚动
+                        });
+
+                        // 更新活跃状态
+                        tocItems.forEach(i => i.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
+            });
+
+            // 滚动监听 - 自动高亮当前章节
+            window.addEventListener('scroll', function() {
+                const sections = document.querySelectorAll('.info-unit.card');
+                let currentSectionId = '';
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.offsetHeight;
+                    if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                        const sectionTitle = section.querySelector('h2').textContent.trim();
+                        currentSectionId = sectionTitle;
+                    }
+                });
+
+                // 更新目录活跃状态
+                tocItems.forEach(item => {
+                    if (item.textContent.trim() === currentSectionId) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            });
+
             // 直接定义模拟数据
             const mockData = {
                 articleCount: 1452,  // 修正格式错误，使用正确数字
