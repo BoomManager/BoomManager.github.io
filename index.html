@@ -23,17 +23,39 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
 
+
         // 页面加载完成后执行
         document.addEventListener('DOMContentLoaded', function() {
-            // 检查图片是否存在
-            const avatarImg = document.querySelector('.avatar');
-            if (avatarImg) {
-                // 手动触发一次加载检查
-                if (avatarImg.complete) {
-                    avatarImg.style.display = 'block';
-                    avatarImg.previousElementSibling.style.display = 'none';
+            // 检查图片是否存在并优化加载
+            const avatarImgs = document.querySelectorAll('.avatar');
+            avatarImgs.forEach(img => {
+                // 创建新的Image对象来预加载图片
+                const newImg = new Image();
+                newImg.onload = function() {
+                    img.src = this.src;
+                    img.style.display = 'block';
+                    if (img.previousElementSibling) {
+                        img.previousElementSibling.style.display = 'none';
+                    }
+                };
+                newImg.onerror = function() {
+                    img.style.display = 'none';
+                    if (img.previousElementSibling) {
+                        img.previousElementSibling.innerHTML = '<i class=\'fa fa-exclamation-triangle fa-3x\' style=\'color: #e74c3c;\' aria-hidden=\'true\'></i>';
+                    }
+                };
+                // 开始预加载
+                newImg.src = img.src;
+
+                // 如果图片已经缓存，直接显示
+                if (img.complete && img.naturalWidth !== 0) {
+                    img.style.display = 'block';
+                    if (img.previousElementSibling) {
+                        img.previousElementSibling.style.display = 'none';
+                    }
                 }
-            }
+            });
+
             // 创建交叉观察器实例 - 用于卡片动画
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -130,6 +152,35 @@
             // 初始化目录导航
             initTocNavigation();
 
+            // 夜间模式切换功能
+            const themeSwitch = document.getElementById('themeSwitch');
+            const body = document.body;
+
+            // 检查本地存储或系统偏好设置
+            if (localStorage.getItem('theme') === 'dark' ||
+                (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                body.classList.add('dark-mode');
+                if (themeSwitch) {
+                    themeSwitch.innerHTML = '<i class="fa fa-sun-o" aria-hidden="true"></i>';
+                }
+            }
+
+            // 添加点击事件监听器
+            if (themeSwitch) {
+                themeSwitch.addEventListener('click', function() {
+                    body.classList.toggle('dark-mode');
+
+                    // 切换图标
+                    if (body.classList.contains('dark-mode')) {
+                        this.innerHTML = '<i class="fa fa-sun-o" aria-hidden="true"></i>';
+                        localStorage.setItem('theme', 'dark');
+                    } else {
+                        this.innerHTML = '<i class="fa fa-moon-o" aria-hidden="true"></i>';
+                        localStorage.setItem('theme', 'light');
+                    }
+                });
+            }
+
             // 导航目录功能
             document.querySelectorAll('.toc-item').forEach(item => {
                 item.addEventListener('click', function() {
@@ -186,18 +237,6 @@
             counters.forEach(counter => {
                 counterObserver.observe(counter);
             });
-
-            // 夜间模式切换
-            const themeSwitch = document.getElementById('themeSwitch');
-            const body = document.body;
-
-            if (localStorage.getItem('theme') === 'dark' ||
-                (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                body.classList.add('dark-mode');
-                themeSwitch.innerHTML = '<i class="fa fa-sun-o" aria-hidden="true"></i>';
-            }
-
-
 
             // 背景粒子效果
             const canvas = document.getElementById('particlesCanvas');
@@ -336,11 +375,11 @@
 
             // 直接定义模拟数据
             const mockData = {
-                articleCount: 1452,  // 修正格式错误，使用正确数字
-                viewCount: 1248400,   // 添加访问量数据
-                favoriteCount: 20170,
+                articleCount:1465,  // 修正格式错误，使用正确数字
+                viewCount: 2468110,   // 添加访问量数据
+                favoriteCount: 20424,
                 commentCount: 10959,
-                likeCount: 17049
+                likeCount: 17291
             };
 
             // 更新统计数据UI
@@ -410,6 +449,7 @@
             <li class="toc-item" data-target="写文成果">写文成果</li>
         </ul>
     </div>
+
 
 <header class="header"></header>
 
@@ -1288,8 +1328,12 @@
                     <label>邮箱</label>
                     <span>java_wxid@aliyun.com</span>
                 </li>
+                <li>
+                    <label>微信</label>
+                    <span>SenioRD</span>
+                </li>
             </ul>
-            <label>微信号</label>
+            <label>微信号二维码</label>
             <div class="image-container">
                 <div class="loading" style="display: flex; justify-content: center; align-items: center; height: 200px;">
                     <i class="fa fa-spinner fa-spin fa-3x" aria-hidden="true"></i>
@@ -2050,7 +2094,7 @@
 
 <footer class="footer">
     <p>© 2025 廖志伟.文档最后更新时间为
-        <time>2025年9月20日</time>.</p>
+        <time>2025年9月21日</time>.</p>
 </footer>
 
 <aside>
