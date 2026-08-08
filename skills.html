@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="renderer" content="webkit">
+    <meta name="apple-mobile-web-app-title" content="廖志伟" />
+
+    <!-- SEO Meta Tags -->
+    <title>职业技能 | 廖志伟 - Java资深开发工程师技术栈</title>
+    <meta name="description" content="廖志伟，Java资深开发工程师，18大技术领域技能栈完整解析。涵盖Java底层原理、JVM性能调优、并发编程AQS、MySQL索引优化、Redis分布式锁、消息中间件、Spring源码、Spring Cloud微服务、Kubernetes云原生等核心技术，附实际项目经验与源码研究。"/>
+    <meta name="keywords" content="廖志伟职业技能,Java技能栈,Spring源码,JVM调优,并发编程,AQS,MySQL优化,Redis缓存,消息中间件,Kafka,RocketMQ,RabbitMQ,微服务架构,Spring Cloud,Docker,Kubernetes,设计模式,大数据,Spark,HBase"/>
+    <meta name="author" content="廖志伟"/>
+    <meta name="robots" content="index, follow, max-image-preview:large"/>
+    <link rel="canonical" href="https://www.liaozhiwei.cn/skills.html"/>
+
+    <!-- hreflang 多语言 -->
+    <link rel="alternate" hreflang="zh-CN" href="https://www.liaozhiwei.cn/skills.html"/>
+    <link rel="alternate" hreflang="x-default" href="https://www.liaozhiwei.cn/skills.html"/>
+
+    <!-- GEO 地理位置元数据 -->
+    <meta name="geo.region" content="CN-SH"/>
+    <meta name="geo.placename" content="上海"/>
+    <meta name="geo.position" content="31.2304;121.4737"/>
+    <meta name="ICBM" content="31.2304, 121.4737"/>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website"/>
+    <meta property="og:title" content="职业技能 | 廖志伟 - Java资深开发工程师技术栈"/>
+    <meta property="og:description" content="Java资深开发工程师职业技能技术栈详解，涵盖Java基础、JVM调优、并发编程、MySQL优化、Redis缓存、消息中间件、Spring生态、微服务架构、容器云原生等核心技术领域。"/>
+    <meta property="og:url" content="https://www.liaozhiwei.cn/skills.html"/>
+    <meta property="og:image" content="https://www.liaozhiwei.cn/assets/images/avatar.jpg"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta property="og:image:alt" content="廖志伟职业技能技术栈"/>
+    <meta property="article:published_time" content="2026-08-08T00:00:00+08:00"/>
+    <meta property="article:modified_time" content="2026-08-08T00:00:00+08:00"/>
+    <meta property="article:author" content="廖志伟"/>
+    <meta property="article:section" content="职业技能"/>
+    <meta property="article:tag" content="Java,Spring,JVM,MySQL,Redis,微服务,Docker,Kubernetes"/>
+    <meta property="og:site_name" content="廖志伟个人主页"/>
+    <meta property="og:locale" content="zh_CN"/>
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="职业技能 | 廖志伟 - Java资深开发工程师技术栈"/>
+    <meta name="twitter:description" content="Java资深开发工程师职业技能技术栈详解，涵盖Java基础、JVM调优、并发编程、MySQL优化、Redis缓存、微服务架构等核心技术领域。"/>
+    <meta name="twitter:image" content="https://www.liaozhiwei.cn/assets/images/avatar.jpg"/>
+
+    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://blog.csdn.net">
+    <link rel="dns-prefetch" href="https://space.bilibili.com">
+    <link rel="dns-prefetch" href="https://gitee.com">
+    <link rel="preload" href="assets/css/common.css" as="style">
+    <link rel="preload" href="assets/js/common.js" as="script">
+    <!-- 预取其他页面 -->
+    <link rel="prefetch" href="index.html" as="document">
+    <link rel="prefetch" href="works.html" as="document">
+    <link rel="prefetch" href="business.html" as="document">
+    <link rel="stylesheet" href="assets/css/typo.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/common.css">
+
+    <!-- JSON-LD 结构化数据：面包屑导航 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "首页",
+            "item": "https://www.liaozhiwei.cn/"
+        }, {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "职业技能",
+            "item": "https://www.liaozhiwei.cn/skills.html"
+        }]
+    }
+    </script>
+
+    <!-- JSON-LD 结构化数据：技术文章 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "廖志伟职业技能技术栈详解",
+        "description": "Java资深开发工程师职业技能完整技术栈，涵盖18大技术领域",
+        "image": "https://www.liaozhiwei.cn/assets/images/avatar.jpg",
+        "datePublished": "2026-08-08",
+        "dateModified": "2026-08-08",
+        "author": {
+            "@type": "Person",
+            "name": "廖志伟",
+            "url": "https://www.liaozhiwei.cn/"
+        },
+        "publisher": {
+            "@type": "Person",
+            "name": "廖志伟",
+            "url": "https://www.liaozhiwei.cn/"
+        },
+        "about": ["Java", "Spring", "MySQL", "Redis", "微服务架构", "Docker", "Kubernetes"],
+        "proficiencyLevel": "Expert",
+        "dependencies": ["Java基础", "JVM", "并发编程", "MySQL", "Redis", "Spring生态", "微服务架构"],
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://www.liaozhiwei.cn/skills.html"
+        }
+    }
+    </script>
+
+    <!-- JSON-LD 结构化数据：技术资质认证 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "EducationalOccupationalCredential",
+        "name": "Java资深开发工程师技术认证",
+        "description": "具备Java全栈技术能力，包括JVM调优、并发编程、微服务架构、数据库优化等",
+        "credentialCategory": "Technical Skill",
+        "recognizedBy": {
+            "@type": "Organization",
+            "name": "CSDN"
+        },
+        "dateCreated": "2026-08-08"
+    }
+    </script>
+
+    <!-- JSON-LD 结构化数据：集合页面 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "职业技能技术栈",
+        "url": "https://www.liaozhiwei.cn/skills.html",
+        "description": "Java资深开发工程师18大技术领域技能详解",
+        "inLanguage": "zh-CN",
+        "isPartOf": {
+            "@id": "https://www.liaozhiwei.cn/#website"
+        },
+        "about": {
+            "@id": "https://www.liaozhiwei.cn/#person"
+        },
+        "mainEntity": {
+            "@type": "ItemList",
+            "name": "技术技能列表",
+            "numberOfItems": 18,
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Java基础与底层原理"},
+                {"@type": "ListItem", "position": 2, "name": "数据结构与算法"},
+                {"@type": "ListItem", "position": 3, "name": "JVM与性能调优"},
+                {"@type": "ListItem", "position": 4, "name": "并发编程"},
+                {"@type": "ListItem", "position": 5, "name": "Web容器与网络编程"},
+                {"@type": "ListItem", "position": 6, "name": "关系型数据库(MySQL)"},
+                {"@type": "ListItem", "position": 7, "name": "缓存技术(Redis)"},
+                {"@type": "ListItem", "position": 8, "name": "消息中间件"},
+                {"@type": "ListItem", "position": 9, "name": "主流框架(Spring生态)"},
+                {"@type": "ListItem", "position": 10, "name": "微服务架构(Spring Cloud)"},
+                {"@type": "ListItem", "position": 11, "name": "分布式协调服务(Zookeeper)"},
+                {"@type": "ListItem", "position": 12, "name": "搜索引擎(ElasticSearch)"},
+                {"@type": "ListItem", "position": 13, "name": "NoSQL数据库(MongoDB)"},
+                {"@type": "ListItem", "position": 14, "name": "大数据技术栈"},
+                {"@type": "ListItem", "position": 15, "name": "高性能IO与通信"},
+                {"@type": "ListItem", "position": 16, "name": "设计模式实践"},
+                {"@type": "ListItem", "position": 17, "name": "容器与云原生"},
+                {"@type": "ListItem", "position": 18, "name": "项目管理与架构设计"}
+            ]
+        }
+    }
+    </script>
+
+    <!-- JSON-LD 结构化数据：课程 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "Java资深开发工程师技术栈全解析",
+        "description": "涵盖Java基础、JVM调优、并发编程、MySQL、Redis、消息中间件、Spring生态、微服务架构等18大技术领域的完整技能体系",
+        "provider": {
+            "@type": "Person",
+            "name": "廖志伟",
+            "url": "https://www.liaozhiwei.cn/",
+            "sameAs": "https://blog.csdn.net/java_wxid"
+        },
+        "inLanguage": "zh-CN",
+        "educationalLevel": "高级",
+        "hasCourseInstance": {
+            "@type": "CourseInstance",
+            "courseMode": "Online",
+            "courseWorkload": "PT40H",
+            "instructor": {
+                "@type": "Person",
+                "name": "廖志伟"
+            }
+        },
+        "about": ["Java编程", "Spring框架", "微服务架构", "数据库优化", "容器云原生"],
+        "teaches": ["Java底层原理", "JVM性能调优", "并发编程", "MySQL优化", "Redis缓存", "消息中间件", "Spring源码", "Docker", "Kubernetes"]
+    }
+    </script>
+
+    <!-- JSON-LD 结构化数据：WebPage -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "职业技能 - 廖志伟Java技术栈",
+        "url": "https://www.liaozhiwei.cn/skills.html",
+        "description": "Java资深开发工程师18大技术领域技能详解",
+        "inLanguage": "zh-CN",
+        "isPartOf": {
+            "@id": "https://www.liaozhiwei.cn/#website"
+        },
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "首页", "item": "https://www.liaozhiwei.cn/"},
+                {"@type": "ListItem", "position": 2, "name": "职业技能", "item": "https://www.liaozhiwei.cn/skills.html"}
+            ]
+        }
+    }
+    </script>
+</head>
+
+<body>
+    <!-- 滚动进度条 -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- 鼠标跟随效果 -->
+    <div class="cursor-follower"></div>
+
+    <!-- 顶部导航栏 -->
+    <header>
+    <nav class="navbar" role="navigation" aria-label="主导航">
+        <a href="index.html" class="navbar-brand">
+            <i class="fa fa-code"></i> 廖志伟
+        </a>
+        <ul class="navbar-menu" id="navbarMenu">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="skills.html" class="active" aria-current="page">职业技能</a></li>
+            <li><a href="business.html">商业思维</a></li>
+            <li><a href="works.html">作品成果</a></li>
+            <li><a href="about.html">关于我</a></li>
+        </ul>
+        <div class="navbar-tools">
+            <div class="theme-switch" id="themeSwitch" role="button" aria-label="切换夜间模式" tabindex="0">
+                <i class="fa fa-moon-o" aria-hidden="true"></i>
+            </div>
+            <button class="navbar-toggle" id="navbarToggle" aria-label="打开菜单" aria-expanded="false">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 可视化面包屑导航 -->
+    <nav class="breadcrumb" role="navigation" aria-label="面包屑导航">
+        <ol>
+            <li><a href="index.html"><i class="fa fa-home"></i> 首页</a></li>
+            <li>职业技能</li>
+        </ol>
+    </nav>
+    </header>
+
+    <!-- 目录导航 -->
+    <div class="toc-container">
+        <div class="toc-title">目录导航</div>
+        <ul class="toc-list">
+            <li class="toc-item" data-target="职业技能">职业技能</li>
+            <li class="toc-item" data-target="相关内容推荐">相关推荐</li>
+        </ul>
+    </div>
+
+<div class="page-content">
+    <section class="work info-unit card">
+        <h2>
+            <i class="fa fa-pencil" aria-hidden="true"></i>职业技能</h2>
+        <hr/>
+
+        <div class="skill-categories">
+            <!-- Java基础与底层 -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3><i class="fa fa-coffee"></i> Java基础与底层原理</h3>
+                    <div class="category-icon">+</div>
+                </div>
+                <div class="category-details">
+                    <p>🍊具备扎实的Java基础，操作系统与虚拟机底层，CPU缓存一致性协议MESI、HTTP协议、TCPIP协议、OAUTH2协议、Fail-safe机制/Fail-fast机制、深拷贝和浅拷贝、伪共享、网络四元组。</p>
+                </div>
+            </div>
+
+            <!-- 数据结构与算法 -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3><i class="fa fa-sitemap"></i> 数据结构与算法</h3>
+                    <div class="category-icon">+</div>
+                </div>
+                <div class="category-details">
+                    <p>🍊熟悉数据结构：数组（BaseArray、Vector）、链表（ArrayList、LinkedList、DoubleLinkedList）、栈（ArrayStack、ListStack、LinkedListStack）、队列（Queue、PrioritQueue）、树论基础与二叉树、二叉搜索树与红黑树、Btree树、Trie树、赫夫曼树、堆树、图论基础、最短路径。 算法思想：排序算法（冒泡排序、选择排序、插入排序、希尔排序、归并排序、快速排序、计数排序、基数排序）、基础数论、枚举算法、递归算法、分治算法、回溯算法、贪心算法、动态规划、二分与HashMap、HashSet与TreeSet。</p>
+                </div>
+            </div>
+
+            <!-- JVM与性能调优 -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3><i class="fa fa-tachometer"></i> JVM与性能调优</h3>
+                    <div class="category-icon">+</div>
+                </div>
+                <div class="category-details">
+                    <p>🍊熟练掌握集合、JVM内存模型、内存屏障、happens-before和as-if-serial语义、类加载机制、双亲委派、垃圾回收算法、垃圾回收器、空间分配担保策略、安全点与安全区域、记忆集与卡表、JIT技术、可达性分析、强软弱虚引用、GC的过程、三色标记、跨代引用、逃逸分析、内存泄漏与溢出、 class文件结构、虚拟机字节码执行引擎、栈帧局部变量表、栈帧操作数栈、动态连接、方法返回地址、方法调用（解析与分派）、有过JVM线上调优、OOM异常排查经验。</p>
+                </div>
+            </div>
+
+            <!-- 并发编程 -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3><i class="fa fa-code-fork"></i> 并发编程</h3>
+                    <div class="category-icon">+</div>
+                </div>
+                <div class="category-details">
+                    <p>🍊深入理解Synchronized关键字，ThreadLocal，volatile关键字，线程的生命周期、CompletableFuture事件驱动异步回调、CountDownLatch&CyclicBarrier&Semaphore应用与原理，AtomicReference原子引用&AtomicInteger原子整型，CompareAndSwap底层原理， Executor线程池原理与源码、Lock锁的使用与原理。深入理解同步器AQS，阻塞队列BlockingQueue&非阻塞队列ConcurrentLinkedQueue&同步队列SyncQueue，Future&ForkJoin框架原理，无锁并发框架Disruptor等并发编程相关技术。</p>
+                </div>
+            </div>
+
+            <!-- Web容器与网络编程 -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3><i class="fa fa-server"></i> Web容器与网络编程</h3>
+                    <div class="category-icon">+</div>
+                </div>
+                <div class="category-details">
+                    <p>🍊深入理解Tomcat整体架构和处理请求流程，长连接的底层源码原理，底层分块传输和响应流程原理，NIO处理请求源码等性能优化相关技术。</p>
+                </div>
+            </div>
+
+            <!-- MySQL数据库 -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3><i class="fa fa-database"></i> 关系型数据库(MySQL)</h3>
+                    <div class="category-icon">+</div>
+                </div>
+                <div class="category-details">
+                    <p>🍊深入理解MySQL关系型数据库： InnoDB数据页结构、CheckPoint技术、AIO与刷新邻接页、行记录格式（Compact、Redundant、Compressed、Dynamic）、Named File Formats机制、表空间（段、区、页）、约束、视图、分区表、BufferPool缓存机制、filesort过程、离散读优化、 ICP优化、MRR优化、全文检索、行锁、表锁、间隙锁、死锁、主键自增长实现原理、索引数据结构、SQL优化、索引失效的几种情况、聚集索引、辅助索引、覆盖索引、联合索引、FIC、OSC、Online DDL、Cardinality值、redo log、bin log、undolog、Group Commint、隔离级别、 ACID底层实现原理、一致性非锁定读（MVCC的原理）、分布式事务、内部事务、SQL的执行流程、缓冲池、管理方式、重做日志刷盘策略、有MySQL调优、Apache ShardingSphere分库分表读写分离、主从复制工作原理、MySQL InnoDB Cluster高可用经验、冷备、热备、逻辑备。</p>
+                </div>
+            </div>
+
+            <!-- Redis缓存 -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3><i class="fa fa-bolt"></i> 缓存技术(Redis)</h3>
+                    <div class="category-icon">+</div>
+                </div>
+                <div class="category-details">
+                    <p>🍊深入理解Redis缓存： 多路复用模式、单线程模型、简单字符串、链表、字典、跳跃表、压缩列表、encoding属性编码、持久化、布隆过滤器、分布式寻址算法、过期策略、内存淘汰策略、Redis与数据库的数据一致性、Redis分布式锁、热点数据缓存、哨兵模式、集群模式、 多级缓存架构、并发竞争、主从架构等。 具有集群架构及高可用相关经验、熟悉各种缓存高并发的 使用场景如：缓存雪崩、缓存穿透、缓存失效。</p>
+                </div>
+            </div>
+
+            <!-- 消息中间件 -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3><i class="fa fa-exchange"></i> 消息中间件</h3>
+                    <div class="category-icon">+</div>
+                </div>
+                <div class="category-details">
+                    <p>🍊RabbitMQ、RocketMQ、Kafka 三种消息中间件出现的消息可靠投递、消息丢失、消息顺序性、消息延迟、过期失效、消息队列满了、消息高可用等问题的解决方案。RabbitMQ的工作模式，RocketMQ的消息类型，Kafka消费模式、主题/分区/日志、核心总控制器以及它的选举机制、 Partition副本选举Leader机制、消费者消费消息的offset记录机制、消费者Rebalance机制、Rebalance分区分配策略、Rebalance过程、 producer发布消息机制、HW与LEO、日志分段存储、十亿消息数据线上环境规划、JVM参数设置。</p>
+                </div>
+            </div>
+
+            <!-- 主流框架(Spring生态) -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3><i class="fa fa-leaf"></i> 主流框架(Spring生态)</h3>
+                    <div class="category-icon">+</div>
+                </div>
+                <div class="category-details">
+                    <p>🍊深入理解Spring、Spring MVC、Mybatis、Spring Boot、Dubbo等开源框架的设计原理以及底层架构、研究过Spring循环依赖源码、Spring容器启动过程源码、Spring事务源码、Bean生命周期源码、Spring事务底层实现原理、Ioc容器加载过程源码、 AOP底层实现、SpringMVC执行流程源码、Spring的自动装配、Spring Boot自动装配、MyBatis的数据过操作过程源码、SQL操作执行流程源码、配置文件解析源码、Spring Boot自动装配核心源码、Dubbo服务引入与导出以及调用源码。</p>
+                </div>
+            </div>
+
+            <!-- 微服务架构(Spring Cloud) -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3><i class="fa fa-puzzle-piece"></i> 微服务架构(Spring Cloud)</h3>
+                    <div class="category-icon">+</div>
+                </div>
+                <div class="category-details">
+                    <p>🍊深入理解Spring Cloud分布式微服务架构：微服务构建、客户端负载均衡、服务治理、服务容错保护、声明式服务调用、API网关服务、分布式配置中心、消息总线、消息驱动、分布式服务追踪、分布式事务、流量控制。研究过Alibaba Nacos注册中心源码、 Sentinel规则持久化源码、分布式事务组件Seata内核源码。</p>
+                </div>
+            </div>
+
+            <!-- 分布式协调服务(Zookeeper) -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3><i class="fa fa-link"></i> 分布式协调服务(Zookeeper)</h3>
+                    <div class="category-icon">+</div>
+                </div>
+                <div class="category-details">
+                    <p>🍊深入理解Zookeeper：特性与节点数据类型、典型使用场景、选举Leader源码、集群ZAB协议与Watcher监听机制源码等。</p>
+                </div>
+            </div>
+
+            <!-- 搜索引擎(ElasticSearch) -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3><i class="fa fa-search"></i> 搜索引擎(ElasticSearch)</h3>
+                    <div class="category-icon">+</div>
+                </div>
+                <div class="category-details">
+                    <p>🍊深入理解ElasticSearch：核心语法、倒排索引、底层原理与分组聚合查询、具备集群高可用实战经验、集群架构原理与搜索技术深入、Java API整合ElasticSearch以及Logstash、FileBeat使用等。</p>
+                </div>
+            </div>
+
+            <!-- NoSQL数据库(MongoDB) -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3><i class="fa fa-table"></i> NoSQL数据库(MongoDB)</h3>
+                    <div class="category-icon">+</div>
+                </div>
+                <div class="category-details">
+                    <p>🍊深入理解MongoDB：基本原理、聚合操作及索引底层原理、集群模式及应用实战。</p>
+                </div>
+            </div>
+
+            <!-- 大数据技术栈 -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3><i class="fa fa-bar-chart"></i> 大数据技术栈</h3>
+                    <div class="category-icon">+</div>
+                </div>
+                <div class="category-details">
+                    <p>🍊熟练使用Apache Spark作为基于内存计算的大数据分析引擎用于批处理、交互式查询。ETL工具将数据源抽取到HDFS作为高可靠、高吞吐量的分布式文件系统存储，通过Hive清洗、处理和计算原始数据，Hive清洗处理后的结果，将存入Hbase，海量数据随机查询场景从HBase查询数据。</p>
+                </div>
+            </div>
+
+            <!-- 高性能IO与通信 -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3><i class="fa fa-exchange"></i> 高性能IO与通信</h3>
+                    <div class="category-icon">+</div>
+                </div>
+                <div class="category-details">
+                    <p>🍊深入理解各种高性能IO通信模型以及Netty底层数据交互源码、理解NIO与Netty线程模型有过深入研究、深入Hotspot源码与Linux内核、熟悉百万级并发服务器架构的设计。</p>
+                </div>
+            </div>
+
+            <!-- 设计模式实践 -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3><i class="fa fa-cubes"></i> 设计模式实践</h3>
+                    <div class="category-icon">+</div>
+                </div>
+                <div class="category-details">
+                    <p>🍊熟练使用设计模式： 不同营销策略的切换场景：策略模式； 对象的创建和管理场景：工厂模式； 奖励分配和活动参与场景：责任链模式； 实时消息推送、互动交流场景：发布-订阅模式； 用户的行为响应和推送通知功能场景：观察者模式； 支付场景：策略模式 + 工厂模式 + 门面模式 + 单例模式； 业务投放场景：责任链模式； 平台积分红包发放场景：装饰者模式； 订单状态场景：状态模式+观察者模式； 开具增值税发票场景： 建造者模式 + 原型模式； 商品多级分类目录场景：组合模式+访问者模式； 记录核心审计日志场景： 模板方法模式； 查询 ElasticSearch大量数据场景：迭代器模式；</p>
+                </div>
+            </div>
+
+            <!-- 容器与云原生 -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3><i class="fa fa-cloud"></i> 容器与云原生</h3>
+                    <div class="category-icon">+</div>
+                </div>
+                <div class="category-details">
+                    <p>🍊深入理解Kubernetes系统原理、核心资源、Pod原理与创建及生命周期管理、Job、Cronjob and Statefulset、Service负载均衡Ingress、Service Mesh发展历程及Istio架构、存储供应使用NFSflexvolumeCSI接口、Configmap、SecretMetric service及HPA、Wordpress应用Mysql主从PVPVCSCHPA、 部署Shardingsphere、Mycat、Mysql、Redis、中间件Rocketmq、Rabbitmq、Nacos、测试生产环境整体部署及全链路测试、自动化运维平台Jenkins与Devops环境搭建、Devops自动化Jenkins上Pipeline建立和使用与部署、Bookinginfo实例部署灰度发布故障注入流量、gateway和serviceentry使用、SDS认证授权等使用、 Kiali、prometheus、grafana和ELK系统、Knative Servina、Knative Eventing 核心概念及Broker、Channel and Trigger使用、Kubesphere 云平台使用、具备两地三中心与三地五中心容灾架构实战经验。</p>
+                </div>
+            </div>
+
+            <!-- 项目管理与架构设计 -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3><i class="fa fa-sitemap"></i> 项目管理与架构设计</h3>
+                    <div class="category-icon">+</div>
+                </div>
+                <div class="category-details">
+                    <p>🍊能独立或带领团队Java工程师成员完成服务端代码的研发工作，结合业务需求给出合理的技术解决方案，改进现有模块功能，提高系统的可扩展性，封装性，稳定性。深入挖掘业务需求，可0-1设计高可用、高并发、高伸缩的分布式项目架构，环境搭建、自动化部署、服务器环境线上排查、性能评估相关经验。 具备Linux常用命令、Docker容器化、本地镜像仓库、GitLab私服、Jenkins自动化部署等技术。</p>
+                    <p>🍊拥有产品需求讨论、项目开发计划制定、控制项目风险、负责技术小组日常管理工作、进度检验与管理、任务分配、Code审查、负责指导、培训普通开发工程师、代码review、审核开发工程师的设计与研发质量等经验。具备需求分析、文档编写、原型设计等基本的文档输出能力。</p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+
+<!-- 背景粒子效果 -->
+<canvas id="particlesCanvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1;"></canvas>
+
+<!-- 相关内容推荐（SEO 内部链接） -->
+<section class="related-content" aria-label="相关内容推荐">
+    <div class="related-content-inner">
+        <h2><i class="fa fa-link" aria-hidden="true"></i> 相关内容推荐</h2>
+        <div class="page-entry-cards">
+            <a href="works.html" class="page-entry-card" rel="next">
+                <div class="entry-icon"><i class="fa fa-book"></i></div>
+                <div class="entry-title">作品成果</div>
+                <div class="entry-desc">Java项目实战系列图书，清华大学出版社出版</div>
+            </a>
+            <a href="business.html" class="page-entry-card" rel="next">
+                <div class="entry-icon"><i class="fa fa-line-chart"></i></div>
+                <div class="entry-title">商业思维</div>
+                <div class="entry-desc">副业思路与商业方法论，用户运营AARRR模型</div>
+            </a>
+            <a href="https://blog.csdn.net/java_wxid" class="page-entry-card" target="_blank" rel="noopener external">
+                <div class="entry-icon"><i class="fa fa-rss"></i></div>
+                <div class="entry-title">CSDN技术博客</div>
+                <div class="entry-desc">1900+篇Java技术文章，深入源码分析</div>
+            </a>
+            <a href="https://space.bilibili.com/353586723" class="page-entry-card" target="_blank" rel="noopener external">
+                <div class="entry-icon"><i class="fa fa-play-circle"></i></div>
+                <div class="entry-title">B站视频教程</div>
+                <div class="entry-desc">Java技术栈视频教程与实战演示</div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<footer class="footer" role="contentinfo">
+    <div class="footer-content">
+        <p>&copy; 2020-2026 廖志伟. 保留所有权利.</p>
+        <p>文档最后更新时间为 <time datetime="2026-08-08">2026年8月8日</time></p>
+        <nav class="footer-nav" aria-label="页脚导航">
+            <a href="index.html">首页</a> |
+            <a href="skills.html">职业技能</a> |
+            <a href="business.html">商业思维</a> |
+            <a href="works.html">作品成果</a> |
+            <a href="about.html">关于我</a> |
+            <a href="https://blog.csdn.net/java_wxid" target="_blank" rel="noopener">CSDN博客</a>
+        </nav>
+        <p class="footer-meta">
+            <i class="fa fa-map-marker" aria-hidden="true"></i> 上海, 中国 |
+            <i class="fa fa-envelope" aria-hidden="true"></i> java_wxid@aliyun.com |
+            <i class="fa fa-language" aria-hidden="true"></i> 中文(简体)
+        </p>
+    </div>
+</footer>
+
+<!-- 返回顶部按钮 -->
+<button id="backToTop" aria-label="返回顶部" title="返回顶部">
+    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+</button>
+<script src="assets/js/common.js"></script>
+</body>
+</html>
