@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 公共脚本 - 所有页面共用
  * 包含：主题切换、滚动进度条、粒子效果、图片预加载、卡片动画、移动端导航
  */
@@ -551,7 +551,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ===== 7. 数字增长动画 =====
+    
+    // ===== 侧边栏展开/收起（移动端，默认展开与PC一致） =====
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarDetails = document.getElementById('sidebarDetails');
+    if (sidebarToggle && sidebarDetails) {
+        sidebarToggle.addEventListener('click', () => {
+            const collapsed = document.body.classList.toggle('sidebar-collapsed');
+            sidebarToggle.setAttribute('aria-expanded', !collapsed);
+            const label = collapsed ? '查看更多信息与联系方式' : '收起详细信息';
+            sidebarToggle.querySelector('span').textContent = label;
+        });
+    }
+// ===== 7. 数字增长动画 =====
     const counters = document.querySelectorAll('.counter');
     const counterObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {

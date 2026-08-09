@@ -377,7 +377,7 @@ body:hover .cursor-follower {
 .container {
     display: flex;
     gap: 20px;
-    padding: 24px 20px 20px;
+    padding: 40px 20px 20px;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -1907,7 +1907,7 @@ body.dark-mode .navbar {
     /* Desktop: fully visible, no overflow restriction */
 }
 
-body.sidebar-expanded .sidebar-toggle i {
+body.sidebar-collapsed .sidebar-toggle i {
     transform: rotate(180deg);
 }
 
@@ -2027,7 +2027,7 @@ body.dark-mode .sidebar-toggle:hover {
 
     .container {
         flex-direction: column;
-        padding: 24px 15px 24px;
+        padding: 32px 15px 24px;
     }
 
     /* 移动端侧边栏移到主内容之后，避免遮挡主要内容 */
@@ -2040,20 +2040,20 @@ body.dark-mode .sidebar-toggle:hover {
         order: 1;
     }
 
-    /* 移动端侧边栏折叠 */
+    /* 移动端侧边栏 - 默认展开保持与PC一致 */
     .sidebar-toggle {
         display: inline-flex;
         min-height: 44px;
     }
 
     .sidebar-details {
-        max-height: 0;
+        max-height: 5000px;
         overflow: hidden;
         transition: max-height 0.4s ease;
     }
 
-    body.sidebar-expanded .sidebar-details {
-        max-height: 5000px;
+    body.sidebar-collapsed .sidebar-details {
+        max-height: 0;
     }
 
     .page-content {
@@ -2304,12 +2304,6 @@ body.dark-mode .sidebar-toggle:hover {
 
     .page-entry-cards {
         grid-template-columns: 1fr;
-    }
-
-    /* 移动端禁用 content-visibility，确保卡片即时可交互 */
-    .page-entry-card {
-        content-visibility: visible !important;
-        contain-intrinsic-size: auto !important;
     }
 
     /* 移动端卡片可点击视觉指示 */
@@ -3341,14 +3335,18 @@ body,
     transition: background 0.4s ease, color 0.4s ease, background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* 性能优化：content-visibility 跳过屏幕外渲染 */
-.card,
-.page-entry-card,
+/* 性能优化：content-visibility 跳过屏幕外渲染（仅用于非交互元素） */
 .achievement-card,
 .habit-card,
 .stat-card {
     content-visibility: auto;
     contain-intrinsic-size: 200px;
+}
+
+/* 交互元素（card、page-entry-card）需即时可交互，禁用 content-visibility */
+.card,
+.page-entry-card {
+    content-visibility: visible;
 }
 
 /* 减少动画偏好支持 */
@@ -3543,7 +3541,7 @@ body,
     align-items: center;
     justify-content: flex-start;
     text-align: center;
-    padding: 120px 20px 40px;
+    padding: 140px 20px 80px;
     position: relative;
     overflow: hidden;
 }
@@ -3688,7 +3686,7 @@ body.dark-mode .hero-decoration::after {
 @media (max-width: 768px) {
     .hero {
         min-height: auto;
-        padding: 120px 16px 32px;
+        padding: 120px 16px 48px;
     }
     .hero-cta {
         flex-direction: column;
