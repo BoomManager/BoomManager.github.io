@@ -387,6 +387,10 @@ body:hover .cursor-follower {
     color: var(--color-primary);
 }
 
+.sub-list {
+    margin-left: 30px;
+}
+
 /* =================================================
  * 卡片样式
  * ================================================= */
@@ -709,16 +713,19 @@ body.dark-mode .media-link::after {
     transition: all 0.3s ease;
 }
 
-.skill-category:hover {
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
+/* hover展开仅限鼠标设备，触摸设备用.active class控制 */
+@media (hover: hover) {
+    .skill-category:hover {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
 
-.skill-category:hover .category-details {
-    max-height: 2000px;
-}
+    .skill-category:hover .category-details {
+        max-height: 2000px;
+    }
 
-.skill-category:hover .category-icon {
-    transform: rotate(45deg);
+    .skill-category:hover .category-icon {
+        transform: rotate(45deg);
+    }
 }
 
 .skill-category.active .category-header {
@@ -759,8 +766,10 @@ body.dark-mode .media-link::after {
     transition: transform 0.3s ease;
 }
 
-.skill-category:hover .category-header h3 i {
-    transform: rotate(15deg);
+@media (hover: hover) {
+    .skill-category:hover .category-header h3 i {
+        transform: rotate(15deg);
+    }
 }
 
 .category-icon {
@@ -1563,37 +1572,6 @@ body.navbar-hidden .breadcrumb {
 .related-content h2 i {
     color: #1abc9c;
     margin-right: 8px;
-}
-
-/* =================================================
- * 右侧悬浮按钮
- * ================================================= */
-aside {
-    position: fixed;
-    right: 0;
-    top: 30%;
-    z-index: 2;
-}
-
-aside ul {
-    list-style: none;
-}
-
-aside ul li {
-    margin-bottom: 10px;
-    border-radius: 19px 0 0 10px;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-    background: #1abc9c;
-}
-
-aside ul li a {
-    display: inline-block;
-    width: 80px;
-    height: 38px;
-    line-height: 38px;
-    padding-left: 10px;
-    color: #fff;
-    text-decoration: none;
 }
 
 /* =================================================
@@ -2424,25 +2402,68 @@ body.dark-mode .skeleton {
 }
 
 /* =================================================
+ * 粒子背景画布
+ * ================================================= */
+#particlesCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* =================================================
  * 移动端触摸优化
  * ================================================= */
 @media (max-width: 768px) {
     #backToTop {
         bottom: 20px;
         right: 20px;
-        width: 40px;
-        height: 40px;
+        width: 44px;
+        height: 44px;
+    }
+
+    /* TOC展开时隐藏返回顶部按钮，避免视觉冲突 */
+    .toc-container.mobile-open ~ #backToTop {
+        display: none !important;
     }
 
     /* 增大触摸目标 */
     .navbar-menu li a,
     .toc-item,
-    .page-entry-card {
+    .page-entry-card,
+    .media-link,
+    .toc-close-btn {
         min-height: 44px;
     }
 
     .reading-time {
         display: none;
+    }
+
+    /* 移动端最小字号14px，保证可读性 */
+    .contact-label,
+    .qrcode-tip,
+    .media-link,
+    .book-meta,
+    .book-tag,
+    .book-publisher-meta,
+    .book-isbn,
+    .breadcrumb ol {
+        font-size: 14px;
+    }
+
+    .book-desc,
+    .book-link,
+    .toc-item {
+        font-size: 14px;
+    }
+
+    /* 响应式锚点偏移 */
+    html {
+        scroll-padding-top: 90px;
     }
 }
 
@@ -2694,8 +2715,8 @@ img[data-loaded="true"] {
     100% { background-position: -200% 0; }
 }
 
-/* 返回顶部按钮脉冲效果 */
-#backToTop.show {
+/* 返回顶部按钮脉冲效果 - 仅hover时触发，节省GPU */
+#backToTop.show:hover {
     animation: backToTopPulse 2s ease-in-out infinite;
 }
 

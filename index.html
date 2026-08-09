@@ -6,9 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="format-detection" content="email=no" />
+    <meta name="format-detection" content="email=no, telephone=no, address=no"/>
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="format-detection" content="telephone=no" />
     <meta name="renderer" content="webkit">
     <meta name="apple-mobile-web-app-title" content="廖志伟" />
 
@@ -45,7 +44,7 @@
     <!-- SEO Meta Tags -->
     <title>廖志伟 | Java资深开发工程师 · 技术博客 · 个人主页</title>
     <meta name="description" content="廖志伟，Java资深开发工程师，CSDN博客专家，拥有多年一线研发经验。研究Spring、SpringBoot、Mybatis、Dubbo等框架底层源码，精通MySQL、Redis、消息中间件、微服务架构。出版多本Java技术书籍，CSDN博客文章1900+篇。"/>
-    <meta name="keywords" content="廖志伟,Java开发工程师,Java资深开发,CSDN博客专家,Spring源码,微服务架构,MySQL调优,Redis缓存,Kafka,RocketMQ,Java技术博客,Java程序员,上海Java开发"/>
+    <meta name="keywords" content="廖志伟,Java开发工程师,Java资深开发,CSDN博客专家,Spring微服务架构"/>
     <meta name="author" content="廖志伟"/>
     <meta name="robots" content="index, follow, max-image-preview:large"/>
     <link rel="canonical" href="https://www.liaozhiwei.cn/"/>
@@ -76,8 +75,6 @@
     <meta property="og:image:type" content="image/jpeg"/>
     <meta property="og:site_name" content="廖志伟个人主页"/>
     <meta property="og:locale" content="zh_CN"/>
-    <meta property="og:locale:alternate" content="en_US"/>
-    <meta property="og:locale:alternate" content="zh_TW"/>
     <meta property="article:published_time" content="2020-01-01T00:00:00+08:00"/>
     <meta property="article:modified_time" content="2026-08-08T00:00:00+08:00"/>
     <meta property="article:author" content="廖志伟"/>
@@ -103,11 +100,10 @@
     <link rel="preload" href="assets/css/common.css" as="style">
     <link rel="preload" href="assets/css/font-awesome.min.css" as="style">
     <link rel="preload" href="assets/js/common.js" as="script">
-    <link rel="preload" href="assets/images/profile.jpg" as="image">
 
-    <!-- 预取其他页面（提升导航速度） -->
-    <link rel="prefetch" href="skills.html" as="document">
-    <link rel="prefetch" href="works.html" as="document">
+    <!-- 预取其他页面（仅桌面端，提升导航速度） -->
+    <link rel="prefetch" href="skills.html" as="document" media="(hover: hover) and (min-width: 769px)">
+    <link rel="prefetch" href="works.html" as="document" media="(hover: hover) and (min-width: 769px)">
 
     <link rel="stylesheet" href="assets/css/typo.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
@@ -483,9 +479,7 @@
         </ul>
     </div>
 
-<article class="container" id="mainContent" itemscope itemtype="https://schema.org/Person">
-    <meta itemprop="name" content="廖志伟">
-    <meta itemprop="jobTitle" content="Java资深开发工程师">
+<article class="container" id="mainContent">
     <section class="side" id="side">
         <!-- 个人肖像 -->
         <section class="me card">
@@ -497,7 +491,6 @@
                      width="200" height="200"
                      style="display: none; max-width: 100%; height: auto; object-fit: cover; border-radius: 50%;"
                      loading="eager" decoding="async"
-                     itemprop="image"
                      onload="this.style.display='block'; this.previousElementSibling.style.display='none';"
                      onerror="this.style.display='none'; this.previousElementSibling.innerHTML='<i class=\'fa fa-exclamation-triangle fa-3x\' style=\'color: #e74c3c;\' aria-hidden=\'true\'></i>';">
             </div>
@@ -509,7 +502,6 @@
         <section class="profile info-unit card">
             <h2>
                 <i class="fa fa-user" aria-hidden="true"></i>基本信息</h2>
-            <hr/>
             <ul>
                 <li>
                     <label><b>姓名</b></label>
@@ -566,7 +558,6 @@
         <section class="contact info-unit card">
             <h2>
                 <i class="fa fa-phone" aria-hidden="true"></i>联系方式</h2>
-            <hr/>
             <div class="contact-list">
                 <a class="contact-item" href="mailto:java_wxid@aliyun.com">
                     <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -638,7 +629,6 @@
         <section class="work info-unit card" id="个人简介">
             <h2>
                 <i class="fa fa-pencil" aria-hidden="true"></i>个人简介</h2>
-            <hr/>
             <ul>
                 <li>
 		            <i class="fa fa-user-circle icon-accent" aria-hidden="true"></i>
@@ -694,7 +684,6 @@
         <section class="work info-unit card" id="写文成果">
             <h2>
                 <i class="fa fa-trophy" aria-hidden="true"></i>写文成果</h2>
-            <hr/>
 
             <!-- 实时数据统计区域 -->
             <div class="stats-container">
@@ -753,7 +742,6 @@
         <section class="work info-unit card" id="更多内容">
             <h2>
                 <i class="fa fa-compass" aria-hidden="true"></i>更多内容</h2>
-            <hr/>
             <div class="page-entry-cards">
                 <a href="skills.html" class="page-entry-card">
                     <div class="entry-icon"><i class="fa fa-code"></i></div>
@@ -788,7 +776,7 @@
 </article>
 
 <!-- 背景粒子效果 -->
-<canvas id="particlesCanvas" aria-hidden="true" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1;"></canvas>
+<canvas id="particlesCanvas" aria-hidden="true"></canvas>
 
 <!-- 相关内容推荐（SEO 内部链接） -->
 <section class="related-content" aria-label="相关内容推荐" id="相关内容推荐">

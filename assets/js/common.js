@@ -773,24 +773,25 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // ===== 13. 阅读时间估算 =====
-    document.querySelectorAll('.card').forEach(card => {
-        if (card.dataset.readingTime) return;
-        const text = card.textContent || '';
-        const charCount = text.length;
-        // 中文阅读速度约 400-600 字/分钟
-        const minutes = Math.max(1, Math.ceil(charCount / 500));
-        card.dataset.readingTime = minutes + '分钟';
+    // ===== 13. 阅读时间估算（移动端不注入，CSS已隐藏） =====
+    if (!window.matchMedia('(max-width: 768px)').matches) {
+        document.querySelectorAll('.card').forEach(card => {
+            if (card.dataset.readingTime) return;
+            const text = card.textContent || '';
+            const charCount = text.length;
+            const minutes = Math.max(1, Math.ceil(charCount / 500));
+            card.dataset.readingTime = minutes + '分钟';
 
-        const h2 = card.querySelector('h2');
-        if (h2 && !card.querySelector('.reading-time')) {
-            const badge = document.createElement('span');
-            badge.className = 'reading-time';
-            badge.title = '预计阅读时间';
-            badge.innerHTML = '<i class="fa fa-clock-o" aria-hidden="true"></i> ' + minutes + '分钟';
-            h2.appendChild(badge);
-        }
-    });
+            const h2 = card.querySelector('h2');
+            if (h2 && !card.querySelector('.reading-time')) {
+                const badge = document.createElement('span');
+                badge.className = 'reading-time';
+                badge.title = '预计阅读时间';
+                badge.innerHTML = '<i class="fa fa-clock-o" aria-hidden="true"></i> ' + minutes + '分钟';
+                h2.appendChild(badge);
+            }
+        });
+    }
 
     // ===== 统一图片加载失败处理 =====
     document.querySelectorAll('img').forEach(function(img) {
@@ -880,20 +881,30 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.removeChild(tmp);
     }
 
-    // ===== 15. 链接预取（鼠标悬停时预加载） =====
+    // ===== 15. 链接预取（鼠标悬停延迟100ms预加载，仅桌面端） =====
     const prefetchedUrls = new Set();
-    document.querySelectorAll('a[href$=".html"]').forEach(link => {
-        link.addEventListener('mouseenter', function() {
-            const href = this.getAttribute('href');
-            if (prefetchedUrls.has(href) || href === window.location.pathname.split('/').pop()) return;
-            prefetchedUrls.add(href);
-
-            const prefetchLink = document.createElement('link');
-            prefetchLink.rel = 'prefetch';
-            prefetchLink.href = href;
-            document.head.appendChild(prefetchLink);
+    if (window.matchMedia('(hover: hover) and (min-width: 769px)').matches) {
+        document.querySelectorAll('a[href$=".html"]').forEach(link => {
+            var prefetchTimer = null;
+            link.addEventListener('mouseenter', function() {
+                const href = this.getAttribute('href');
+                if (prefetchedUrls.has(href) || href === window.location.pathname.split('/').pop()) return;
+                prefetchTimer = setTimeout(function() {
+                    prefetchedUrls.add(href);
+                    const prefetchLink = document.createElement('link');
+                    prefetchLink.rel = 'prefetch';
+                    prefetchLink.href = href;
+                    document.head.appendChild(prefetchLink);
+                }, 100);
+            });
+            link.addEventListener('mouseleave', function() {
+                if (prefetchTimer) {
+                    clearTimeout(prefetchTimer);
+                    prefetchTimer = null;
+                }
+            });
         });
-    });
+    }
 
     // ===== 16. 图片渐进式加载（模糊→清晰） =====
     if ('IntersectionObserver' in window) {
