@@ -584,14 +584,13 @@
                 </div>
             </div>
             <div class="qrcode-box">
-                <div class="loading" style="display: flex; justify-content: center; align-items: center; width: 140px; height: 140px;">
-                    <i class="fa fa-spinner fa-spin fa-2x" aria-hidden="true"></i>
-                </div>
+                <div class="skeleton" style="width: 140px; height: 140px; border-radius: 8px; margin: 0 auto;"></div>
                 <img class="avatar" src="assets/images/wechat-qr.jpg" alt="廖志伟微信号二维码 - 扫码添加微信好友 SenioRD"
                      width="140" height="140"
                      style="display: none; max-width: 100%; height: auto; object-fit: cover; border-radius: 8px;"
                      loading="lazy" decoding="async"
-                     onload="this.style.display='block'; this.previousElementSibling.style.display='none';">
+                     onload="this.style.display='block'; this.previousElementSibling.style.display='none';"
+                     onerror="this.style.display='none'; this.previousElementSibling.style.background='#e5e7eb'; this.previousElementSibling.innerHTML='<i class=\'fa fa-qrcode\' style=\'font-size:56px;color:#9ca3af;display:flex;align-items:center;justify-content:center;height:100%;\' aria-hidden=\'true\'></i>';">
                 <p class="qrcode-tip">扫码添加微信好友</p>
             </div>
         </section>

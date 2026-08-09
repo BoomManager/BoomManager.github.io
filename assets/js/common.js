@@ -19,7 +19,13 @@ document.addEventListener('DOMContentLoaded', function() {
         newImg.onerror = function() {
             img.style.display = 'none';
             if (img.previousElementSibling) {
-                img.previousElementSibling.innerHTML = '<i class=\'fa fa-exclamation-triangle fa-3x\' style=\'color: #e74c3c;\' aria-hidden=\'true\'></i>';
+                // 美观的占位符：灰色背景 + 通用图标
+                const prev = img.previousElementSibling;
+                prev.style.background = '#e5e7eb';
+                prev.style.display = 'flex';
+                prev.style.alignItems = 'center';
+                prev.style.justifyContent = 'center';
+                prev.innerHTML = '<i class="fa fa-user" style="font-size:64px;color:#9ca3af;" aria-hidden="true"></i>';
             }
         };
         newImg.src = img.src;
@@ -189,6 +195,22 @@ document.addEventListener('DOMContentLoaded', function() {
         if (themeSwitch) {
             themeSwitch.innerHTML = '<i class="fa fa-sun-o" aria-hidden="true"></i>';
         }
+    }
+
+    // 暗色模式跟随系统实时变化（仅当用户未手动设置主题时）
+    const darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    if (darkMediaQuery.addEventListener) {
+        darkMediaQuery.addEventListener('change', function(e) {
+            if (localStorage.getItem('theme')) return; // 用户已手动设置，不跟随
+            const isDark = e.matches;
+            if (isDark) {
+                body.classList.add('dark-mode');
+                if (themeSwitch) themeSwitch.innerHTML = '<i class="fa fa-sun-o" aria-hidden="true"></i>';
+            } else {
+                body.classList.remove('dark-mode');
+                if (themeSwitch) themeSwitch.innerHTML = '<i class="fa fa-moon-o" aria-hidden="true"></i>';
+            }
+        });
     }
 
     if (themeSwitch) {
@@ -410,10 +432,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ===== 10. 技能分类点击展开/收起 =====
+    // ===== 10. 技能分类点击展开/收起（accordion 互斥：展开一个收起其他） =====
+    const skillCategories = document.querySelectorAll('.skill-category');
     document.querySelectorAll('.category-header').forEach(header => {
         header.addEventListener('click', function() {
-            this.closest('.skill-category').classList.toggle('active');
+            const current = this.closest('.skill-category');
+            const willOpen = !current.classList.contains('active');
+            // 互斥：收起其他所有展开项
+            skillCategories.forEach(cat => {
+                if (cat !== current) cat.classList.remove('active');
+            });
+            current.classList.toggle('active', willOpen);
         });
     });
 
@@ -824,4 +853,78 @@ if ('serviceWorker' in navigator) {
         });
     });
 }
+
+// ==================================================
+// Web Vitals 轻量监控（LCP / CLS / INP）
+// 收集核心性能指标，输出到 console
+// 如需上报后端，配置 WEB_VITALS_ENDPOINT 常量即可
+// ==================================================
+(function webVitalsMonitor() {
+    var WEB_VITALS_ENDPOINT = ''; // 留空则只打印 console，填写 URL 则 beacon 上报
+
+    function logMetric(name, value, rating) {
+        var entry = { name: name, value: Math.round(value * 100) / 100, rating: rating, page: location.pathname, ts: Date.now() };
+        // 调试输出（开发可见）
+        if (typeof console !== 'undefined' && console.debug) {
+            console.debug('[Web Vitals]', name, entry.value, '(' + rating + ')');
+        }
+        // 上报（生产环境填写 ENDPOINT 后启用）
+        if (WEB_VITALS_ENDPOINT && navigator.sendBeacon) {
+            navigator.sendBeacon(WEB_VITALS_ENDPOINT, JSON.stringify(entry));
+        }
+    }
+
+    // LCP - 最大内容绘制
+    if (window.PerformanceObserver) {
+        try {
+            var lcpObserver = new PerformanceObserver(function(list) {
+                var entries = list.getEntries();
+                var lastEntry = entries[entries.length - 1];
+                var rating = lastEntry.startTime < 2500 ? 'good' : (lastEntry.startTime < 4000 ? 'needs-improvement' : 'poor');
+                logMetric('LCP', lastEntry.startTime, rating);
+            });
+            lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
+        } catch(e) {}
+
+        // CLS - 累积布局偏移
+        try {
+            var clsValue = 0;
+            var clsObserver = new PerformanceObserver(function(list) {
+                list.getEntries().forEach(function(entry) {
+                    if (!entry.hadRecentInput) {
+                        clsValue += entry.value;
+                    }
+                });
+            });
+            clsObserver.observe({ type: 'layout-shift', buffered: true });
+            // 页面隐藏时记录最终 CLS
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden && clsValue > 0) {
+                    var rating = clsValue < 0.1 ? 'good' : (clsValue < 0.25 ? 'needs-improvement' : 'poor');
+                    logMetric('CLS', clsValue, rating);
+                    clsValue = 0;
+                }
+            });
+        } catch(e) {}
+
+        // INP - 交互到下一次绘制
+        try {
+            var inpValue = 0;
+            var inpObserver = new PerformanceObserver(function(list) {
+                list.getEntries().forEach(function(entry) {
+                    inpValue = Math.max(inpValue, entry.duration);
+                });
+            });
+            inpObserver.observe({ type: 'event', buffered: true });
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden && inpValue > 0) {
+                    var rating = inpValue < 200 ? 'good' : (inpValue < 500 ? 'needs-improvement' : 'poor');
+                    logMetric('INP', inpValue, rating);
+                    inpValue = 0;
+                }
+            });
+        } catch(e) {}
+    }
+})();
+
 
