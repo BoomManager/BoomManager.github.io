@@ -1223,33 +1223,22 @@ document.addEventListener('DOMContentLoaded', function() {
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
         navigator.serviceWorker.register('sw.js').then(function(reg) {
-            // 监听新版本安装，提示用户刷新
             reg.addEventListener('updatefound', function() {
                 var newWorker = reg.installing;
                 if (!newWorker) return;
                 newWorker.addEventListener('statechange', function() {
                     if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                        // 新版本已就绪，显示更新提示
-                        var toast = document.createElement('div');
-                        toast.className = 'copy-toast';
-                        toast.style.cssText = 'bottom:80px;cursor:pointer;padding:12px 20px;';
-                        toast.textContent = '网站已更新，点击刷新页面';
-                        document.body.appendChild(toast);
-                        setTimeout(function() { toast.classList.add('show'); }, 10);
-                        toast.addEventListener('click', function() {
-                            window.location.reload();
-                        });
-                        // 5秒后自动消失
-                        setTimeout(function() {
-                            toast.classList.remove('show');
-                            setTimeout(function() { toast.remove(); }, 300);
-                        }, 8000);
+                        newWorker.postMessage({ type: 'SKIP_WAITING' });
                     }
                 });
             });
-        }).catch(function() {
-            // 注册失败静默处理，不影响正常浏览
-        });
+            var refreshing = false;
+            navigator.serviceWorker.addEventListener('controllerchange', function() {
+                if (refreshing) return;
+                refreshing = true;
+                window.location.reload();
+            });
+        }).catch(function() {});
     });
 }
 

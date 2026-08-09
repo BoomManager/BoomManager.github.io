@@ -3,7 +3,7 @@
  * 策略：网络优先（保证内容新鲜），离线时回退缓存与离线页
  */
 
-const CACHE_VERSION = 'lzw-v1-20260809';
+const CACHE_VERSION = 'lzw-v2-20260809b';
 const CORE_CACHE = CACHE_VERSION + '-core';
 const OFFLINE_URL = 'offline.html';
 
@@ -57,6 +57,13 @@ self.addEventListener('activate', function(event) {
             return self.clients.claim();
         })
     );
+});
+
+// 接收主线程消息：立即激活新 SW
+self.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+        self.skipWaiting();
+    }
 });
 
 // 请求拦截：网络优先，失败回退缓存，再失败回退离线页

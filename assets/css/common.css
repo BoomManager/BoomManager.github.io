@@ -1973,7 +1973,7 @@ body.dark-mode .navbar {
 
     .container {
         flex-direction: column;
-        padding: 110px 15px 80px;
+        padding: 110px 15px 24px;
     }
 
     .side {
@@ -1981,7 +1981,7 @@ body.dark-mode .navbar {
     }
 
     .page-content {
-        padding: 0 15px 80px;
+        padding: 0 15px 24px;
     }
 
     /* 移动端 TOC 浮动按钮 - 左下角 */
