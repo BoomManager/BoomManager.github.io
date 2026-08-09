@@ -57,8 +57,6 @@
     <link rel="icon" type="image/x-icon" sizes="32x32" href="assets/images/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/avatar.jpg">
     <link rel="manifest" href="manifest.json">
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="dns-prefetch" href="https://blog.csdn.net">
     <link rel="dns-prefetch" href="https://space.bilibili.com">
     <link rel="dns-prefetch" href="https://gitee.com">
@@ -115,7 +113,7 @@
                         "name": "清华大学出版社"
                     },
                     "inLanguage": "zh-CN",
-                    "bookFormat": "https://schema.org/ Hardcover",
+                    "bookFormat": "https://schema.org/Hardcover",
                     "genre": "计算机/编程"
                 }
             },
@@ -233,28 +231,6 @@
     }
     </script>
 
-    <!-- JSON-LD 结构化数据：评分 -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "AggregateRating",
-        "itemReviewed": {
-            "@type": "CreativeWorkSeries",
-            "name": "廖志伟Java技术作品",
-            "author": {
-                "@type": "Person",
-                "name": "廖志伟"
-            }
-        },
-        "ratingValue": "4.8",
-        "bestRating": "5",
-        "worstRating": "1",
-        "ratingCount": "27769",
-        "reviewCount": "11188",
-        "description": "基于CSDN博客27769次收藏和11188次评论的读者评价"
-    }
-    </script>
-
     <!-- JSON-LD 结构化数据：WebPage -->
     <script type="application/ld+json">
     {
@@ -279,11 +255,12 @@
 </head>
 
 <body>
+    <a href="#mainContent" class="skip-to-content">跳到主内容</a>
     <!-- 滚动进度条 -->
     <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
 
     <!-- 鼠标跟随效果 -->
-    <div class="cursor-follower"></div>
+    <div class="cursor-follower" aria-hidden="true"></div>
 
     <!-- 顶部导航栏 -->
     <header>
@@ -299,9 +276,9 @@
             <li><a href="about.html">关于我</a></li>
         </ul>
         <div class="navbar-tools">
-            <div class="theme-switch" id="themeSwitch" role="button" aria-label="切换夜间模式" tabindex="0">
+            <button class="theme-switch" id="themeSwitch" aria-label="切换夜间模式" type="button">
                 <i class="fa fa-moon-o" aria-hidden="true"></i>
-            </div>
+            </button>
             <button class="navbar-toggle" id="navbarToggle" aria-label="打开菜单" aria-expanded="false">
                 <i class="fa fa-bars"></i>
             </button>
@@ -327,7 +304,7 @@
         </ul>
     </div>
 
-<div class="page-content">
+<div class="page-content" id="mainContent">
     <h1 class="sr-only">作品成果 - 廖志伟</h1>
     <!-- 独立出版图书 -->
     <section class="books info-unit card">
@@ -405,7 +382,7 @@
         <div class="books-grid">
             <a href="https://item.jd.com/10125461368888.html" target="_blank" rel="noopener" class="book-card">
                 <div class="book-cover">
-                    <img src="assets/images/book-tw.jpg" alt="Java網路元件專案——大型網際網路企業級最重要應用封面" loading="lazy" decoding="async">
+                    <img src="assets/images/book-tw.jpg" alt="Java網路元件專案——大型網際網路企業級最重要應用封面" width="180" height="240" loading="lazy" decoding="async">
                 </div>
                 <div class="book-info">
                     <h3 class="book-title">Java網路元件專案——大型網際網路企業級最重要應用</h3>
@@ -493,7 +470,7 @@
 </div>
 
 <!-- 背景粒子效果 -->
-<canvas id="particlesCanvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1;"></canvas>
+<canvas id="particlesCanvas" aria-hidden="true" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1;"></canvas>
 
 <!-- 相关内容推荐（SEO 内部链接） -->
 <section class="related-content" aria-label="相关内容推荐">

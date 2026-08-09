@@ -78,8 +78,6 @@
     <link rel="manifest" href="manifest.json">
 
     <!-- 性能优化：预连接和预加载 -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="dns-prefetch" href="https://blog.csdn.net">
     <link rel="dns-prefetch" href="https://space.bilibili.com">
     <link rel="dns-prefetch" href="https://gitee.com">
@@ -112,7 +110,6 @@
         "url": "https://www.liaozhiwei.cn/",
         "image": "https://www.liaozhiwei.cn/assets/images/avatar.jpg",
         "email": "java_wxid@aliyun.com",
-        "telephone": "+86-SenioRD",
         "birthDate": "1997-04-19",
         "gender": "Male",
         "nationality": {
@@ -176,7 +173,7 @@
     }
     </script>
 
-    <!-- JSON-LD 结构化数据：网站（增强版） -->
+    <!-- JSON-LD 结构化数据：网站 -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -189,14 +186,6 @@
         "inLanguage": "zh-CN",
         "publisher": {
             "@id": "https://www.liaozhiwei.cn/#person"
-        },
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": {
-                "@type": "EntryPoint",
-                "urlTemplate": "https://www.liaozhiwei.cn/?q={search_term_string}"
-            },
-            "query-input": "required name=search_term_string"
         }
     }
     </script>
@@ -313,55 +302,6 @@
     }
     </script>
 
-    <!-- JSON-LD 结构化数据：专业服务（增强本地 SEO） -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "ProfessionalService",
-        "@id": "https://www.liaozhiwei.cn/#professional-service",
-        "name": "廖志伟Java技术服务",
-        "alternateName": "Java资深开发工程师技术咨询",
-        "description": "提供Java技术架构咨询、系统设计、性能优化、技术培训等专业服务",
-        "url": "https://www.liaozhiwei.cn/",
-        "image": "https://www.liaozhiwei.cn/assets/images/avatar.jpg",
-        "logo": "https://www.liaozhiwei.cn/assets/images/avatar.jpg",
-        "email": "java_wxid@aliyun.com",
-        "telephone": "+86-SenioRD",
-        "priceRange": "$$",
-        "currenciesAccepted": "CNY",
-        "paymentAccepted": "Cash, Credit Card, WeChat Pay, Alipay",
-        "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "上海",
-            "addressRegion": "上海",
-            "addressCountry": "CN",
-            "postalCode": "200000"
-        },
-        "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": 31.2304,
-            "longitude": 121.4737
-        },
-        "areaServed": [{
-            "@type": "City",
-            "name": "上海"
-        }, {
-            "@type": "Country",
-            "name": "中国"
-        }],
-        "serviceType": ["Java技术架构咨询", "系统性能优化", "微服务架构设计", "技术培训", "代码审查", "技术写作"],
-        "openingHoursSpecification": {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            "opens": "09:00",
-            "closes": "18:00"
-        },
-        "employee": {
-            "@id": "https://www.liaozhiwei.cn/#person"
-        }
-    }
-    </script>
-
     <!-- JSON-LD 结构化数据：WebPage -->
     <script type="application/ld+json">
     {
@@ -384,70 +324,17 @@
         }
     }
     </script>
-
-    <!-- JSON-LD 结构化数据：视频对象 -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "VideoObject",
-        "name": "Java程序员廖志伟技术视频教程",
-        "description": "Java资深开发工程师廖志伟在B站分享的Java技术视频教程，涵盖Spring、微服务、MySQL调优等核心技术",
-        "thumbnailUrl": "https://www.liaozhiwei.cn/assets/images/avatar.jpg",
-        "uploadDate": "2020-01-01",
-        "contentUrl": "https://space.bilibili.com/353586723",
-        "embedUrl": "https://player.bilibili.com/player.html?bvid=353586723",
-        "duration": "PT30M",
-        "inLanguage": "zh-CN",
-        "author": {
-            "@type": "Person",
-            "name": "廖志伟"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "哔哩哔哩",
-            "url": "https://www.bilibili.com"
-        }
-    }
-    </script>
-
-    <!-- JSON-LD 结构化数据：读者评价 -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Review",
-        "itemReviewed": {
-            "@type": "Person",
-            "name": "廖志伟",
-            "jobTitle": "Java资深开发工程师"
-        },
-        "author": {
-            "@type": "Person",
-            "name": "CSDN读者"
-        },
-        "reviewBody": "廖志伟的Java技术文章深入浅出，从底层源码到实战应用，涵盖了Spring、MySQL、Redis、微服务架构等核心技术，帮助了众多Java开发者成长。1900+篇技术文章、311万+访问量见证了内容质量。",
-        "datePublished": "2026-08-08",
-        "reviewRating": {
-            "@type": "Rating",
-            "ratingValue": "5",
-            "bestRating": "5",
-            "worstRating": "1"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "CSDN"
-        }
-    }
-    </script>
 </head>
 
 <body>
+    <a href="#mainContent" class="skip-to-content">跳到主内容</a>
     <!-- 滚动进度条 -->
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
     </div>
 
     <!-- 鼠标跟随效果 -->
-    <div class="cursor-follower"></div>
+    <div class="cursor-follower" aria-hidden="true"></div>
 
     <!-- SEO：noscript 提示 -->
     <noscript>
@@ -471,9 +358,9 @@
             <li><a href="about.html">关于我</a></li>
         </ul>
         <div class="navbar-tools">
-            <div class="theme-switch" id="themeSwitch" role="button" aria-label="切换夜间模式" tabindex="0">
+            <button class="theme-switch" id="themeSwitch" aria-label="切换夜间模式" type="button">
                 <i class="fa fa-moon-o" aria-hidden="true"></i>
-            </div>
+            </button>
             <button class="navbar-toggle" id="navbarToggle" aria-label="打开菜单" aria-expanded="false">
                 <i class="fa fa-bars"></i>
             </button>
@@ -500,7 +387,7 @@
         </ul>
     </div>
 
-<article class="container" itemscope itemtype="https://schema.org/Person">
+<article class="container" id="mainContent" itemscope itemtype="https://schema.org/Person">
     <meta itemprop="name" content="廖志伟">
     <meta itemprop="jobTitle" content="Java资深开发工程师">
     <section class="side" id="side">
@@ -763,7 +650,7 @@
             </div>
 
             <div class="data-source">
-                <p>数据来源: <a href="https://blog.csdn.net/java_wxid" target="_blank" rel="noopener">CSDN博客</a></p>
+                <p>博客主页: <a href="https://blog.csdn.net/java_wxid" target="_blank" rel="noopener">CSDN博客</a></p>
             </div>
         </section>
 
@@ -806,7 +693,7 @@
 </article>
 
 <!-- 背景粒子效果 -->
-<canvas id="particlesCanvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1;"></canvas>
+<canvas id="particlesCanvas" aria-hidden="true" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1;"></canvas>
 
 <!-- 相关内容推荐（SEO 内部链接） -->
 <section class="related-content" aria-label="相关内容推荐">
@@ -857,13 +744,6 @@
     </div>
 </footer>
 
-<aside>
-    <ul>
-        <li>
-            <a href="https://www.liaozhiwei.cn/" target="_blank" rel="noopener">个人主页</a>
-        </li>
-    </ul>
-</aside>
 
 <!-- 返回顶部按钮 -->
 <button id="backToTop" aria-label="返回顶部" title="返回顶部">

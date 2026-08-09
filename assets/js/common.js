@@ -110,9 +110,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         tocItems.forEach(item => {
-            item.addEventListener('click', function() {
-                const targetText = this.getAttribute('data-target');
-                let targetElement = null;
+            item.setAttribute('tabindex', '0');
+            item.setAttribute('role', 'button');
+
+            var tocClick = function() {
+                var targetText = this.getAttribute('data-target');
+                var targetElement = null;
 
                 document.querySelectorAll('[data-section]').forEach(el => {
                     if (el.dataset.section === targetText) {
@@ -128,6 +131,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     tocItems.forEach(i => i.classList.remove('active'));
                     this.classList.add('active');
+                }
+            };
+
+            item.addEventListener('click', tocClick);
+            item.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    tocClick.call(this);
                 }
             });
         });
@@ -346,7 +357,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
+        let particleRafId = null;
+        let particlePaused = false;
+
         function animateParticles() {
+            if (particlePaused) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             for (let i = 0; i < particlesArray.length; i++) {
@@ -354,11 +369,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 particlesArray[i].draw();
             }
 
-            requestAnimationFrame(animateParticles);
+            particleRafId = requestAnimationFrame(animateParticles);
         }
 
         initParticles();
         animateParticles();
+
+        // 标签页隐藏时暂停动画，节省 CPU/电量
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                particlePaused = true;
+                if (particleRafId) {
+                    cancelAnimationFrame(particleRafId);
+                    particleRafId = null;
+                }
+            } else {
+                particlePaused = false;
+                if (!particleRafId) {
+                    particleRafId = requestAnimationFrame(animateParticles);
+                }
+            }
+        });
     }
 
     // ===== 10. 技能分类点击展开/收起 =====
@@ -454,13 +485,8 @@ document.addEventListener('DOMContentLoaded', function() {
             el.addEventListener('click', function(e) {
                 if (this.tagName === 'A') return; // 链接不拦截
                 e.preventDefault();
-                const tmp = document.createElement('textarea');
-                tmp.value = text;
-                document.body.appendChild(tmp);
-                tmp.select();
-                try {
-                    document.execCommand('copy');
-                    // 显示复制成功提示
+
+                function showToast() {
                     const toast = document.createElement('div');
                     toast.className = 'copy-toast';
                     toast.textContent = '已复制：' + text;
@@ -470,11 +496,35 @@ document.addEventListener('DOMContentLoaded', function() {
                         toast.classList.remove('show');
                         setTimeout(() => toast.remove(), 300);
                     }, 2000);
-                } catch (err) {}
-                document.body.removeChild(tmp);
+                }
+
+                // 优先使用现代 Clipboard API（需 HTTPS 或 localhost）
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(showToast).catch(() => {
+                        fallbackCopy(text, showToast);
+                    });
+                } else {
+                    fallbackCopy(text, showToast);
+                }
             });
         }
     });
+
+    // 兜底复制方案（非 HTTPS 环境）
+    function fallbackCopy(text, onSuccess) {
+        const tmp = document.createElement('textarea');
+        tmp.value = text;
+        tmp.setAttribute('readonly', '');
+        tmp.style.position = 'absolute';
+        tmp.style.left = '-9999px';
+        document.body.appendChild(tmp);
+        tmp.select();
+        try {
+            document.execCommand('copy');
+            onSuccess();
+        } catch (err) {}
+        document.body.removeChild(tmp);
+    }
 
     // ===== 15. 链接预取（鼠标悬停时预加载） =====
     const prefetchedUrls = new Set();
