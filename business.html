@@ -200,6 +200,34 @@
         }
     }
     </script>
+
+    <!-- JSON-LD 结构化数据：Service（商业咨询服务） -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "程序员副业变现与商业咨询",
+        "serviceType": "副业咨询/内容营销/用户运营咨询",
+        "provider": {
+            "@id": "https://www.liaozhiwei.cn/#person"
+        },
+        "areaServed": {
+            "@type": "Country",
+            "name": "中国"
+        },
+        "description": "提供程序员副业变现思路、自媒体内容营销、用户生命周期运营（AARRR模型）等商业咨询服务",
+        "url": "https://www.liaozhiwei.cn/business.html",
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "商业服务目录",
+            "itemListElement": [
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "副业变现规划咨询"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "自媒体内容营销培训"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "用户运营策略咨询"}}
+            ]
+        }
+    }
+    </script>
 </head>
 
 <body>

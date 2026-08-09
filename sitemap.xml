@@ -22,9 +22,6 @@
             <image:title>廖志伟个人主页形象照</image:title>
             <image:caption>Java资深开发工程师廖志伟</image:caption>
         </image:image>
-        <geo:geo>
-            <geo:format>kml</geo:format>
-        </geo:geo>
         <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.liaozhiwei.cn/"/>
         <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://www.liaozhiwei.cn/"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://www.liaozhiwei.cn/"/>
@@ -42,9 +39,6 @@
             <image:caption>Java资深开发工程师18大技术领域技能详解</image:caption>
             <image:geo_location>上海, 中国</image:geo_location>
         </image:image>
-        <geo:geo>
-            <geo:format>kml</geo:format>
-        </geo:geo>
         <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.liaozhiwei.cn/skills.html"/>
         <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://www.liaozhiwei.cn/skills.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://www.liaozhiwei.cn/skills.html"/>
@@ -62,9 +56,6 @@
             <image:caption>10条副业思路、10条商业思维、用户生命周期AARRR模型</image:caption>
             <image:geo_location>上海, 中国</image:geo_location>
         </image:image>
-        <geo:geo>
-            <geo:format>kml</geo:format>
-        </geo:geo>
         <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.liaozhiwei.cn/business.html"/>
         <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://www.liaozhiwei.cn/business.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://www.liaozhiwei.cn/business.html"/>
@@ -107,10 +98,8 @@
             <image:title>Java網路元件專案——大型網際網路企業級最重要應用</image:title>
             <image:caption>ISBN 9786267569085，深智数位台版繁体</image:caption>
         </image:image>
-        <geo:geo>
-            <geo:format>kml</geo:format>
-        </geo:geo>
         <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.liaozhiwei.cn/works.html"/>
+        <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://www.liaozhiwei.cn/works.html"/>
         <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://www.liaozhiwei.cn/works.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://www.liaozhiwei.cn/works.html"/>
     </url>
@@ -127,9 +116,6 @@
             <image:caption>廖志伟的自我评价、兴趣爱好、生活习惯与持续计划</image:caption>
             <image:geo_location>上海, 中国</image:geo_location>
         </image:image>
-        <geo:geo>
-            <geo:format>kml</geo:format>
-        </geo:geo>
         <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.liaozhiwei.cn/about.html"/>
         <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://www.liaozhiwei.cn/about.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://www.liaozhiwei.cn/about.html"/>

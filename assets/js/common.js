@@ -107,6 +107,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // ===== 3.1 卡片鼠标聚光灯（桌面端，更新 --mx/--my CSS 变量） =====
+    if (window.matchMedia('(hover: hover)').matches) {
+        document.querySelectorAll('.card, .page-entry-card, .book-card, .achievement-card, .habit-card, .stat-card').forEach(card => {
+            card.addEventListener('mousemove', function(e) {
+                var rect = this.getBoundingClientRect();
+                var x = ((e.clientX - rect.left) / rect.width) * 100;
+                var y = ((e.clientY - rect.top) / rect.height) * 100;
+                this.style.setProperty('--mx', x + '%');
+                this.style.setProperty('--my', y + '%');
+            });
+        });
+    }
+
     // ===== 4. 目录导航功能 =====
     function initTocNavigation() {
         const tocItems = document.querySelectorAll('.toc-item');
@@ -318,7 +331,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 tocContainer.classList.add('mobile-open');
                 tocOverlay.classList.add('show');
                 document.body.style.overflow = 'hidden';
-                tocFab.style.display = 'none';
+                // FAB 隐藏由 CSS .toc-container.mobile-open .toc-fab { display:none } 控制
+                // 焦点移入面板，便于键盘操作
+                setTimeout(function() {
+                    var closeBtn = tocContainer.querySelector('.toc-close-btn');
+                    if (closeBtn) closeBtn.focus();
+                }, 100);
             }
 
             function closeToc() {
@@ -326,8 +344,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 tocContainer.classList.remove('mobile-open');
                 if (tocOverlay) tocOverlay.classList.remove('show');
                 document.body.style.overflow = '';
-                if (tocFab) tocFab.style.display = '';
+                if (tocFab) {
+                    tocFab.focus();
+                }
             }
+
+            // 焦点陷阱：Tab 键循环在面板内
+            tocContainer.addEventListener('keydown', function(e) {
+                if (e.key !== 'Tab' || !tocContainer.classList.contains('mobile-open')) return;
+                var focusables = tocContainer.querySelectorAll('.toc-close-btn, .toc-item');
+                if (focusables.length === 0) return;
+                var first = focusables[0];
+                var last = focusables[focusables.length - 1];
+                if (e.shiftKey) {
+                    if (document.activeElement === first) {
+                        e.preventDefault();
+                        last.focus();
+                    }
+                } else {
+                    if (document.activeElement === last) {
+                        e.preventDefault();
+                        first.focus();
+                    }
+                }
+            });
 
             function bindMobileEvents() {
                 if (!tocFab || !tocOverlay) return;
@@ -621,7 +661,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function initParticles() {
             particlesArray = [];
-            const particleCount = Math.min(Math.floor(canvas.width * canvas.height / 15000), 100);
+            // 移动端大幅减少粒子数量以省电
+            var isMobile = window.matchMedia('(max-width: 768px)').matches;
+            var areaDivisor = isMobile ? 40000 : 15000;
+            var maxCount = isMobile ? 30 : 100;
+            const particleCount = Math.min(Math.floor(canvas.width * canvas.height / areaDivisor), maxCount);
 
             for (let i = 0; i < particleCount; i++) {
                 particlesArray.push(new Particle());
@@ -843,6 +887,11 @@ document.addEventListener('DOMContentLoaded', function() {
             el.addEventListener('click', function(e) {
                 if (this.tagName === 'A') return; // 链接不拦截
                 e.preventDefault();
+                var self = this;
+
+                // 视觉反馈：被点击元素高亮
+                self.classList.add('copied');
+                setTimeout(function() { self.classList.remove('copied'); }, 1500);
 
                 // 优先使用现代 Clipboard API（需 HTTPS 或 localhost）
                 if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -863,6 +912,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         }
+    });
+
+    // ===== 14.1 自媒体链接点击 toast 反馈 =====
+    document.querySelectorAll('.media-link').forEach(link => {
+        link.addEventListener('click', function() {
+            var span = this.querySelector('span');
+            var name = span ? span.textContent : '外部平台';
+            showCopyToast('正在跳转到' + name + '...');
+        });
     });
 
     // 兜底复制方案（非 HTTPS 环境）
