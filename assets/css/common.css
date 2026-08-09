@@ -3436,13 +3436,13 @@ body,
  * 首屏 Hero 区域
  * ================================================= */
 .hero {
-    min-height: 70vh;
+    min-height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 120px 20px 60px;
+    padding: 90px 20px 32px;
     position: relative;
     overflow: hidden;
 }
@@ -3585,8 +3585,8 @@ body.dark-mode .hero-decoration::after {
 
 @media (max-width: 768px) {
     .hero {
-        min-height: 60vh;
-        padding: 100px 20px 40px;
+        min-height: auto;
+        padding: 80px 16px 24px;
     }
     .hero-cta {
         flex-direction: column;
