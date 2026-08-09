@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="format-detection" content="email=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -272,7 +272,7 @@
 <div class="page-content" id="mainContent">
     <h1 class="sr-only">关于我 - 廖志伟</h1>
     <!-- 自我评价 -->
-    <section class="contact info-unit card">
+    <section class="contact info-unit card" id="自我评价/期望">
         <h2>
             <i class="fa fa-pencil" aria-hidden="true"></i>自我评价/期望</h2>
         <hr/>
@@ -305,7 +305,7 @@
     </section>
 
     <!-- 兴趣爱好 -->
-    <section class="contact info-unit card">
+    <section class="contact info-unit card" id="兴趣爱好">
         <h2>
             <i class="fa fa-pencil" aria-hidden="true"></i>兴趣爱好</h2>
         <hr/>
@@ -338,7 +338,7 @@
     </section>
 
     <!-- 生活习惯 -->
-    <section class="contact info-unit card">
+    <section class="contact info-unit card" id="生活习惯">
         <h2>
             <i class="fa fa-pencil" aria-hidden="true"></i>生活习惯</h2>
         <hr/>
@@ -407,7 +407,7 @@
     </section>
 
     <!-- 持续计划 -->
-    <section class="work info-unit card">
+    <section class="work info-unit card" id="持续计划">
         <h2>
             <i class="fa fa-pencil" aria-hidden="true"></i>持续计划</h2>
         <hr/>
@@ -460,7 +460,7 @@
 <canvas id="particlesCanvas" aria-hidden="true" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1;"></canvas>
 
 <!-- 相关内容推荐（SEO 内部链接） -->
-<section class="related-content" aria-label="相关内容推荐">
+<section class="related-content" aria-label="相关内容推荐" id="相关内容推荐">
     <div class="related-content-inner">
         <h2><i class="fa fa-link" aria-hidden="true"></i> 相关内容推荐</h2>
         <div class="page-entry-cards">
@@ -500,8 +500,7 @@
 
 <footer class="footer" role="contentinfo">
     <div class="footer-content">
-        <p>&copy; 2020-2026 廖志伟. 保留所有权利.</p>
-        <p>文档最后更新时间为 <time datetime="2026-08-08">2026年8月8日</time></p>
+        <p class="footer-copyright">&copy; 2020-2026 廖志伟. 保留所有权利. 最后更新 <time datetime="2026-08-08">2026-08-08</time></p>
         <nav class="footer-nav" aria-label="页脚导航">
             <a href="index.html">首页</a> |
             <a href="skills.html">职业技能</a> |

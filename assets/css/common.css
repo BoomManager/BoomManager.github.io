@@ -18,7 +18,7 @@
     /* 文字色 */
     --color-text: #2c3e50;
     --color-text-secondary: #6b7280;
-    --color-text-muted: #95a5a6;
+    --color-text-muted: #7f8c8d;
 
     /* 背景色 */
     --color-bg: #ffffff;
@@ -53,6 +53,13 @@
     /* 渐变 */
     --gradient-primary: linear-gradient(135deg, #1abc9c, #16a085);
     --gradient-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+
+    /* AARRR 模型色彩 */
+    --color-aarrr-acquisition: #3498db;
+    --color-aarrr-activation: #2ecc71;
+    --color-aarrr-retention: #f39c12;
+    --color-aarrr-revenue: #e74c3c;
+    --color-aarrr-referral: #9b59b6;
 }
 
 /* 暗色模式 token 覆盖 */
@@ -373,6 +380,14 @@ body:hover .cursor-follower {
 }
 
 /* =================================================
+ * 工具类
+ * ================================================= */
+.icon-accent {
+    margin-right: var(--space-sm);
+    color: var(--color-primary);
+}
+
+/* =================================================
  * 卡片样式
  * ================================================= */
 .card {
@@ -576,8 +591,8 @@ body.dark-mode .qrcode-box {
 /* 自媒体矩阵网格 */
 .media-matrix {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 8px;
     margin-top: 15px;
 }
 
@@ -585,15 +600,15 @@ body.dark-mode .qrcode-box {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 8px;
+    padding: 8px 6px;
     background: rgba(26, 188, 156, 0.08);
-    border-radius: 8px;
-    color: #2c3e50;
+    border-radius: var(--radius-sm);
+    color: var(--color-text);
     text-decoration: none;
-    font-size: 13px;
-    transition: all 0.3s ease;
+    font-size: 12px;
+    transition: all var(--transition-base);
     border: 1px solid transparent;
-    min-height: 44px;
+    min-height: 40px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
@@ -1414,7 +1429,7 @@ body.dark-mode .book-tag-soft {
     padding: 30px 20px;
     text-align: center;
     font-size: 0.8rem;
-    color: #7f8c8d;
+    color: var(--color-text-muted);
     background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(10px);
 }
@@ -1422,33 +1437,37 @@ body.dark-mode .book-tag-soft {
 .footer-content {
     max-width: 1200px;
     margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
 }
 
-.footer a {
-    color: #1abc9c;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.footer a:hover {
-    color: #16a085;
-    text-decoration: underline;
+.footer-copyright {
+    margin: 0;
 }
 
 .footer-nav {
-    margin: 15px 0;
     line-height: 1.8;
 }
 
 .footer-meta {
-    margin-top: 10px;
+    margin: 0;
     font-size: 0.75rem;
     opacity: 0.8;
 }
 
 .footer-meta i {
     margin-right: 5px;
-    color: #1abc9c;
+    color: var(--color-primary);
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
 }
 
 /* =================================================

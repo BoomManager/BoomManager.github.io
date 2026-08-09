@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const tocItems = document.querySelectorAll('.toc-item');
 
         // 为每个卡片打上 data-section 标记，便于精准匹配
-        document.querySelectorAll('.info-unit.card, .books.info-unit.card, section.related-content').forEach(card => {
+        document.querySelectorAll('.info-unit.card, .books.info-unit.card, section.related-content, .page-content section[id]').forEach(card => {
             const h2 = card.querySelector('h2');
             if (h2 && !card.dataset.section) {
                 // 提取纯文本（去掉图标元素）
@@ -131,13 +131,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 var targetText = this.getAttribute('data-target');
                 var targetElement = null;
 
-                document.querySelectorAll('[data-section]').forEach(el => {
-                    if (el.dataset.section === targetText) {
-                        targetElement = el;
-                    }
-                });
+                // 优先通过 id 锚点查找
+                targetElement = document.getElementById(targetText);
+
+                // 回退到 data-section 匹配
+                if (!targetElement) {
+                    document.querySelectorAll('[data-section]').forEach(el => {
+                        if (el.dataset.section === targetText) {
+                            targetElement = el;
+                        }
+                    });
+                }
 
                 if (targetElement) {
+                    // 更新 URL hash 支持章节分享
+                    if (history.replaceState) {
+                        history.replaceState(null, '', '#' + encodeURIComponent(targetText));
+                    }
+
                     window.scrollTo({
                         top: targetElement.offsetTop - 120,
                         behavior: 'smooth'
@@ -376,6 +387,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     initTocNavigation();
+
+    // URL hash 锚点跳转：页面加载时如果有 #hash，滚动到对应section
+    if (location.hash) {
+        var hashTarget = decodeURIComponent(location.hash.slice(1));
+        var el = document.getElementById(hashTarget);
+        if (el) {
+            setTimeout(function() {
+                window.scrollTo({ top: el.offsetTop - 120, behavior: 'smooth' });
+            }, 300);
+        }
+    }
 
     // ===== 5. 夜间模式切换 =====
     const themeSwitch = document.getElementById('themeSwitch');
@@ -768,6 +790,28 @@ document.addEventListener('DOMContentLoaded', function() {
             badge.innerHTML = '<i class="fa fa-clock-o" aria-hidden="true"></i> ' + minutes + '分钟';
             h2.appendChild(badge);
         }
+    });
+
+    // ===== 统一图片加载失败处理 =====
+    document.querySelectorAll('img').forEach(function(img) {
+        if (img.dataset.errorBound) return;
+        img.dataset.errorBound = '1';
+        img.addEventListener('error', function() {
+            if (this.style.display === 'none') return; // 防止重复处理
+            this.style.display = 'none';
+            var parent = this.parentNode;
+            if (!parent) return;
+            parent.style.background = '#e5e7eb';
+            parent.style.display = 'flex';
+            parent.style.alignItems = 'center';
+            parent.style.justifyContent = 'center';
+            parent.style.minHeight = '60px';
+            var icon = document.createElement('i');
+            icon.className = 'fa fa-book';
+            icon.style.cssText = 'font-size:48px;color:#9ca3af';
+            icon.setAttribute('aria-hidden', 'true');
+            parent.appendChild(icon);
+        });
     });
 
     // ===== 14. 邮箱/微信一键复制 =====
