@@ -189,29 +189,62 @@ document.addEventListener('DOMContentLoaded', function() {
                 return window.matchMedia('(max-width: 768px)').matches;
             };
 
-            // 创建遮罩层
-            let tocOverlay = document.createElement('div');
-            tocOverlay.className = 'toc-overlay';
-            document.body.appendChild(tocOverlay);
+            let mobileTocInited = false;
+            let tocOverlay = null;
+            let tocFab = null;
 
-            // 创建浮动按钮
-            let tocFab = document.createElement('button');
-            tocFab.type = 'button';
-            tocFab.className = 'toc-fab';
-            tocFab.setAttribute('aria-label', '打开目录导航');
-            tocFab.innerHTML = '<i class="fa fa-list-ul" aria-hidden="true"></i><span>目录</span>';
-            tocContainer.appendChild(tocFab);
+            const iconMap = {
+                '个人简介': 'fa-user',
+                '基本信息': 'fa-user',
+                '联系方式': 'fa-phone',
+                '自媒体矩阵': 'fa-qrcode',
+                '写文成果': 'fa-trophy',
+                '数据统计': 'fa-bar-chart',
+                '更多内容': 'fa-compass',
+                '相关内容推荐': 'fa-link',
+                '相关推荐': 'fa-link',
+                '职业技能': 'fa-code',
+                '技能概览': 'fa-code',
+                '后端技术': 'fa-server',
+                '前端技术': 'fa-html5',
+                '运维与云原生': 'fa-cloud',
+                '大数据技术': 'fa-database',
+                '商业思维': 'fa-line-chart',
+                '副业思路': 'fa-lightbulb-o',
+                '商业方法论': 'fa-book',
+                '用户运营': 'fa-users',
+                '作品成果': 'fa-book',
+                '出版图书': 'fa-book',
+                '技术成就': 'fa-trophy',
+                '社区贡献': 'fa-comments',
+                '关于我': 'fa-user-circle',
+                '自我评价': 'fa-star',
+                '兴趣爱好': 'fa-heart',
+                '生活习惯': 'fa-coffee',
+                '持续计划': 'fa-calendar'
+            };
 
-            // 创建面板头部（拖拽条 + 标题 + 关闭按钮）
-            const tocList = tocContainer.querySelector('.toc-list');
-            if (tocList) {
-                // 拖拽指示条
+            function initMobileToc() {
+                if (mobileTocInited) return;
+                const tocList = tocContainer.querySelector('.toc-list');
+                if (!tocList) return;
+
+                tocOverlay = document.createElement('div');
+                tocOverlay.className = 'toc-overlay';
+                document.body.appendChild(tocOverlay);
+
+                tocFab = document.createElement('button');
+                tocFab.type = 'button';
+                tocFab.className = 'toc-fab';
+                tocFab.setAttribute('aria-label', '打开目录导航');
+                tocFab.innerHTML = '<i class="fa fa-list-ul" aria-hidden="true"></i><span>目录</span>';
+                tocContainer.appendChild(tocFab);
+
                 const handle = document.createElement('div');
                 handle.className = 'toc-panel-handle';
                 handle.setAttribute('aria-hidden', 'true');
                 tocList.insertBefore(handle, tocList.firstChild);
 
-                // 标题栏
                 const panelHeader = document.createElement('div');
                 panelHeader.className = 'toc-panel-header';
                 panelHeader.innerHTML =
@@ -219,37 +252,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     '<button type="button" class="toc-close-btn" aria-label="关闭目录"><i class="fa fa-times" aria-hidden="true"></i></button>';
                 tocList.insertBefore(panelHeader, handle.nextSibling);
 
-                // 为每个toc-item添加智能匹配图标
-                const iconMap = {
-                    '个人简介': 'fa-user',
-                    '基本信息': 'fa-user',
-                    '联系方式': 'fa-phone',
-                    '自媒体矩阵': 'fa-qrcode',
-                    '写文成果': 'fa-trophy',
-                    '数据统计': 'fa-bar-chart',
-                    '更多内容': 'fa-compass',
-                    '相关内容推荐': 'fa-link',
-                    '相关推荐': 'fa-link',
-                    '职业技能': 'fa-code',
-                    '技能概览': 'fa-code',
-                    '后端技术': 'fa-server',
-                    '前端技术': 'fa-html5',
-                    '运维与云原生': 'fa-cloud',
-                    '大数据技术': 'fa-database',
-                    '商业思维': 'fa-line-chart',
-                    '副业思路': 'fa-lightbulb-o',
-                    '商业方法论': 'fa-book',
-                    '用户运营': 'fa-users',
-                    '作品成果': 'fa-book',
-                    '出版图书': 'fa-book',
-                    '技术成就': 'fa-trophy',
-                    '社区贡献': 'fa-comments',
-                    '关于我': 'fa-user-circle',
-                    '自我评价': 'fa-star',
-                    '兴趣爱好': 'fa-heart',
-                    '生活习惯': 'fa-coffee',
-                    '持续计划': 'fa-calendar'
-                };
                 tocList.querySelectorAll('.toc-item').forEach(function(item) {
                     const text = item.textContent.trim();
                     let iconClass = 'fa-circle-o';
@@ -264,74 +266,103 @@ document.addEventListener('DOMContentLoaded', function() {
                     icon.setAttribute('aria-hidden', 'true');
                     item.insertBefore(icon, item.firstChild);
                 });
+
+                bindMobileEvents();
+                mobileTocInited = true;
             }
 
-            // 打开TOC面板
+            function destroyMobileToc() {
+                if (!mobileTocInited) return;
+                closeToc();
+
+                if (tocFab && tocFab.parentNode) tocFab.parentNode.removeChild(tocFab);
+                if (tocOverlay && tocOverlay.parentNode) tocOverlay.parentNode.removeChild(tocOverlay);
+
+                const tocList = tocContainer.querySelector('.toc-list');
+                if (tocList) {
+                    const handle = tocList.querySelector('.toc-panel-handle');
+                    if (handle) handle.parentNode.removeChild(handle);
+                    const panelHeader = tocList.querySelector('.toc-panel-header');
+                    if (panelHeader) panelHeader.parentNode.removeChild(panelHeader);
+                    tocList.querySelectorAll('.toc-item i.fa').forEach(function(icon) {
+                        icon.parentNode.removeChild(icon);
+                    });
+                }
+
+                tocFab = null;
+                tocOverlay = null;
+                mobileTocInited = false;
+            }
+
             function openToc() {
-                if (!isMobile()) return;
+                if (!isMobile() || !mobileTocInited) return;
                 tocContainer.classList.add('mobile-open');
                 tocOverlay.classList.add('show');
                 document.body.style.overflow = 'hidden';
                 tocFab.style.display = 'none';
             }
 
-            // 关闭TOC面板
             function closeToc() {
+                if (!mobileTocInited) return;
                 tocContainer.classList.remove('mobile-open');
-                tocOverlay.classList.remove('show');
+                if (tocOverlay) tocOverlay.classList.remove('show');
                 document.body.style.overflow = '';
-                tocFab.style.display = '';
+                if (tocFab) tocFab.style.display = '';
             }
 
-            // 浮动按钮点击 - 打开面板
-            tocFab.addEventListener('click', function(e) {
-                e.stopPropagation();
-                openToc();
-            });
+            function bindMobileEvents() {
+                if (!tocFab || !tocOverlay) return;
 
-            // 关闭按钮点击
-            const closeBtn = tocContainer.querySelector('.toc-close-btn');
-            if (closeBtn) {
-                closeBtn.addEventListener('click', function(e) {
+                tocFab.addEventListener('click', function(e) {
                     e.stopPropagation();
+                    openToc();
+                });
+
+                const closeBtn = tocContainer.querySelector('.toc-close-btn');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        closeToc();
+                    });
+                }
+
+                tocOverlay.addEventListener('click', function() {
                     closeToc();
                 });
+
+                tocContainer.querySelectorAll('.toc-item').forEach(function(item) {
+                    item.addEventListener('click', function() {
+                        if (isMobile()) {
+                            setTimeout(function() {
+                                closeToc();
+                            }, 350);
+                        }
+                    });
+                });
             }
 
-            // 遮罩点击关闭
-            tocOverlay.addEventListener('click', function() {
-                closeToc();
-            });
-
-            // 点击章节后自动关闭面板
-            tocContainer.querySelectorAll('.toc-item').forEach(function(item) {
-                item.addEventListener('click', function() {
-                    if (isMobile()) {
-                        setTimeout(function() {
-                            closeToc();
-                        }, 350);
-                    }
-                });
-            });
-
-            // ESC 键关闭
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && tocContainer.classList.contains('mobile-open')) {
                     closeToc();
                 }
             });
 
-            // 窗口变桌面端时重置状态
             const mql = window.matchMedia('(max-width: 768px)');
             function handleMQLChange(e) {
-                if (!e.matches) {
-                    closeToc();
+                if (e.matches) {
+                    initMobileToc();
+                } else {
+                    destroyMobileToc();
                 }
             }
             if (mql.addEventListener) {
                 mql.addEventListener('change', handleMQLChange);
             } else {
                 mql.addListener(handleMQLChange);
+            }
+
+            if (isMobile()) {
+                initMobileToc();
             }
         }
     }

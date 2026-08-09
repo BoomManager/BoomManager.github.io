@@ -1818,30 +1818,39 @@ body.dark-mode .navbar {
 }
 
 /* =================================================
- * 移动端 TOC 遮罩层
+ * PC端默认隐藏移动端TOC专属元素（双重保险）
  * ================================================= */
-.toc-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 998;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.toc-overlay.show {
-    display: block;
-    opacity: 1;
+.toc-overlay,
+.toc-fab,
+.toc-panel-handle,
+.toc-panel-header,
+.toc-container .toc-item i.fa {
+    display: none !important;
 }
 
 /* =================================================
  * 响应式 - 移动端
  * ================================================= */
 @media (max-width: 768px) {
+    /* 移动端 TOC 遮罩层 */
+    .toc-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 998;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .toc-overlay.show {
+        display: block;
+        opacity: 1;
+    }
+
     .navbar {
         padding: 0 15px;
     }
@@ -1930,14 +1939,22 @@ body.dark-mode .navbar {
         display: none;
     }
 
-    /* 收起状态：显示浮动按钮 */
+    /* 移动端 - 恢复移动端TOC元素显示 */
+    .toc-overlay,
+    .toc-fab,
+    .toc-panel-handle,
+    .toc-panel-header {
+        display: block !important;
+    }
+
+    /* 收起状态：目录列表隐藏 */
     .toc-container:not(.mobile-open) .toc-list {
         display: none;
     }
 
     /* 浮动按钮 - 使用真实DOM元素 */
     .toc-fab {
-        display: flex;
+        display: flex !important;
         align-items: center;
         gap: 8px;
         padding: 10px 16px;
@@ -2072,7 +2089,8 @@ body.dark-mode .navbar {
         padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
     }
 
-    .toc-container.mobile-open .toc-item i {
+    .toc-container.mobile-open .toc-item i.fa {
+        display: inline-block !important;
         width: 20px;
         text-align: center;
         font-size: 14px;
