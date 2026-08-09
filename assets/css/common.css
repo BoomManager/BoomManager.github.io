@@ -4,6 +4,81 @@
  * 包含：导航栏、卡片、夜间模式、响应式、滚动进度条等
  * ================================================= */
 
+/* =================================================
+ * 设计 Token（CSS 变量）- 统一圆角/阴影/间距/主色
+ * 美感基础：所有组件应优先使用变量，保证视觉一致性
+ * ================================================= */
+:root {
+    /* 主色系 */
+    --color-primary: #1abc9c;
+    --color-primary-dark: #16a085;
+    --color-primary-light: rgba(26, 188, 156, 0.1);
+    --color-primary-glow: rgba(26, 188, 156, 0.4);
+
+    /* 文字色 */
+    --color-text: #2c3e50;
+    --color-text-secondary: #6b7280;
+    --color-text-muted: #95a5a6;
+
+    /* 背景色 */
+    --color-bg: #ffffff;
+    --color-bg-alt: rgba(26, 188, 156, 0.06);
+
+    /* 圆角阶梯 */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+    --radius-full: 50%;
+
+    /* 阴影阶梯 */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.12);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.16);
+    --shadow-primary: 0 8px 24px rgba(26, 188, 156, 0.25);
+
+    /* 间距阶梯（8px 基准） */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 40px;
+
+    /* 过渡 */
+    --transition-fast: 0.2s ease;
+    --transition-base: 0.3s ease;
+    --transition-slow: 0.5s ease;
+
+    /* 渐变 */
+    --gradient-primary: linear-gradient(135deg, #1abc9c, #16a085);
+    --gradient-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+/* 暗色模式 token 覆盖 */
+body.dark-mode {
+    --color-primary: #38bdf8;
+    --color-primary-dark: #0ea5e9;
+    --color-primary-light: rgba(56, 189, 248, 0.1);
+    --color-primary-glow: rgba(56, 189, 248, 0.4);
+
+    --color-text: #f3f4f6;
+    --color-text-secondary: #9ca3af;
+    --color-text-muted: #6b7280;
+
+    --color-bg: #1f2937;
+    --color-bg-alt: rgba(56, 189, 248, 0.08);
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
+    --shadow-primary: 0 8px 24px rgba(56, 189, 248, 0.25);
+
+    --gradient-primary: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    --gradient-bg: linear-gradient(135deg, #1a2a3a 0%, #111827 100%);
+}
+
 /* 屏幕阅读器专用（视觉隐藏，SEO 友好） */
 .sr-only {
     position: absolute;
@@ -85,29 +160,49 @@ body .fa {
     left: 0;
     width: 100%;
     height: 60px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04), 0 4px 20px rgba(0, 0, 0, 0.06);
     z-index: 1000;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 30px;
-    transition: all 0.3s ease;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), height 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar.scrolled {
+    height: 52px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06), 0 6px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* 滚动方向感知：向下隐藏，向上显示 */
+.navbar.hidden {
+    transform: translateY(-100%);
 }
 
 .navbar-brand {
     font-size: 18px;
-    font-weight: bold;
-    color: #2c3e50;
+    font-weight: 700;
+    background: linear-gradient(135deg, #2c3e50, #1abc9c);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
     text-decoration: none;
     display: flex;
     align-items: center;
     gap: 8px;
+    letter-spacing: 0.5px;
 }
 
 .navbar-brand i {
     color: #1abc9c;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .navbar-menu {
@@ -122,16 +217,23 @@ body .fa {
     padding: 8px 16px;
     color: #555;
     text-decoration: none;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     font-size: 14px;
-    transition: all 0.3s ease;
+    font-weight: 500;
+    transition: all var(--transition-base);
     white-space: nowrap;
+    position: relative;
 }
 
-.navbar-menu li a:hover,
+.navbar-menu li a:hover {
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+}
+
 .navbar-menu li a.active {
-    background: #1abc9c;
+    background: var(--gradient-primary);
     color: white;
+    box-shadow: 0 2px 8px var(--color-primary-glow);
 }
 
 .navbar-tools {
@@ -142,16 +244,16 @@ body .fa {
 
 /* 夜间模式切换按钮 */
 .theme-switch {
-    background: white;
-    border-radius: 50%;
+    background: linear-gradient(135deg, #ffffff, #f8fafc);
+    border-radius: var(--radius-full);
     width: 40px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255,255,255,0.8);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all var(--transition-base);
     border: none;
     padding: 0;
     font: inherit;
@@ -180,6 +282,11 @@ body .fa {
     color: #2c3e50;
     cursor: pointer;
     padding: 5px 10px;
+    transition: transform 0.2s ease;
+}
+
+.navbar-toggle:active {
+    transform: scale(0.9);
 }
 
 /* =================================================
@@ -197,9 +304,11 @@ body .fa {
 
 .progress-bar {
     height: 3px;
-    background: #1abc9c;
+    background: linear-gradient(90deg, #1abc9c, #16a085, #1abc9c);
+    background-size: 200% 100%;
     width: 0%;
     transition: width 0.1s ease;
+    box-shadow: 0 0 8px rgba(26, 188, 156, 0.5);
 }
 
 /* =================================================
@@ -268,14 +377,15 @@ body:hover .cursor-follower {
  * ================================================= */
 .card {
     background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.08);
-    padding: 24px;
-    margin-bottom: 24px;
-    transition: all 0.3s ease;
-    border-left: 4px solid #1abc9c;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-lg);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+    border-left: 4px solid var(--color-primary);
     opacity: 0;
     transform: translateY(20px);
+    position: relative;
 }
 
 .card.animate {
@@ -284,8 +394,8 @@ body:hover .cursor-follower {
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-xl);
 }
 
 .card h2 {
@@ -1446,7 +1556,8 @@ aside ul li a {
 }
 
 /* =================================================
- * 滚动条样式
+ * 滚动条样式（webkit 内核）
+ * Firefox 通过 html 上的 scrollbar-width / scrollbar-color 兼容
  * ================================================= */
 ::-webkit-scrollbar {
     width: 8px;
@@ -1465,6 +1576,23 @@ aside ul li a {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #16a085;
+}
+
+/* 暗色模式滚动条 */
+body.dark-mode {
+    scrollbar-color: #38bdf8 #1f2937;
+}
+
+body.dark-mode ::-webkit-scrollbar-track {
+    background: #1f2937;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb {
+    background: #38bdf8;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb:hover {
+    background: #0ea5e9;
 }
 
 /* =================================================
@@ -1490,6 +1618,20 @@ body.dark-mode .navbar-menu li a {
 body.dark-mode .navbar-menu li a:hover,
 body.dark-mode .navbar-menu li a.active {
     background: #38bdf8;
+}
+
+/* 暗色模式：secondary 文本统一提亮（WCAG AA 4.5:1） */
+body.dark-mode .contact-label,
+body.dark-mode .stat-label,
+body.dark-mode .book-publisher-meta,
+body.dark-mode .reading-time,
+body.dark-mode .qrcode-tip,
+body.dark-mode .info-job {
+    color: #9ca3af;
+}
+
+body.dark-mode .book-meta {
+    color: #a8b3c5;
 }
 
 body.dark-mode .card {
@@ -1863,6 +2005,10 @@ body.dark-mode .navbar {
     background: #16a085;
     transform: translateY(-3px);
     box-shadow: 0 6px 16px rgba(26, 188, 156, 0.5);
+}
+
+#backToTop:active {
+    transform: translateY(-1px) scale(0.92);
 }
 
 body.dark-mode #backToTop {
@@ -2360,6 +2506,295 @@ img[data-loaded="true"] {
         transform: translateY(0);
     }
 }
+
+/* =================================================
+ * 极致体验：字号调节按钮
+ * ================================================= */
+.font-size-toggle {
+    background: linear-gradient(135deg, #ffffff, #f8fafc);
+    border-radius: var(--radius-full);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255,255,255,0.8);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: var(--color-primary-dark);
+    font-weight: 700;
+    font-size: 13px;
+    position: relative;
+}
+
+.font-size-toggle:hover {
+    transform: scale(1.1);
+}
+
+.font-size-toggle:active {
+    transform: scale(0.92);
+}
+
+.font-size-toggle:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+body.dark-mode .font-size-toggle {
+    background: linear-gradient(135deg, #374151, #1f2937);
+    color: #38bdf8;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+/* 字号调节弹出面板 */
+.font-size-panel {
+    position: absolute;
+    top: 48px;
+    right: 0;
+    background: #fff;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    padding: 8px;
+    display: none;
+    gap: 4px;
+    z-index: 1001;
+    border: 1px solid rgba(0,0,0,0.06);
+}
+
+.font-size-panel.show {
+    display: flex;
+}
+
+.font-size-panel button {
+    background: transparent;
+    border: none;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--color-text);
+    transition: all var(--transition-fast);
+    min-height: 36px;
+    min-width: 44px;
+    font-weight: 500;
+}
+
+.font-size-panel button:hover {
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+}
+
+.font-size-panel button.active {
+    background: var(--gradient-primary);
+    color: #fff;
+}
+
+body.dark-mode .font-size-panel {
+    background: #1f2937;
+    border-color: rgba(255,255,255,0.08);
+}
+
+body.dark-mode .font-size-panel button {
+    color: #f3f4f6;
+}
+
+body.dark-mode .font-size-panel button:hover {
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+}
+
+body.dark-mode .font-size-panel button.active {
+    background: var(--gradient-primary);
+}
+
+/* =================================================
+ * 极致体验：快捷键帮助面板
+ * ================================================= */
+.shortcut-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.shortcut-overlay.show {
+    display: flex;
+    opacity: 1;
+}
+
+.shortcut-modal {
+    background: #fff;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    padding: 28px 32px;
+    max-width: 480px;
+    width: calc(100% - 40px);
+    transform: scale(0.9);
+    transition: transform var(--transition-base);
+}
+
+.shortcut-overlay.show .shortcut-modal {
+    transform: scale(1);
+}
+
+.shortcut-modal h2 {
+    margin: 0 0 6px;
+    font-size: 20px;
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.shortcut-modal h2 i {
+    color: var(--color-primary);
+}
+
+.shortcut-modal .shortcut-desc {
+    color: var(--color-text-muted);
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.shortcut-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.shortcut-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+}
+
+.shortcut-list li:last-child {
+    border-bottom: none;
+}
+
+.shortcut-list .shortcut-label {
+    color: var(--color-text);
+}
+
+.shortcut-list kbd {
+    background: #f5f5f5;
+    border: 1px solid #d1d5db;
+    border-bottom-width: 2px;
+    border-radius: var(--radius-sm);
+    padding: 3px 10px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12px;
+    color: var(--color-text);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+    min-width: 28px;
+    text-align: center;
+}
+
+.shortcut-close-hint {
+    margin-top: 16px;
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 12px;
+}
+
+body.dark-mode .shortcut-modal {
+    background: #1f2937;
+}
+
+body.dark-mode .shortcut-modal h2 {
+    color: #f3f4f6;
+}
+
+body.dark-mode .shortcut-list li {
+    border-color: rgba(255,255,255,0.08);
+}
+
+body.dark-mode .shortcut-list .shortcut-label {
+    color: #f3f4f6;
+}
+
+body.dark-mode .shortcut-list kbd {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f3f4f6;
+}
+
+/* =================================================
+ * 极致体验：链接跳转加载条
+ * ================================================= */
+.nav-loading-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: var(--gradient-primary);
+    width: 0;
+    z-index: 10001;
+    box-shadow: 0 0 8px var(--color-primary-glow);
+    transition: width 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+}
+
+.nav-loading-bar.loading {
+    opacity: 1;
+    animation: navLoadingGrow 1.2s ease-in-out infinite;
+}
+
+@keyframes navLoadingGrow {
+    0% { width: 0; }
+    50% { width: 70%; }
+    100% { width: 90%; }
+}
+
+/* =================================================
+ * 极致体验：阅读模式
+ * ================================================= */
+body.reading-mode .cursor-follower,
+body.reading-mode #particlesCanvas,
+body.reading-mode .toc-container,
+body.reading-mode aside,
+body.reading-mode .breadcrumb {
+    display: none !important;
+}
+
+body.reading-mode .container,
+body.reading-mode .page-content {
+    max-width: 760px;
+}
+
+body.reading-mode .card {
+    box-shadow: var(--shadow-sm);
+}
+
+body.reading-mode .card:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+}
+
+/* 减少动画偏好：隐藏新增交互的非必要动画 */
+@media (prefers-reduced-motion: reduce) {
+    .nav-loading-bar.loading {
+        animation: none;
+        width: 90%;
+    }
+    .shortcut-modal {
+        transition: none;
+    }
+}
+
 
 /* 页面整体淡入 */
 body {

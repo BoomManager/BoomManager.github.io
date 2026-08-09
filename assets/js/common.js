@@ -205,22 +205,40 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ===== 6. 移动端导航菜单 =====
+    // ===== 6. 移动端导航菜单（汉堡 ↔ X 图标切换） =====
     const navbarToggle = document.getElementById('navbarToggle');
     const navbarMenu = document.getElementById('navbarMenu');
+    const toggleIcon = navbarToggle ? navbarToggle.querySelector('i') : null;
+
+    function setMenuState(isShown) {
+        if (!navbarMenu || !navbarToggle) return;
+        if (isShown) {
+            navbarMenu.classList.add('show');
+            navbarToggle.setAttribute('aria-expanded', 'true');
+            navbarToggle.setAttribute('aria-label', '关闭菜单');
+            if (toggleIcon) {
+                toggleIcon.classList.remove('fa-bars');
+                toggleIcon.classList.add('fa-times');
+            }
+        } else {
+            navbarMenu.classList.remove('show');
+            navbarToggle.setAttribute('aria-expanded', 'false');
+            navbarToggle.setAttribute('aria-label', '打开菜单');
+            if (toggleIcon) {
+                toggleIcon.classList.remove('fa-times');
+                toggleIcon.classList.add('fa-bars');
+            }
+        }
+    }
 
     if (navbarToggle && navbarMenu) {
         navbarToggle.addEventListener('click', function() {
-            const isShown = navbarMenu.classList.toggle('show');
-            this.setAttribute('aria-expanded', isShown);
+            setMenuState(!navbarMenu.classList.contains('show'));
         });
 
         // 点击导航链接后关闭菜单
         navbarMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navbarMenu.classList.remove('show');
-                navbarToggle.setAttribute('aria-expanded', 'false');
-            });
+            link.addEventListener('click', () => setMenuState(false));
         });
     }
 
@@ -399,11 +417,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ===== 11. 返回顶部按钮 + 导航栏滚动效果 =====
+    // ===== 11. 返回顶部按钮 + 导航栏滚动效果（含方向感知隐藏） =====
     const backToTopBtn = document.getElementById('backToTop');
     const navbar = document.querySelector('.navbar');
     if (backToTopBtn || navbar) {
         let uiScrollTicking = false;
+        let lastScrollY = window.pageYOffset;
         function onScrollUI() {
             const offset = window.pageYOffset;
             if (backToTopBtn) {
@@ -419,7 +438,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     navbar.classList.remove('scrolled');
                 }
+                // 方向感知：向下滚动且超过 200px 时隐藏，向上滚动时显示
+                // 顶部 50px 内始终显示，菜单展开时始终显示
+                const scrollDelta = offset - lastScrollY;
+                const menuOpen = navbarMenu && navbarMenu.classList.contains('show');
+                if (offset < 50 || menuOpen) {
+                    navbar.classList.remove('hidden');
+                } else if (scrollDelta > 5 && offset > 200) {
+                    navbar.classList.add('hidden');
+                } else if (scrollDelta < -5) {
+                    navbar.classList.remove('hidden');
+                }
             }
+            lastScrollY = offset;
             uiScrollTicking = false;
         }
 
@@ -439,6 +470,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ===== 12. 键盘导航快捷键 =====
     document.addEventListener('keydown', function(e) {
+        const isInputFocused = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA';
         // Alt + 1-5 快捷切换页面
         if (e.altKey && !e.ctrlKey && !e.shiftKey) {
             const navMap = { '1': 'index.html', '2': 'skills.html', '3': 'business.html', '4': 'works.html', '5': 'about.html' };
@@ -447,13 +479,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.location.href = navMap[e.key];
             }
         }
-        // ESC 关闭移动端菜单
-        if (e.key === 'Escape' && navbarMenu && navbarMenu.classList.contains('show')) {
-            navbarMenu.classList.remove('show');
+        // ESC 关闭弹层（菜单 / 快捷键面板 / 字号面板）
+        if (e.key === 'Escape') {
+            if (shortcutOverlay && shortcutOverlay.classList.contains('show')) {
+                closeShortcutPanel();
+            } else if (fontSizePanel && fontSizePanel.classList.contains('show')) {
+                fontSizePanel.classList.remove('show');
+            } else if (navbarMenu && navbarMenu.classList.contains('show')) {
+                setMenuState(false);
+            }
         }
-        // T 切换主题
-        if (e.key === 't' && !e.altKey && !e.ctrlKey && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-            if (themeSwitch) themeSwitch.click();
+        // 仅在非输入框聚焦时响应字母快捷键
+        if (!e.altKey && !e.ctrlKey && !e.metaKey && !isInputFocused) {
+            // T 切换主题
+            if (e.key === 't' || e.key === 'T') {
+                if (themeSwitch) themeSwitch.click();
+            }
+            // R 切换阅读模式
+            if (e.key === 'r' || e.key === 'R') {
+                document.body.classList.toggle('reading-mode');
+                try { localStorage.setItem('readingMode', document.body.classList.contains('reading-mode') ? '1' : '0'); } catch(_) {}
+            }
+            // ? 或 / 弹出快捷键帮助
+            if (e.key === '?' || (e.key === '/' && e.shiftKey)) {
+                e.preventDefault();
+                openShortcutPanel();
+            }
         }
     });
 
@@ -589,8 +640,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// ===== 滚动进度条（全局，节流优化） =====
+// ===== 滚动进度条（全局，节流优化） + 阅读进度记忆 =====
 let progressTicking = false;
+const SCROLL_KEY = 'readingPos:' + location.pathname;
+
 window.addEventListener('scroll', function() {
     if (!progressTicking) {
         window.requestAnimationFrame(function() {
@@ -599,8 +652,176 @@ window.addEventListener('scroll', function() {
             let scrolled = height > 0 ? (winScroll / height) * 100 : 0;
             const progressBar = document.getElementById("progressBar");
             if (progressBar) progressBar.style.width = scrolled + "%";
+            // 阅读进度记忆（节流写入 sessionStorage）
+            try { sessionStorage.setItem(SCROLL_KEY, String(winScroll)); } catch(_) {}
             progressTicking = false;
         });
         progressTicking = true;
     }
 }, { passive: true });
+
+// 阅读进度恢复（页面加载时）
+(function restoreReadingPos() {
+    try {
+        const saved = sessionStorage.getItem(SCROLL_KEY);
+        if (saved && parseInt(saved, 10) > 200) {
+            // 延迟到布局稳定后恢复
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    window.scrollTo(0, parseInt(saved, 10));
+                }, 100);
+            });
+        }
+    } catch(_) {}
+})();
+
+// ==================================================
+// 极致体验：字号调节 / 快捷键面板 / 链接加载指示 / 阅读模式恢复
+// ==================================================
+
+// 字号调节：通过 html 根字号缩放（body 用 em 单位会联动）
+const FONT_SCALE_KEY = 'fontScale';
+const fontScales = { '小': 0.9, '标准': 1, '大': 1.12, '特大': 1.25 };
+let currentFontScale = 1;
+
+function applyFontScale(scale) {
+    currentFontScale = scale;
+    document.documentElement.style.fontSize = scale * 100 + '%';
+    try { localStorage.setItem(FONT_SCALE_KEY, String(scale)); } catch(_) {}
+    // 更新面板激活态
+    document.querySelectorAll('.font-size-panel button').forEach(btn => {
+        btn.classList.toggle('active', parseFloat(btn.dataset.scale) === scale);
+    });
+}
+
+// 注入字号调节按钮 + 面板
+function injectFontSizeToggle() {
+    const tools = document.querySelector('.navbar-tools');
+    if (!tools) return;
+    const wrap = document.createElement('div');
+    wrap.style.position = 'relative';
+    wrap.innerHTML = '<button class="font-size-toggle" id="fontSizeToggle" type="button" aria-label="调节字号" aria-haspopup="true" aria-expanded="false">A</button>' +
+        '<div class="font-size-panel" id="fontSizePanel" role="menu" aria-label="字号选择">' +
+        Object.keys(fontScales).map(function(k) {
+            return '<button type="button" role="menuitem" data-scale="' + fontScales[k] + '">' + k + '</button>';
+        }).join('') +
+        '</div>';
+    // 插到 theme-switch 之前
+    tools.insertBefore(wrap, tools.firstChild);
+
+    const toggle = document.getElementById('fontSizeToggle');
+    const panel = document.getElementById('fontSizePanel');
+    toggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const isShow = panel.classList.toggle('show');
+        toggle.setAttribute('aria-expanded', isShow ? 'true' : 'false');
+    });
+    panel.querySelectorAll('button').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            applyFontScale(parseFloat(btn.dataset.scale));
+            panel.classList.remove('show');
+            toggle.setAttribute('aria-expanded', 'false');
+        });
+    });
+    // 点击外部关闭
+    document.addEventListener('click', function(e) {
+        if (!wrap.contains(e.target)) {
+            panel.classList.remove('show');
+            toggle.setAttribute('aria-expanded', 'false');
+        }
+    });
+    return panel;
+}
+
+// 注入快捷键帮助面板
+function injectShortcutPanel() {
+    const overlay = document.createElement('div');
+    overlay.className = 'shortcut-overlay';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-labelledby', 'shortcutTitle');
+    overlay.innerHTML =
+        '<div class="shortcut-modal">' +
+            '<h2 id="shortcutTitle"><i class="fa fa-keyboard-o" aria-hidden="true"></i> 键盘快捷键</h2>' +
+            '<p class="shortcut-desc">使用键盘可快速导航与操作，提升浏览效率。</p>' +
+            '<ul class="shortcut-list">' +
+                '<li><span class="shortcut-label">切换页面</span><kbd>Alt</kbd> + <kbd>1-5</kbd></li>' +
+                '<li><span class="shortcut-label">切换夜间/日间模式</span><kbd>T</kbd></li>' +
+                '<li><span class="shortcut-label">切换阅读模式</span><kbd>R</kbd></li>' +
+                '<li><span class="shortcut-label">显示本帮助面板</span><kbd>?</kbd></li>' +
+                '<li><span class="shortcut-label">关闭弹层/菜单</span><kbd>Esc</kbd></li>' +
+            '</ul>' +
+            '<p class="shortcut-close-hint">按 <kbd>Esc</kbd> 或点击空白处关闭</p>' +
+        '</div>';
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) closeShortcutPanel();
+    });
+    return overlay;
+}
+
+var shortcutOverlay = null;
+var fontSizePanel = null;
+
+function openShortcutPanel() {
+    if (!shortcutOverlay) shortcutOverlay = injectShortcutPanel();
+    shortcutOverlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeShortcutPanel() {
+    if (shortcutOverlay) {
+        shortcutOverlay.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+}
+
+// 链接跳转加载指示
+function injectNavLoadingBar() {
+    const bar = document.createElement('div');
+    bar.className = 'nav-loading-bar';
+    document.body.appendChild(bar);
+    // 监听站内 .html 链接点击
+    document.addEventListener('click', function(e) {
+        const link = e.target.closest('a');
+        if (!link) return;
+        const href = link.getAttribute('href');
+        // 仅对站内 .html 链接（非新窗口、非锚点）触发
+        if (!href || !href.endsWith('.html') && !href.endsWith('/')) return;
+        if (link.target === '_blank' || e.metaKey || e.ctrlKey || e.shiftKey) return;
+        if (href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+        bar.classList.add('loading');
+        // 兜底：3 秒后若页面未跳转则隐藏
+        setTimeout(function() { bar.classList.remove('loading'); }, 3000);
+    });
+}
+
+// 阅读模式恢复 + 字号恢复 + DOM 注入（DOMContentLoaded 后执行）
+document.addEventListener('DOMContentLoaded', function() {
+    // 恢复阅读模式
+    try {
+        if (localStorage.getItem('readingMode') === '1') {
+            document.body.classList.add('reading-mode');
+        }
+    } catch(_) {}
+    // 恢复字号
+    try {
+        const savedScale = parseFloat(localStorage.getItem(FONT_SCALE_KEY));
+        if (savedScale && !isNaN(savedScale)) {
+            applyFontScale(savedScale);
+        }
+    } catch(_) {}
+    // 注入控件
+    fontSizePanel = injectFontSizeToggle();
+    injectNavLoadingBar();
+});
+
+// Service Worker 注册（轻量 PWA，网络优先策略）
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('sw.js').catch(function() {
+            // 注册失败静默处理，不影响正常浏览
+        });
+    });
+}
+

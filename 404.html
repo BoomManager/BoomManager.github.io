@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="renderer" content="webkit">
+    <meta name="apple-mobile-web-app-title" content="廖志伟" />
+
+    <!-- 安全与隐私 -->
+    <meta name="referrer" content="strict-origin-when-cross-origin"/>
+    <meta name="color-scheme" content="light dark"/>
+    <meta name="supported-color-schemes" content="light dark"/>
+    <meta name="google" content="notranslate"/>
+
+    <!-- SEO Meta Tags -->
+    <title>页面走丢了 (404) | 廖志伟 - Java资深开发工程师</title>
+    <meta name="description" content="您访问的页面不存在。返回廖志伟个人主页，查看职业技能、商业思维、作品成果等精彩内容。"/>
+    <meta name="robots" content="noindex, follow"/>
+    <link rel="canonical" href="https://www.liaozhiwei.cn/404.html"/>
+
+    <!-- GEO 地理位置元数据 -->
+    <meta name="geo.region" content="CN-SH"/>
+    <meta name="geo.placename" content="上海"/>
+    <meta name="geo.position" content="31.2304;121.4737"/>
+
+    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/x-icon" sizes="32x32" href="assets/images/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/avatar.jpg">
+    <link rel="manifest" href="manifest.json">
+
+    <link rel="stylesheet" href="assets/css/typo.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/common.css">
+
+    <style>
+        /* 404 页面专属样式 */
+        .error-wrap {
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 20px 40px;
+            text-align: center;
+        }
+        .error-inner {
+            max-width: 560px;
+        }
+        .error-code {
+            font-size: clamp(80px, 18vw, 160px);
+            font-weight: 900;
+            line-height: 1;
+            background: linear-gradient(135deg, #1abc9c, #16a085);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            margin-bottom: 8px;
+            letter-spacing: -4px;
+        }
+        .error-title {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        .error-desc {
+            font-size: 15px;
+            color: #7f8c8d;
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+        .error-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        .error-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.25s ease;
+            min-height: 44px;
+        }
+        .error-btn-primary {
+            background: linear-gradient(135deg, #1abc9c, #16a085);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(26, 188, 156, 0.3);
+        }
+        .error-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(26, 188, 156, 0.4);
+        }
+        .error-btn-primary:active {
+            transform: translateY(0) scale(0.97);
+        }
+        .error-btn-secondary {
+            background: rgba(26, 188, 156, 0.1);
+            color: #16a085;
+            border: 1px solid rgba(26, 188, 156, 0.3);
+        }
+        .error-btn-secondary:hover {
+            background: rgba(26, 188, 156, 0.18);
+            transform: translateY(-2px);
+        }
+        .error-btn-secondary:active {
+            transform: translateY(0) scale(0.97);
+        }
+        .error-suggestions {
+            background: #fff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            border-left: 4px solid #1abc9c;
+            text-align: left;
+        }
+        .error-suggestions h3 {
+            font-size: 16px;
+            color: #2c3e50;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .error-suggestions ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 8px;
+        }
+        .error-suggestions li a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: #2c3e50;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            background: rgba(26, 188, 156, 0.05);
+            min-height: 44px;
+        }
+        .error-suggestions li a:hover {
+            background: rgba(26, 188, 156, 0.15);
+            transform: translateX(4px);
+            color: #16a085;
+        }
+        .error-suggestions li a i {
+            color: #1abc9c;
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* 暗色模式 */
+        body.dark-mode .error-title { color: #f3f4f6; }
+        body.dark-mode .error-desc { color: #9ca3af; }
+        body.dark-mode .error-suggestions {
+            background: #1f2937;
+            border-left-color: #38bdf8;
+        }
+        body.dark-mode .error-suggestions h3 { color: #f3f4f6; }
+        body.dark-mode .error-suggestions li a {
+            color: #f3f4f6;
+            background: rgba(56, 189, 248, 0.08);
+        }
+        body.dark-mode .error-suggestions li a:hover {
+            background: rgba(56, 189, 248, 0.18);
+            color: #38bdf8;
+        }
+        body.dark-mode .error-suggestions li a i { color: #38bdf8; }
+        body.dark-mode .error-btn-secondary {
+            background: rgba(56, 189, 248, 0.1);
+            color: #38bdf8;
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+        body.dark-mode .error-btn-secondary:hover {
+            background: rgba(56, 189, 248, 0.18);
+        }
+        body.dark-mode .error-btn-primary {
+            background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+        }
+        body.dark-mode .error-btn-primary:hover {
+            box-shadow: 0 8px 20px rgba(56, 189, 248, 0.4);
+        }
+
+        @media (max-width: 480px) {
+            .error-actions { flex-direction: column; }
+            .error-btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="#mainContent" class="skip-to-content">跳到主内容</a>
+    <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="cursor-follower" aria-hidden="true"></div>
+
+    <!-- 顶部导航栏 -->
+    <header>
+    <nav class="navbar" role="navigation" aria-label="主导航">
+        <a href="index.html" class="navbar-brand">
+            <i class="fa fa-code"></i> 廖志伟
+        </a>
+        <ul class="navbar-menu" id="navbarMenu">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="skills.html">职业技能</a></li>
+            <li><a href="business.html">商业思维</a></li>
+            <li><a href="works.html">作品成果</a></li>
+            <li><a href="about.html">关于我</a></li>
+        </ul>
+        <div class="navbar-tools">
+            <button class="theme-switch" id="themeSwitch" aria-label="切换夜间模式" type="button">
+                <i class="fa fa-moon-o" aria-hidden="true"></i>
+            </button>
+            <button class="navbar-toggle" id="navbarToggle" aria-label="打开菜单" aria-expanded="false">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+    </header>
+
+    <main class="error-wrap" id="mainContent">
+        <div class="error-inner">
+            <div class="error-code">404</div>
+            <h1 class="error-title">页面走丢了</h1>
+            <p class="error-desc">
+                抱歉，您访问的页面不存在或已被移动。<br>
+                可能是链接失效或地址输入有误。
+            </p>
+            <div class="error-actions">
+                <a href="index.html" class="error-btn error-btn-primary">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                    返回首页
+                </a>
+                <a href="javascript:history.back()" class="error-btn error-btn-secondary">
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                    返回上一页
+                </a>
+            </div>
+            <div class="error-suggestions">
+                <h3><i class="fa fa-compass" aria-hidden="true"></i> 您可能想访问</h3>
+                <ul>
+                    <li><a href="skills.html"><i class="fa fa-cogs" aria-hidden="true"></i> 职业技能技术栈</a></li>
+                    <li><a href="works.html"><i class="fa fa-book" aria-hidden="true"></i> 出版图书作品</a></li>
+                    <li><a href="business.html"><i class="fa fa-lightbulb-o" aria-hidden="true"></i> 商业思维与副业</a></li>
+                    <li><a href="about.html"><i class="fa fa-user" aria-hidden="true"></i> 关于廖志伟</a></li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/common.js"></script>
+</body>
+
+</html>
