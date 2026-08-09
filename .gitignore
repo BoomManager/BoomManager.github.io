@@ -1,0 +1,15 @@
+# IDE
+.idea/
+
+# Sass cache
+assets/.sass-cache/
+
+# Debug logs
+debug.log
+
+# Trae verify (临时验证文件)
+.trae-verify/
+
+# OS files
+.DS_Store
+Thumbs.db

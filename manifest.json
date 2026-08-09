@@ -1,0 +1,64 @@
+{
+    "name": "廖志伟个人主页",
+    "short_name": "廖志伟",
+    "description": "Java资深开发工程师个人主页 - 职业技能、商业思维、作品成果",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "background_color": "#f5f7fa",
+    "theme_color": "#1abc9c",
+    "lang": "zh-CN",
+    "dir": "ltr",
+    "scope": "/",
+    "icons": [
+        {
+            "src": "assets/images/avatar.jpg",
+            "sizes": "192x192",
+            "type": "image/jpeg",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "assets/images/avatar.jpg",
+            "sizes": "512x512",
+            "type": "image/jpeg",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "assets/images/favicon.ico",
+            "sizes": "16x16 32x32 48x48",
+            "type": "image/x-icon"
+        }
+    ],
+    "categories": ["education", "productivity", "developer"],
+    "screenshots": [],
+    "shortcuts": [
+        {
+            "name": "职业技能",
+            "short_name": "技能",
+            "description": "查看Java技术栈详解",
+            "url": "/skills.html",
+            "icons": [{"src": "assets/images/avatar.jpg", "sizes": "192x192"}]
+        },
+        {
+            "name": "商业思维",
+            "short_name": "商业",
+            "description": "副业思路与商业方法论",
+            "url": "/business.html",
+            "icons": [{"src": "assets/images/avatar.jpg", "sizes": "192x192"}]
+        },
+        {
+            "name": "作品成果",
+            "short_name": "作品",
+            "description": "出版图书与技术成就",
+            "url": "/works.html",
+            "icons": [{"src": "assets/images/avatar.jpg", "sizes": "192x192"}]
+        },
+        {
+            "name": "关于我",
+            "short_name": "关于",
+            "description": "自我评价与兴趣爱好",
+            "url": "/about.html",
+            "icons": [{"src": "assets/images/avatar.jpg", "sizes": "192x192"}]
+        }
+    ]
+}
