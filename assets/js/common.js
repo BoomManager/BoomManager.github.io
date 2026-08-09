@@ -32,41 +32,51 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // ===== 2. 卡片入场动画 =====
-    const observer = new IntersectionObserver((entries) => {
+    // ===== 2. 卡片入场动画（统一观察器，支持交错延迟） =====
+    const animateObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
-                observer.unobserve(entry.target);
+                // 获取同组元素索引实现交错延迟
+                const siblings = entry.target.parentElement
+                    ? Array.from(entry.target.parentElement.children).filter(el =>
+                        el.classList.contains('card') ||
+                        el.classList.contains('page-entry-card') ||
+                        el.classList.contains('achievement-card') ||
+                        el.classList.contains('habit-card') ||
+                        el.classList.contains('stat-card') ||
+                        el.classList.contains('book-card'))
+                    : [entry.target];
+                const index = siblings.indexOf(entry.target);
+                const delay = Math.min(index * 80, 400);
+
+                setTimeout(() => {
+                    entry.target.classList.add('animate');
+                }, delay);
+                animateObserver.unobserve(entry.target);
             }
         });
     }, {
         threshold: 0.1,
-        rootMargin: '100px 0px'
+        rootMargin: '80px 0px'
     });
 
-    document.querySelectorAll('.card').forEach(card => {
-        observer.observe(card);
+    // 观察所有需要入场动画的元素
+    document.querySelectorAll('.card, .page-entry-card, .achievement-card, .habit-card, .stat-card, .book-card').forEach(el => {
+        animateObserver.observe(el);
     });
 
-    // ===== 2.1 书籍卡片交错入场动画 =====
-    const bookCards = document.querySelectorAll('.book-card');
-    if (bookCards.length > 0) {
-        const bookObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
+    // ===== 2.1 相关内容推荐区域入场 =====
+    const relatedContent = document.querySelector('.related-content');
+    if (relatedContent) {
+        const relatedObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const delay = Array.from(bookCards).indexOf(entry.target) * 120;
-                    setTimeout(() => {
-                        entry.target.classList.add('animate');
-                    }, delay);
-                    bookObserver.unobserve(entry.target);
+                    entry.target.classList.add('animate');
+                    relatedObserver.unobserve(entry.target);
                 }
             });
-        }, {
-            threshold: 0.1,
-            rootMargin: '50px 0px'
-        });
-        bookCards.forEach(card => bookObserver.observe(card));
+        }, { threshold: 0.15 });
+        relatedObserver.observe(relatedContent);
     }
 
     // ===== 3. 鼠标跟随效果 =====
@@ -122,7 +132,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        window.addEventListener('scroll', function() {
+        // 节流滚动处理
+        let scrollTicking = false;
+        function onScroll() {
             const sections = document.querySelectorAll('[data-section]');
             let currentSectionId = '';
             const scrollPosition = window.scrollY + 140;
@@ -143,7 +155,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     item.classList.remove('active');
                 }
             });
-        });
+            scrollTicking = false;
+        }
+
+        window.addEventListener('scroll', function() {
+            if (!scrollTicking) {
+                window.requestAnimationFrame(onScroll);
+                scrollTicking = true;
+            }
+        }, { passive: true });
     }
 
     initTocNavigation();
@@ -348,23 +368,42 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ===== 11. 返回顶部按钮 =====
+    // ===== 11. 返回顶部按钮 + 导航栏滚动效果 =====
     const backToTopBtn = document.getElementById('backToTop');
-    if (backToTopBtn) {
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 300) {
-                backToTopBtn.classList.add('show');
-            } else {
-                backToTopBtn.classList.remove('show');
+    const navbar = document.querySelector('.navbar');
+    if (backToTopBtn || navbar) {
+        let uiScrollTicking = false;
+        function onScrollUI() {
+            const offset = window.pageYOffset;
+            if (backToTopBtn) {
+                if (offset > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
             }
-        });
+            if (navbar) {
+                if (offset > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            }
+            uiScrollTicking = false;
+        }
 
-        backToTopBtn.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+        window.addEventListener('scroll', function() {
+            if (!uiScrollTicking) {
+                window.requestAnimationFrame(onScrollUI);
+                uiScrollTicking = true;
+            }
+        }, { passive: true });
+
+        if (backToTopBtn) {
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             });
-        });
+        }
     }
 
     // ===== 12. 键盘导航快捷键 =====
@@ -452,18 +491,31 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ===== 16. 图片懒加载增强（IntersectionObserver） =====
+    // ===== 16. 图片渐进式加载（模糊→清晰） =====
     if ('IntersectionObserver' in window) {
         const lazyImages = document.querySelectorAll('img[loading="lazy"]:not([data-loaded])');
         const imageObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const img = entry.target;
-                    img.dataset.loaded = 'true';
+                    img.dataset.loading = 'true';
+
+                    // 图片加载完成后移除模糊
+                    const onLoaded = function() {
+                        img.dataset.loaded = 'true';
+                        img.removeAttribute('data-loading');
+                        img.removeEventListener('load', onLoaded);
+                    };
+
+                    if (img.complete && img.naturalWidth !== 0) {
+                        onLoaded();
+                    } else {
+                        img.addEventListener('load', onLoaded);
+                    }
                     imageObserver.unobserve(img);
                 }
             });
-        }, { rootMargin: '50px 0px' });
+        }, { rootMargin: '100px 0px' });
 
         lazyImages.forEach(img => imageObserver.observe(img));
     }
@@ -487,11 +539,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// ===== 滚动进度条（全局） =====
-window.onscroll = function() {
-    let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    let scrolled = (winScroll / height) * 100;
-    const progressBar = document.getElementById("progressBar");
-    if (progressBar) progressBar.style.width = scrolled + "%";
-};
+// ===== 滚动进度条（全局，节流优化） =====
+let progressTicking = false;
+window.addEventListener('scroll', function() {
+    if (!progressTicking) {
+        window.requestAnimationFrame(function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+            const progressBar = document.getElementById("progressBar");
+            if (progressBar) progressBar.style.width = scrolled + "%";
+            progressTicking = false;
+        });
+        progressTicking = true;
+    }
+}, { passive: true });

@@ -1993,6 +1993,351 @@ body.dark-mode .skeleton {
 }
 
 /* =================================================
+ * 渐进式加载 & 增强动画
+ * ================================================= */
+
+/* 图片渐进式加载（模糊→清晰） */
+img {
+    transition: filter 0.4s ease, opacity 0.4s ease;
+}
+
+img[data-loading="true"] {
+    filter: blur(8px);
+    opacity: 0.6;
+}
+
+img[data-loaded="true"] {
+    filter: blur(0);
+    opacity: 1;
+}
+
+/* 卡片入场动画增强 - 交错延迟 */
+.card {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+    will-change: opacity, transform;
+}
+
+.card.animate {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* 卡片悬停时的光效扫过 */
+.card {
+    position: relative;
+    overflow: hidden;
+}
+
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+    transition: left 0.6s ease;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.card:hover::after {
+    left: 120%;
+}
+
+/* 卡片内容层级 */
+.card > *:not(.ripple) {
+    position: relative;
+    z-index: 1;
+}
+
+/* 页面入口卡片入场动画 */
+.page-entry-card {
+    opacity: 0;
+    transform: translateY(25px) scale(0.95);
+    transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                box-shadow 0.3s ease;
+    will-change: opacity, transform;
+}
+
+.page-entry-card.animate {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* 页面入口卡片图标弹跳效果 */
+.page-entry-card:hover .entry-icon {
+    animation: iconBounce 0.5s ease;
+}
+
+@keyframes iconBounce {
+    0%, 100% { transform: scale(1); }
+    30% { transform: scale(1.2) rotate(-8deg); }
+    60% { transform: scale(0.95) rotate(4deg); }
+}
+
+/* 成就卡片入场动画 */
+.achievement-card,
+.habit-card {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.5s ease, transform 0.5s ease, background-color 0.3s ease;
+    will-change: opacity, transform;
+}
+
+.achievement-card.animate,
+.habit-card.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* 统计卡片入场动画 */
+.stat-card {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    will-change: opacity, transform;
+}
+
+.stat-card.animate {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* 统计数字弹性放大 */
+.stat-value {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.stat-card:hover .stat-value {
+    transform: scale(1.15);
+}
+
+/* 相关内容推荐区域入场 */
+.related-content {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.related-content.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 导航栏滚动时的阴影增强 */
+.navbar.scrolled {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    height: 55px;
+}
+
+.navbar.scrolled .navbar-brand {
+    font-size: 16px;
+}
+
+/* 导航链接下划线动画 */
+.navbar-menu li a {
+    position: relative;
+    overflow: hidden;
+}
+
+.navbar-menu li a::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transition: width 0.3s ease, left 0.3s ease;
+    border-radius: 1px;
+}
+
+.navbar-menu li a:hover::after,
+.navbar-menu li a.active::after {
+    width: 60%;
+    left: 20%;
+}
+
+/* 滚动进度条渐变增强 */
+.progress-bar {
+    background: linear-gradient(90deg, #1abc9c, #16a085, #1abc9c);
+    background-size: 200% 100%;
+    animation: progressShimmer 3s linear infinite;
+    box-shadow: 0 0 8px rgba(26, 188, 156, 0.5);
+}
+
+@keyframes progressShimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* 返回顶部按钮脉冲效果 */
+#backToTop.show {
+    animation: backToTopPulse 2s ease-in-out infinite;
+}
+
+@keyframes backToTopPulse {
+    0%, 100% { box-shadow: 0 4px 12px rgba(26, 188, 156, 0.4); }
+    50% { box-shadow: 0 4px 20px rgba(26, 188, 156, 0.6); }
+}
+
+/* 自媒体矩阵链接微动画 */
+.media-link {
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                background 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+.media-link:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 4px 12px rgba(26, 188, 156, 0.2);
+}
+
+/* 标题文字渐入效果 */
+.card h2 {
+    overflow: hidden;
+}
+
+.card h2 i {
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease;
+}
+
+.card.animate h2 i {
+    animation: iconPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+
+@keyframes iconPopIn {
+    0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+/* 列表项交错入场 */
+.card.animate li {
+    animation: listItemSlide 0.4s ease both;
+}
+
+.card.animate li:nth-child(1) { animation-delay: 0.05s; }
+.card.animate li:nth-child(2) { animation-delay: 0.1s; }
+.card.animate li:nth-child(3) { animation-delay: 0.15s; }
+.card.animate li:nth-child(4) { animation-delay: 0.2s; }
+.card.animate li:nth-child(5) { animation-delay: 0.25s; }
+.card.animate li:nth-child(6) { animation-delay: 0.3s; }
+.card.animate li:nth-child(7) { animation-delay: 0.35s; }
+.card.animate li:nth-child(8) { animation-delay: 0.4s; }
+.card.animate li:nth-child(9) { animation-delay: 0.45s; }
+.card.animate li:nth-child(10) { animation-delay: 0.5s; }
+
+@keyframes listItemSlide {
+    from {
+        opacity: 0;
+        transform: translateX(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 面包屑导航淡入 */
+.breadcrumb {
+    animation: fadeInDown 0.5s ease both;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 页面整体淡入 */
+body {
+    animation: pageFadeIn 0.4s ease both;
+}
+
+@keyframes pageFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* 夜间模式切换过渡 */
+body,
+.navbar,
+.card,
+.page-entry-card,
+.toc-container,
+.breadcrumb,
+.footer {
+    transition: background 0.4s ease, color 0.4s ease, background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* 性能优化：content-visibility 跳过屏幕外渲染 */
+.card,
+.page-entry-card,
+.achievement-card,
+.habit-card,
+.stat-card {
+    content-visibility: auto;
+    contain-intrinsic-size: 200px;
+}
+
+/* 减少动画偏好支持 */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .card,
+    .page-entry-card,
+    .achievement-card,
+    .habit-card,
+    .stat-card {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* TOC目录项激活动画 */
+.toc-item {
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toc-item.active {
+    transform: scale(1.05);
+    font-weight: 600;
+}
+
+/* 书籍链接提示箭头动画 */
+.book-link {
+    transition: transform 0.3s ease;
+}
+
+.book-card:hover .book-link i {
+    animation: arrowBounce 0.6s ease infinite;
+}
+
+@keyframes arrowBounce {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
+}
+
+/* =================================================
  * 减少动画（用户偏好）
  * ================================================= */
 @media (prefers-reduced-motion: reduce) {
