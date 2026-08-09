@@ -1451,7 +1451,8 @@ body.dark-mode .book-tag-soft {
  * ================================================= */
 .breadcrumb {
     background: rgba(248, 250, 252, 0.95);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     padding: 8px 30px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -1461,6 +1462,22 @@ body.dark-mode .book-tag-soft {
     width: 100%;
     z-index: 999;
     box-sizing: border-box;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), top 0.3s ease;
+}
+
+/* navbar 收缩时面包屑跟随上移（JS 同步 class） */
+body.navbar-scrolled .breadcrumb {
+    top: 52px;
+}
+
+/* navbar 隐藏时面包屑跟随到顶部 */
+body.navbar-hidden .breadcrumb {
+    top: 0;
+}
+
+/* 面包屑自己隐藏（向下滚动） */
+.breadcrumb.breadcrumb-hidden {
+    transform: translateY(-100%);
 }
 
 .breadcrumb ol {
@@ -1801,6 +1818,27 @@ body.dark-mode .navbar {
 }
 
 /* =================================================
+ * 移动端 TOC 遮罩层
+ * ================================================= */
+.toc-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 998;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.toc-overlay.show {
+    display: block;
+    opacity: 1;
+}
+
+/* =================================================
  * 响应式 - 移动端
  * ================================================= */
 @media (max-width: 768px) {
@@ -1856,7 +1894,7 @@ body.dark-mode .navbar {
 
     .container {
         flex-direction: column;
-        padding: 110px 15px 15px;
+        padding: 110px 15px 80px;
     }
 
     .side {
@@ -1864,42 +1902,232 @@ body.dark-mode .navbar {
     }
 
     .page-content {
-        padding: 0 15px;
+        padding: 0 15px 80px;
     }
 
+    /* 移动端 TOC 浮动按钮 - 左下角 */
     .toc-container {
-        bottom: 10px;
+        position: fixed;
+        left: 15px;
+        bottom: 20px;
         top: auto;
-        right: 50%;
-        transform: translateX(50%);
-        width: calc(100% - 40px);
-        max-height: 60px;
-        overflow-x: auto;
-        overflow-y: hidden;
-        pointer-events: auto;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(26, 188, 156, 0.15);
-        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+        right: auto;
+        transform: none;
+        width: auto;
+        max-width: none;
+        max-height: none;
+        padding: 0;
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border: none;
+        box-shadow: none;
         z-index: 999;
+        transition: none;
     }
 
-    body.dark-mode .toc-container {
-        background: rgba(31, 41, 55, 0.95);
-        border-color: rgba(56, 189, 248, 0.15);
-        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+    .toc-container .toc-title {
+        display: none;
+    }
+
+    /* 收起状态：显示浮动按钮 */
+    .toc-container:not(.mobile-open) .toc-list {
+        display: none;
+    }
+
+    /* 浮动按钮 - 使用真实DOM元素 */
+    .toc-fab {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        border-radius: 28px;
+        background: var(--gradient-primary);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: 0 4px 16px var(--color-primary-glow);
+        cursor: pointer;
+        transition: all 0.25s ease;
+        border: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .toc-fab i {
+        font-size: 16px;
+    }
+
+    .toc-fab:active {
+        transform: scale(0.95);
+    }
+
+    /* 展开状态：底部弹出面板 */
+    .toc-container.mobile-open {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+
+    .toc-container.mobile-open .toc-list {
+        display: block;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        max-height: 50vh;
+        overflow-y: auto;
+        padding: 0;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+        box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.15);
+        border-top: 1px solid rgba(26, 188, 156, 0.15);
+        -webkit-overflow-scrolling: touch;
+        transform: translateY(100%);
+        animation: tocSlideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes tocSlideUp {
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    /* TOC 面板拖拽指示条 */
+    .toc-panel-handle {
+        width: 40px;
+        height: 4px;
+        background: rgba(0, 0, 0, 0.15);
+        border-radius: 2px;
+        margin: 10px auto 0;
+        flex-shrink: 0;
+    }
+
+    /* TOC 面板头部 */
+    .toc-panel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 20px 12px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        position: sticky;
+        top: 0;
+        background: inherit;
+        z-index: 1;
+    }
+
+    .toc-panel-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--color-text);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .toc-panel-title i {
+        color: var(--color-primary);
+    }
+
+    .toc-close-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(0, 0, 0, 0.05);
+        color: var(--color-text-secondary);
+        font-size: 18px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
+        flex-shrink: 0;
+    }
+
+    .toc-close-btn:active {
+        background: rgba(0, 0, 0, 0.1);
+        transform: scale(0.9);
+    }
+
+    .toc-container.mobile-open .toc-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 20px;
+        margin: 0;
+        border-radius: 0;
+        font-size: 15px;
+        white-space: normal;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        min-height: 52px;
+    }
+
+    .toc-container.mobile-open .toc-item:last-child {
+        border-bottom: none;
+        padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .toc-container.mobile-open .toc-item i {
+        width: 20px;
+        text-align: center;
+        font-size: 14px;
+        color: var(--color-primary);
+        opacity: 0.7;
+        flex-shrink: 0;
+    }
+
+    .toc-container.mobile-open .toc-item.active {
+        background: var(--color-primary-light);
+        color: var(--color-primary-dark);
+        font-weight: 600;
+    }
+
+    .toc-container.mobile-open .toc-item.active i {
+        opacity: 1;
+    }
+
+    body.dark-mode .toc-container.mobile-open .toc-list {
+        background: rgba(31, 41, 55, 0.98);
+        border-top-color: rgba(56, 189, 248, 0.15);
+        box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    body.dark-mode .toc-panel-header {
+        border-bottom-color: rgba(255, 255, 255, 0.08);
+    }
+
+    body.dark-mode .toc-panel-title {
+        color: #f3f4f6;
+    }
+
+    body.dark-mode .toc-close-btn {
+        background: rgba(255, 255, 255, 0.1);
+        color: #9ca3af;
+    }
+
+    body.dark-mode .toc-close-btn:active {
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    body.dark-mode .toc-panel-handle {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    body.dark-mode .toc-container.mobile-open .toc-item {
+        border-bottom-color: rgba(255, 255, 255, 0.05);
+    }
+
+    body.dark-mode .toc-fab {
+        box-shadow: 0 4px 16px var(--color-primary-glow);
     }
 
     body {
-        padding-bottom: 90px;
-    }
-
-    .toc-list {
-        display: flex;
-        gap: 5px;
-        width: max-content;
-        padding: 5px;
+        padding-bottom: 0;
     }
 
     .page-entry-cards {

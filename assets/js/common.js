@@ -181,6 +181,159 @@ document.addEventListener('DOMContentLoaded', function() {
                 scrollTicking = true;
             }
         }, { passive: true });
+
+        // ===== 移动端 TOC 浮动按钮 + 底部弹出面板 =====
+        const tocContainer = document.querySelector('.toc-container');
+        if (tocContainer) {
+            const isMobile = function() {
+                return window.matchMedia('(max-width: 768px)').matches;
+            };
+
+            // 创建遮罩层
+            let tocOverlay = document.createElement('div');
+            tocOverlay.className = 'toc-overlay';
+            document.body.appendChild(tocOverlay);
+
+            // 创建浮动按钮
+            let tocFab = document.createElement('button');
+            tocFab.type = 'button';
+            tocFab.className = 'toc-fab';
+            tocFab.setAttribute('aria-label', '打开目录导航');
+            tocFab.innerHTML = '<i class="fa fa-list-ul" aria-hidden="true"></i><span>目录</span>';
+            tocContainer.appendChild(tocFab);
+
+            // 创建面板头部（拖拽条 + 标题 + 关闭按钮）
+            const tocList = tocContainer.querySelector('.toc-list');
+            if (tocList) {
+                // 拖拽指示条
+                const handle = document.createElement('div');
+                handle.className = 'toc-panel-handle';
+                handle.setAttribute('aria-hidden', 'true');
+                tocList.insertBefore(handle, tocList.firstChild);
+
+                // 标题栏
+                const panelHeader = document.createElement('div');
+                panelHeader.className = 'toc-panel-header';
+                panelHeader.innerHTML =
+                    '<div class="toc-panel-title"><i class="fa fa-list-ul" aria-hidden="true"></i> 目录导航</div>' +
+                    '<button type="button" class="toc-close-btn" aria-label="关闭目录"><i class="fa fa-times" aria-hidden="true"></i></button>';
+                tocList.insertBefore(panelHeader, handle.nextSibling);
+
+                // 为每个toc-item添加智能匹配图标
+                const iconMap = {
+                    '个人简介': 'fa-user',
+                    '基本信息': 'fa-user',
+                    '联系方式': 'fa-phone',
+                    '自媒体矩阵': 'fa-qrcode',
+                    '写文成果': 'fa-trophy',
+                    '数据统计': 'fa-bar-chart',
+                    '更多内容': 'fa-compass',
+                    '相关内容推荐': 'fa-link',
+                    '相关推荐': 'fa-link',
+                    '职业技能': 'fa-code',
+                    '技能概览': 'fa-code',
+                    '后端技术': 'fa-server',
+                    '前端技术': 'fa-html5',
+                    '运维与云原生': 'fa-cloud',
+                    '大数据技术': 'fa-database',
+                    '商业思维': 'fa-line-chart',
+                    '副业思路': 'fa-lightbulb-o',
+                    '商业方法论': 'fa-book',
+                    '用户运营': 'fa-users',
+                    '作品成果': 'fa-book',
+                    '出版图书': 'fa-book',
+                    '技术成就': 'fa-trophy',
+                    '社区贡献': 'fa-comments',
+                    '关于我': 'fa-user-circle',
+                    '自我评价': 'fa-star',
+                    '兴趣爱好': 'fa-heart',
+                    '生活习惯': 'fa-coffee',
+                    '持续计划': 'fa-calendar'
+                };
+                tocList.querySelectorAll('.toc-item').forEach(function(item) {
+                    const text = item.textContent.trim();
+                    let iconClass = 'fa-circle-o';
+                    for (var key in iconMap) {
+                        if (text.indexOf(key) !== -1) {
+                            iconClass = iconMap[key];
+                            break;
+                        }
+                    }
+                    const icon = document.createElement('i');
+                    icon.className = 'fa ' + iconClass;
+                    icon.setAttribute('aria-hidden', 'true');
+                    item.insertBefore(icon, item.firstChild);
+                });
+            }
+
+            // 打开TOC面板
+            function openToc() {
+                if (!isMobile()) return;
+                tocContainer.classList.add('mobile-open');
+                tocOverlay.classList.add('show');
+                document.body.style.overflow = 'hidden';
+                tocFab.style.display = 'none';
+            }
+
+            // 关闭TOC面板
+            function closeToc() {
+                tocContainer.classList.remove('mobile-open');
+                tocOverlay.classList.remove('show');
+                document.body.style.overflow = '';
+                tocFab.style.display = '';
+            }
+
+            // 浮动按钮点击 - 打开面板
+            tocFab.addEventListener('click', function(e) {
+                e.stopPropagation();
+                openToc();
+            });
+
+            // 关闭按钮点击
+            const closeBtn = tocContainer.querySelector('.toc-close-btn');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    closeToc();
+                });
+            }
+
+            // 遮罩点击关闭
+            tocOverlay.addEventListener('click', function() {
+                closeToc();
+            });
+
+            // 点击章节后自动关闭面板
+            tocContainer.querySelectorAll('.toc-item').forEach(function(item) {
+                item.addEventListener('click', function() {
+                    if (isMobile()) {
+                        setTimeout(function() {
+                            closeToc();
+                        }, 350);
+                    }
+                });
+            });
+
+            // ESC 键关闭
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && tocContainer.classList.contains('mobile-open')) {
+                    closeToc();
+                }
+            });
+
+            // 窗口变桌面端时重置状态
+            const mql = window.matchMedia('(max-width: 768px)');
+            function handleMQLChange(e) {
+                if (!e.matches) {
+                    closeToc();
+                }
+            }
+            if (mql.addEventListener) {
+                mql.addEventListener('change', handleMQLChange);
+            } else {
+                mql.addListener(handleMQLChange);
+            }
+        }
     }
 
     initTocNavigation();
@@ -464,8 +617,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (navbar) {
                 if (offset > 50) {
                     navbar.classList.add('scrolled');
+                    document.body.classList.add('navbar-scrolled');
                 } else {
                     navbar.classList.remove('scrolled');
+                    document.body.classList.remove('navbar-scrolled');
                 }
                 // 方向感知：向下滚动且超过 200px 时隐藏，向上滚动时显示
                 // 顶部 50px 内始终显示，菜单展开时始终显示
@@ -473,10 +628,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 const menuOpen = navbarMenu && navbarMenu.classList.contains('show');
                 if (offset < 50 || menuOpen) {
                     navbar.classList.remove('hidden');
+                    document.body.classList.remove('navbar-hidden');
                 } else if (scrollDelta > 5 && offset > 200) {
                     navbar.classList.add('hidden');
+                    document.body.classList.add('navbar-hidden');
                 } else if (scrollDelta < -5) {
                     navbar.classList.remove('hidden');
+                    document.body.classList.remove('navbar-hidden');
                 }
             }
             lastScrollY = offset;
