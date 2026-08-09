@@ -2086,7 +2086,15 @@ body.dark-mode .sidebar-toggle:hover {
     }
 
     /* 移动端 - 恢复移动端TOC元素显示（不强制 display 值，让各自规则生效） */
-    .toc-overlay,
+    .toc-overlay {
+        display: block !important;
+        pointer-events: none;
+    }
+
+    .toc-overlay.show {
+        pointer-events: auto;
+    }
+
     .toc-panel-handle {
         display: block !important;
     }
