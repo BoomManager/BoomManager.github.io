@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="utf-8">
+    <noscript><style>html{visibility:visible}.loading,.skeleton{display:none!important;}</style></noscript>
+    <script>!function(){var h=document.documentElement;h.classList.add('js-loading');var f=function(){h.classList.remove('js-loading')};setTimeout(f,3000);}();</script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
@@ -97,13 +98,24 @@
     <link rel="dns-prefetch" href="https://space.bilibili.com">
     <link rel="dns-prefetch" href="https://gitee.com">
     <link rel="dns-prefetch" href="https://github.com">
+    <link rel="preconnect" href="https://blog.csdn.net" crossorigin>
+    <link rel="preconnect" href="https://github.com" crossorigin>
+
+    <!-- 首屏关键资源preload（高优先级） -->
     <link rel="preload" href="assets/css/common.css" as="style">
     <link rel="preload" href="assets/css/font-awesome.min.css" as="style">
     <link rel="preload" href="assets/js/common.js" as="script">
+    <link rel="preload" href="assets/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/images/profile.jpg" as="image" fetchpriority="high">
+    <link rel="preload" href="assets/images/wechat-qr.jpg" as="image">
 
-    <!-- 预取其他页面（仅桌面端，提升导航速度） -->
-    <link rel="prefetch" href="skills.html" as="document" media="(hover: hover) and (min-width: 769px)">
-    <link rel="prefetch" href="works.html" as="document" media="(hover: hover) and (min-width: 769px)">
+    <!-- 预取其他页面（空闲时加载，提升导航速度） -->
+    <link rel="prefetch" href="skills.html" as="document">
+    <link rel="prefetch" href="works.html" as="document">
+    <link rel="prefetch" href="business.html" as="document">
+    <link rel="prefetch" href="about.html" as="document">
+    <link rel="prefetch" href="assets/css/skills.css" as="style">
+    <link rel="prefetch" href="assets/css/works.css" as="style">
 
     <link rel="stylesheet" href="assets/css/typo.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
@@ -498,16 +510,16 @@
     <section class="side" id="side">
         <!-- 个人肖像 -->
         <section class="me card">
-            <div class="image-container">
-                <div class="loading" style="display: flex; justify-content: center; align-items: center; height: 200px;">
+            <div class="image-container" style="position:relative;">
+                <div class="loading" style="position:absolute;top:0;left:50%;transform:translateX(-50%);display: flex; justify-content: center; align-items: center; width:200px; height:200px; border-radius:50%; background:#f3f4f6;">
                     <i class="fa fa-spinner fa-spin fa-3x" aria-hidden="true"></i>
                 </div>
                 <img class="avatar" src="assets/images/profile.jpg" alt="廖志伟个人照片 - Java资深开发工程师，CSDN博客专家，现居上海"
                      width="200" height="200"
-                     style="display: none; max-width: 100%; height: auto; object-fit: cover; border-radius: 50%;"
-                     loading="eager" decoding="async"
-                     onload="this.style.display='block'; this.previousElementSibling.style.display='none';"
-                     onerror="this.style.display='none'; this.previousElementSibling.innerHTML='<i class=\'fa fa-exclamation-triangle fa-3x\' style=\'color: #e74c3c;\' aria-hidden=\'true\'></i>';">
+                     style="max-width: 100%; height: auto; object-fit: cover; border-radius: 50%; display:block;"
+                     fetchpriority="high" decoding="async"
+                     onload="var l=this.previousElementSibling; if(l) l.style.display='none';"
+                     onerror="this.style.display='none'; var l=this.previousElementSibling; if(l){l.innerHTML='<i class=\'fa fa-exclamation-triangle fa-3x\' style=\'color: #e74c3c;\' aria-hidden=\'true\'></i>';l.style.display='flex';l.style.background='transparent';}">
             </div>
             <h1 class="name">廖志伟</h1>
             <h4 class="info-job">Java / 上海</h4>
@@ -585,14 +597,14 @@
                     </div>
                 </div>
             </div>
-            <div class="qrcode-box">
-                <div class="skeleton" style="width: 140px; height: 140px; border-radius: 8px; margin: 0 auto;"></div>
+            <div class="qrcode-box" style="position:relative;">
+                <div class="skeleton" style="position:absolute;top:0;left:50%;transform:translateX(-50%);width: 140px; height: 140px; border-radius: 8px; margin:0;"></div>
                 <img class="avatar" src="assets/images/wechat-qr.jpg" alt="廖志伟微信号二维码 - 扫码添加微信好友 SenioRD"
                      width="140" height="140"
-                     style="display: none; max-width: 100%; height: auto; object-fit: cover; border-radius: 8px;"
-                     loading="lazy" decoding="async"
-                     onload="this.style.display='block'; this.previousElementSibling.style.display='none';"
-                     onerror="this.style.display='none'; this.previousElementSibling.style.background='#e5e7eb'; this.previousElementSibling.innerHTML='<i class=\'fa fa-qrcode\' style=\'font-size:56px;color:#9ca3af;display:flex;align-items:center;justify-content:center;height:100%;\' aria-hidden=\'true\'></i>';">
+                     style="max-width: 100%; height: auto; object-fit: cover; border-radius: 8px; display:block; margin:0 auto;"
+                     loading="lazy" decoding="async" fetchpriority="low"
+                     onload="var l=this.previousElementSibling; if(l) l.style.display='none';"
+                     onerror="this.style.display='none'; var l=this.previousElementSibling; if(l){l.style.background='#e5e7eb';l.innerHTML='<i class=\'fa fa-qrcode\' style=\'font-size:56px;color:#9ca3af;display:flex;align-items:center;justify-content:center;height:100%;\' aria-hidden=\'true\'></i>';}">
                 <p class="qrcode-tip">扫码添加微信好友</p>
             </div>
         </section>
@@ -701,7 +713,7 @@
                     <div class="stat-icon"><i class="fa fa-file-text-o"></i></div>
                     <div class="stat-content">
                         <h3>文章创作</h3>
-                        <div class="stat-value" id="articleCount">0</div>
+                        <div class="stat-value" id="articleCount">1902</div>
                         <div class="stat-label">篇</div>
                     </div>
                 </div>
@@ -710,7 +722,7 @@
                     <div class="stat-icon"><i class="fa fa-eye"></i></div>
                     <div class="stat-content">
                         <h3>文章访问量</h3>
-                        <div class="stat-value" id="viewCount">0</div>
+                        <div class="stat-value" id="viewCount">3,110,203</div>
                         <div class="stat-label">次</div>
                     </div>
                 </div>
@@ -719,7 +731,7 @@
                     <div class="stat-icon"><i class="fa fa-star-o"></i></div>
                     <div class="stat-content">
                         <h3>文章收藏</h3>
-                        <div class="stat-value" id="favoriteCount">0</div>
+                        <div class="stat-value" id="favoriteCount">27769</div>
                         <div class="stat-label">次</div>
                     </div>
                 </div>
@@ -728,7 +740,7 @@
                     <div class="stat-icon"><i class="fa fa-comment-o"></i></div>
                     <div class="stat-content">
                         <h3>文章评论</h3>
-                        <div class="stat-value" id="commentCount">0</div>
+                        <div class="stat-value" id="commentCount">11188</div>
                         <div class="stat-label">次</div>
                     </div>
                 </div>
@@ -737,7 +749,7 @@
                     <div class="stat-icon"><i class="fa fa-thumbs-o-up"></i></div>
                     <div class="stat-content">
                         <h3>文章点赞</h3>
-                        <div class="stat-value" id="likeCount">0</div>
+                        <div class="stat-value" id="likeCount">24651</div>
                         <div class="stat-label">次</div>
                     </div>
                 </div>

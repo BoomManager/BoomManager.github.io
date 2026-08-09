@@ -4,6 +4,22 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
+    // 渐进式加载策略：
+    // 1. inline script已添加.js-loading，卡片初始opacity:0准备入场动画
+    // 2. IntersectionObserver交错触发时添加.animate，卡片渐入
+    // 3. 1.2s兜底：所有已准备但未触发的卡片强制显示并动画
+    // 4. 2.5s绝对兜底（inline script设置）移除js-loading类
+    setTimeout(function forceAnimateAll() {
+        document.querySelectorAll('.js-loading .card, .js-loading .page-entry-card, .js-loading .achievement-card, .js-loading .habit-card, .js-loading .stat-card, .js-loading .related-content, .js-loading .book-card')
+            .forEach(function(el, i) {
+                setTimeout(function() { el.classList.add('animate'); }, i * 50);
+            });
+    }, 1200);
+
+    // 1.8s后移除js-loading类，彻底解除隐藏限制
+    setTimeout(function() {
+        document.documentElement.classList.remove('js-loading');
+    }, 1800);
 
     // ===== 1. 图片预加载 =====
     const avatarImgs = document.querySelectorAll('.avatar');
@@ -588,6 +604,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const statObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
+                    // JS已就绪，先重置为0再动画（此时不会闪烁，因为已过首屏渲染阶段）
+                    Object.keys(mockData).forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.textContent = '0';
+                    });
                     animateValue('articleCount', 0, mockData.articleCount, 1500);
                     animateValue('viewCount', 0, mockData.viewCount, 2000);
                     animateValue('favoriteCount', 0, mockData.favoriteCount, 1500);
