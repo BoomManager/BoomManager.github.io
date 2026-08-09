@@ -707,7 +707,8 @@ body.dark-mode .achievement-group-title i {
 /* =================================================
  * 出版图书卡片样式
  * ================================================= */
-.books-publisher {
+.books-publisher,
+.books-publisher-group {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -720,8 +721,18 @@ body.dark-mode .achievement-group-title i {
     transition: all 0.3s ease;
 }
 
-.books-publisher i {
+.books-publisher i,
+.books-publisher-group i {
     color: #1abc9c;
+}
+
+.books-publisher-group {
+    margin-top: 28px;
+    background: rgba(155, 89, 182, 0.06);
+}
+
+.books-publisher-group i {
+    color: #9b59b6;
 }
 
 .books-grid {
@@ -868,6 +879,27 @@ body.dark-mode .achievement-group-title i {
     box-shadow: 0 2px 8px rgba(230, 126, 34, 0.3);
 }
 
+.book-tag-tw {
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+}
+
+.book-card:hover .book-tag-tw {
+    box-shadow: 0 2px 8px rgba(155, 89, 182, 0.3);
+}
+
+.book-publisher-meta {
+    font-size: 12px;
+    color: #7f8c8d;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.book-publisher-meta i {
+    font-size: 11px;
+    color: #bdc3c7;
+}
+
 .book-isbn {
     font-size: 12px;
     color: #7f8c8d;
@@ -955,6 +987,27 @@ body.dark-mode .book-card:hover .book-link {
 body.dark-mode .books-publisher {
     background: rgba(56, 189, 248, 0.08);
     color: #94a3b8;
+}
+
+body.dark-mode .books-publisher-group {
+    background: rgba(167, 139, 250, 0.08);
+    color: #94a3b8;
+}
+
+body.dark-mode .books-publisher-group i {
+    color: #a78bfa;
+}
+
+body.dark-mode .book-tag-tw {
+    background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+}
+
+body.dark-mode .book-publisher-meta {
+    color: #64748b;
+}
+
+body.dark-mode .book-publisher-meta i {
+    color: #475569;
 }
 
 body.dark-mode .book-card {
