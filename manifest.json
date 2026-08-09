@@ -1,27 +1,43 @@
 {
-    "name": "廖志伟个人主页",
+    "id": "/",
+    "name": "廖志伟个人主页 - Java资深开发工程师",
     "short_name": "廖志伟",
-    "description": "Java资深开发工程师个人主页 - 职业技能、商业思维、作品成果",
-    "start_url": "/",
+    "description": "Java资深开发工程师个人主页 - 包含职业技能、商业思维、作品成果、关于我等内容",
+    "start_url": "/?source=pwa",
+    "scope": "/",
     "display": "standalone",
-    "orientation": "portrait-primary",
+    "display_override": ["window-controls-overlay", "standalone", "minimal-ui", "browser"],
+    "orientation": "any",
     "background_color": "#f5f7fa",
     "theme_color": "#1abc9c",
     "lang": "zh-CN",
     "dir": "ltr",
-    "scope": "/",
+    "categories": ["education", "productivity", "developer", "books", "technology"],
+    "prefer_related_applications": false,
     "icons": [
         {
             "src": "assets/images/avatar.jpg",
             "sizes": "192x192",
             "type": "image/jpeg",
-            "purpose": "any maskable"
+            "purpose": "any"
         },
         {
             "src": "assets/images/avatar.jpg",
             "sizes": "512x512",
             "type": "image/jpeg",
-            "purpose": "any maskable"
+            "purpose": "any"
+        },
+        {
+            "src": "assets/images/avatar.jpg",
+            "sizes": "192x192",
+            "type": "image/jpeg",
+            "purpose": "maskable"
+        },
+        {
+            "src": "assets/images/avatar.jpg",
+            "sizes": "512x512",
+            "type": "image/jpeg",
+            "purpose": "maskable"
         },
         {
             "src": "assets/images/favicon.ico",
@@ -29,36 +45,49 @@
             "type": "image/x-icon"
         }
     ],
-    "categories": ["education", "productivity", "developer"],
-    "screenshots": [],
+    "screenshots": [
+        {
+            "src": "assets/images/profile.jpg",
+            "sizes": "1200x630",
+            "type": "image/jpeg",
+            "form_factor": "wide",
+            "label": "廖志伟个人主页桌面端预览"
+        }
+    ],
     "shortcuts": [
         {
             "name": "职业技能",
             "short_name": "技能",
-            "description": "查看Java技术栈详解",
-            "url": "/skills.html",
+            "description": "查看Java技术栈详解（18大技术领域）",
+            "url": "/skills.html?source=pwa",
             "icons": [{"src": "assets/images/avatar.jpg", "sizes": "192x192"}]
         },
         {
             "name": "商业思维",
             "short_name": "商业",
             "description": "副业思路与商业方法论",
-            "url": "/business.html",
+            "url": "/business.html?source=pwa",
             "icons": [{"src": "assets/images/avatar.jpg", "sizes": "192x192"}]
         },
         {
             "name": "作品成果",
             "short_name": "作品",
-            "description": "出版图书与技术成就",
-            "url": "/works.html",
+            "description": "出版图书与技术成就（5本著作）",
+            "url": "/works.html?source=pwa",
             "icons": [{"src": "assets/images/avatar.jpg", "sizes": "192x192"}]
         },
         {
             "name": "关于我",
             "short_name": "关于",
             "description": "自我评价与兴趣爱好",
-            "url": "/about.html",
+            "url": "/about.html?source=pwa",
             "icons": [{"src": "assets/images/avatar.jpg", "sizes": "192x192"}]
         }
-    ]
+    ],
+    "launch_handler": {
+        "client_mode": "navigate-existing"
+    },
+    "edge_side_panel": {
+        "preferred_width": 480
+    }
 }

@@ -12,6 +12,12 @@
     <meta name="renderer" content="webkit">
     <meta name="apple-mobile-web-app-title" content="廖志伟" />
 
+    <!-- 安全与隐私 -->
+    <meta name="referrer" content="strict-origin-when-cross-origin"/>
+    <meta name="color-scheme" content="light dark"/>
+    <meta name="supported-color-schemes" content="light dark"/>
+    <meta name="google" content="notranslate"/>
+
     <!-- SEO Meta Tags -->
     <title>作品成果 | 廖志伟 - 出版图书·技术成就·经历</title>
     <meta name="description" content="廖志伟的作品成果展示：在清华大学出版社出版4本技术图书（Java项目实战系列3本+程序员思维表达1本）、担任技术文章评审、创建个人社区与开源项目、参与专业课程录制、CSDN发表1900+篇技术文章、出版专业技术书籍等经历与成就。"/>
@@ -24,11 +30,14 @@
     <link rel="alternate" hreflang="zh-CN" href="https://www.liaozhiwei.cn/works.html"/>
     <link rel="alternate" hreflang="x-default" href="https://www.liaozhiwei.cn/works.html"/>
 
-    <!-- GEO 地理位置元数据 -->
+    <!-- GEO 地理位置元数据（极致版） -->
     <meta name="geo.region" content="CN-SH"/>
     <meta name="geo.placename" content="上海"/>
     <meta name="geo.position" content="31.2304;121.4737"/>
     <meta name="ICBM" content="31.2304, 121.4737"/>
+    <meta name="geo.timezone" content="Asia/Shanghai"/>
+    <meta name="DC.coverage" content="Shanghai, China"/>
+    <meta name="DC.spatial" content="31.2304,121.4737"/>
 
     <!-- Open Graph -->
     <meta property="og:type" content="website"/>
@@ -89,32 +98,45 @@
     }
     </script>
 
-    <!-- JSON-LD 结构化数据：出版图书 -->
+    <!-- JSON-LD 结构化数据：出版图书（含 ISBN/页数/出版日期/定价） -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "ItemList",
         "name": "廖志伟出版图书列表",
-        "description": "清华大学出版社出版的Java技术系列图书",
-        "numberOfItems": 4,
+        "description": "清华大学出版社出版的Java技术系列图书 + 深智数位台版繁体",
+        "numberOfItems": 5,
         "itemListElement": [
             {
                 "@type": "ListItem",
                 "position": 1,
                 "item": {
                     "@type": "Book",
-                    "name": "Java项目实战——深入理解大型互联网企业通用技术基础篇",
+                    "name": "Java项目实战——深入理解大型互联网企业通用技术（架构篇）",
+                    "isbn": "9787302716341",
                     "author": {
                         "@type": "Person",
-                        "name": "廖志伟"
+                        "name": "廖志伟",
+                        "url": "https://www.liaozhiwei.cn/"
                     },
                     "publisher": {
                         "@type": "Organization",
-                        "name": "清华大学出版社"
+                        "name": "清华大学出版社",
+                        "url": "https://www.tup.com.cn/"
                     },
                     "inLanguage": "zh-CN",
                     "bookFormat": "https://schema.org/Hardcover",
-                    "genre": "计算机/编程"
+                    "genre": "计算机/编程",
+                    "datePublished": "2024-09",
+                    "numberOfPages": 480,
+                    "offers": {
+                        "@type": "Offer",
+                        "price": "119",
+                        "priceCurrency": "CNY",
+                        "availability": "https://schema.org/InStock",
+                        "url": "https://www.tup.com.cn/booksCenter/book_10450101.html"
+                    },
+                    "url": "https://www.liaozhiwei.cn/works.html#book-arch"
                 }
             },
             {
@@ -122,18 +144,31 @@
                 "position": 2,
                 "item": {
                     "@type": "Book",
-                    "name": "Java项目实战——深入理解大型互联网企业通用技术进阶篇",
+                    "name": "Java项目实战——深入理解大型互联网企业通用技术（进阶篇）",
+                    "isbn": "9787302658535",
                     "author": {
                         "@type": "Person",
-                        "name": "廖志伟"
+                        "name": "廖志伟",
+                        "url": "https://www.liaozhiwei.cn/"
                     },
                     "publisher": {
                         "@type": "Organization",
-                        "name": "清华大学出版社"
+                        "name": "清华大学出版社",
+                        "url": "https://www.tup.com.cn/"
                     },
                     "inLanguage": "zh-CN",
                     "bookFormat": "https://schema.org/Hardcover",
-                    "genre": "计算机/编程"
+                    "genre": "计算机/编程",
+                    "datePublished": "2024-04",
+                    "numberOfPages": 392,
+                    "offers": {
+                        "@type": "Offer",
+                        "price": "109",
+                        "priceCurrency": "CNY",
+                        "availability": "https://schema.org/InStock",
+                        "url": "https://www.tup.com.cn/booksCenter/book_10400301.html"
+                    },
+                    "url": "https://www.liaozhiwei.cn/works.html#book-advanced"
                 }
             },
             {
@@ -141,18 +176,31 @@
                 "position": 3,
                 "item": {
                     "@type": "Book",
-                    "name": "Java项目实战——深入理解大型互联网企业通用技术架构篇",
+                    "name": "Java项目实战——深入理解大型互联网企业通用技术（基础篇）",
+                    "isbn": "9787302658511",
                     "author": {
                         "@type": "Person",
-                        "name": "廖志伟"
+                        "name": "廖志伟",
+                        "url": "https://www.liaozhiwei.cn/"
                     },
                     "publisher": {
                         "@type": "Organization",
-                        "name": "清华大学出版社"
+                        "name": "清华大学出版社",
+                        "url": "https://www.tup.com.cn/"
                     },
                     "inLanguage": "zh-CN",
                     "bookFormat": "https://schema.org/Hardcover",
-                    "genre": "计算机/编程"
+                    "genre": "计算机/编程",
+                    "datePublished": "2024-01",
+                    "numberOfPages": 320,
+                    "offers": {
+                        "@type": "Offer",
+                        "price": "79",
+                        "priceCurrency": "CNY",
+                        "availability": "https://schema.org/InStock",
+                        "url": "https://www.tup.com.cn/booksCenter/book_10158601.html"
+                    },
+                    "url": "https://www.liaozhiwei.cn/works.html#book-basic"
                 }
             },
             {
@@ -160,18 +208,62 @@
                 "position": 4,
                 "item": {
                     "@type": "Book",
-                    "name": "解密程序员的思维密码--沟通、演讲、思考的实践",
+                    "name": "解密程序员的思维密码——沟通、演讲、思考的实践",
+                    "isbn": "9787302689997",
                     "author": {
                         "@type": "Person",
-                        "name": "廖志伟"
+                        "name": "廖志伟",
+                        "url": "https://www.liaozhiwei.cn/"
                     },
                     "publisher": {
                         "@type": "Organization",
-                        "name": "清华大学出版社"
+                        "name": "清华大学出版社",
+                        "url": "https://www.tup.com.cn/"
                     },
                     "inLanguage": "zh-CN",
                     "bookFormat": "https://schema.org/Hardcover",
-                    "genre": "个人成长/表达"
+                    "genre": "个人成长/表达",
+                    "datePublished": "2025-04",
+                    "numberOfPages": 280,
+                    "offers": {
+                        "@type": "Offer",
+                        "price": "79",
+                        "priceCurrency": "CNY",
+                        "availability": "https://schema.org/InStock",
+                        "url": "https://www.tup.com.cn/booksCenter/book_10483301.html"
+                    },
+                    "url": "https://www.liaozhiwei.cn/works.html#book-mind"
+                }
+            },
+            {
+                "@type": "ListItem",
+                "position": 5,
+                "item": {
+                    "@type": "Book",
+                    "name": "Java網路元件專案——大型網際網路企業級最重要應用",
+                    "isbn": "9786267569085",
+                    "author": {
+                        "@type": "Person",
+                        "name": "廖志偉",
+                        "url": "https://www.liaozhiwei.cn/"
+                    },
+                    "publisher": {
+                        "@type": "Organization",
+                        "name": "深智数位",
+                        "alternateName": "Deep Wisdom"
+                    },
+                    "inLanguage": "zh-Hant",
+                    "bookFormat": "https://schema.org/Paperback",
+                    "genre": "計算機/程式設計",
+                    "datePublished": "2024-09",
+                    "numberOfPages": 480,
+                    "offers": {
+                        "@type": "Offer",
+                        "priceCurrency": "TWD",
+                        "availability": "https://schema.org/InStock",
+                        "url": "https://item.jd.com/10125461368888.html"
+                    },
+                    "url": "https://www.liaozhiwei.cn/works.html#book-tw"
                 }
             }
         ]
@@ -380,7 +472,7 @@
 
         <p class="books-publisher-group"><i class="fa fa-globe" aria-hidden="true"></i>深智数位（台版繁体）</p>
         <div class="books-grid">
-            <a href="https://item.jd.com/10125461368888.html" target="_blank" rel="noopener" class="book-card">
+            <a href="https://item.jd.com/10125461368888.html" target="_blank" rel="noopener" class="book-card" id="book-tw">
                 <div class="book-cover">
                     <img src="assets/images/book-tw.jpg" alt="Java網路元件專案——大型網際網路企業級最重要應用封面" width="180" height="240" loading="lazy" decoding="async">
                 </div>

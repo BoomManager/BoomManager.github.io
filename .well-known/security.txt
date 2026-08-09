@@ -1,0 +1,11 @@
+# Security Policy - 廖志伟个人主页
+# https://www.rfc-editor.org/rfc/rfc9116
+
+Contact: mailto:java_wxid@aliyun.com
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: zh-CN, en
+Canonical: https://www.liaozhiwei.cn/.well-known/security.txt
+Policy: https://www.liaozhiwei.cn/about.html
+
+# 这是一个静态个人主页（GitHub Pages 托管）
+# 如发现安全相关问题，请通过邮箱报告，会在 72 小时内回复

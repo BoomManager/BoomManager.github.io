@@ -12,6 +12,22 @@
     <meta name="renderer" content="webkit">
     <meta name="apple-mobile-web-app-title" content="廖志伟" />
 
+    <!-- 安全与隐私 -->
+    <meta name="referrer" content="strict-origin-when-cross-origin"/>
+    <meta name="color-scheme" content="light dark"/>
+    <meta name="supported-color-schemes" content="light dark"/>
+    <meta name="google" content="notranslate"/>
+
+    <!-- 搜索引擎站长验证占位（部署后到对应平台获取验证码替换 content 值） -->
+    <!--
+    <meta name="google-site-verification" content=""/>
+    <meta name="msvalidate.01" content=""/>
+    <meta name="baidu-site-verification" content=""/>
+    <meta name="360-site-verification" content=""/>
+    <meta name="sogou_site_verification" content=""/>
+    <meta name="yandex-verification" content=""/>
+    -->
+
     <!-- PWA 与移动端优化 -->
     <meta name="theme-color" content="#1abc9c" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)">
@@ -34,17 +50,19 @@
     <meta name="robots" content="index, follow, max-image-preview:large"/>
     <link rel="canonical" href="https://www.liaozhiwei.cn/"/>
 
-    <!-- hreflang 多语言 -->
+    <!-- hreflang 多语言（仅声明实际存在的中文版本） -->
     <link rel="alternate" hreflang="zh-CN" href="https://www.liaozhiwei.cn/"/>
     <link rel="alternate" hreflang="zh-Hans" href="https://www.liaozhiwei.cn/"/>
-    <link rel="alternate" hreflang="en" href="https://www.liaozhiwei.cn/?lang=en"/>
     <link rel="alternate" hreflang="x-default" href="https://www.liaozhiwei.cn/"/>
 
-    <!-- GEO 地理位置元数据 -->
+    <!-- GEO 地理位置元数据（极致版） -->
     <meta name="geo.region" content="CN-SH"/>
     <meta name="geo.placename" content="上海"/>
     <meta name="geo.position" content="31.2304;121.4737"/>
     <meta name="ICBM" content="31.2304, 121.4737"/>
+    <meta name="geo.timezone" content="Asia/Shanghai"/>
+    <meta name="DC.coverage" content="Shanghai, China"/>
+    <meta name="DC.spatial" content="31.2304,121.4737"/>
 
     <!-- Open Graph -->
     <meta property="og:type" content="website"/>
@@ -106,6 +124,15 @@
         "givenName": "志伟",
         "familyName": "廖",
         "jobTitle": "Java资深开发工程师",
+        "hasOccupation": {
+            "@type": "Occupation",
+            "name": "Java资深开发工程师",
+            "occupationLocation": {
+                "@type": "City",
+                "name": "上海"
+            },
+            "skills": "Java, Spring, SpringBoot, Mybatis, Dubbo, MySQL, Redis, ElasticSearch, MongoDB, Kafka, RocketMQ, RabbitMQ, Docker, Kubernetes, 微服务架构, 分布式系统, 高并发架构, JVM调优, 并发编程, 设计模式"
+        },
         "description": "Java资深开发工程师、CSDN博客专家、51CTO专家博主、幕后大佬社区创始人，拥有多年一线研发经验，出版多本Java技术书籍",
         "url": "https://www.liaozhiwei.cn/",
         "image": "https://www.liaozhiwei.cn/assets/images/avatar.jpg",
@@ -302,7 +329,7 @@
     }
     </script>
 
-    <!-- JSON-LD 结构化数据：WebPage -->
+    <!-- JSON-LD 结构化数据：WebPage + Speakable（语音助手朗读） -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -321,6 +348,75 @@
         "primaryImageOfPage": {
             "@type": "ImageObject",
             "url": "https://www.liaozhiwei.cn/assets/images/avatar.jpg"
+        },
+        "speakable": {
+            "@type": "SpeakableSpecification",
+            "cssSelector": [".me.card .name", ".info-job", ".container h2"]
+        }
+    }
+    </script>
+
+    <!-- JSON-LD 结构化数据：服务（GEO + 业务范围） -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "@id": "https://www.liaozhiwei.cn/#service",
+        "name": "Java技术架构咨询与培训服务",
+        "description": "Java资深开发工程师提供的架构咨询、技术培训、代码评审、性能调优、微服务设计等服务",
+        "serviceType": "技术咨询",
+        "provider": {"@id": "https://www.liaozhiwei.cn/#person"},
+        "areaServed": [
+            {"@type": "City", "name": "上海"},
+            {"@type": "AdministrativeArea", "name": "上海市"},
+            {"@type": "Country", "name": "中国"},
+            {"@type": "Place", "name": "全球（远程协作）"}
+        ],
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "技术服务清单",
+            "itemListElement": [
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Java架构设计咨询"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "微服务架构设计"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "MySQL性能调优"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "JVM性能优化"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "代码评审与重构"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "技术培训与分享"}}
+            ]
+        },
+        "availableChannel": {
+            "@type": "ServiceChannel",
+            "serviceUrl": "https://www.liaozhiwei.cn/",
+            "serviceEmail": "java_wxid@aliyun.com"
+        },
+        "inLanguage": "zh-CN"
+    }
+    </script>
+
+    <!-- JSON-LD 结构化数据：地点（GEO 实体） -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Place",
+        "@id": "https://www.liaozhiwei.cn/#place",
+        "name": "廖志伟工作地",
+        "description": "Java资深开发工程师廖志伟所在地",
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 31.2304,
+            "longitude": 121.4737
+        },
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "上海",
+            "addressRegion": "上海",
+            "addressCountry": "CN",
+            "postalCode": "200000"
+        },
+        "hasMap": "https://www.google.com/maps?q=31.2304,121.4737",
+        "containedInPlace": {
+            "@type": "AdministrativeArea",
+            "name": "上海市"
         }
     }
     </script>

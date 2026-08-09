@@ -1,12 +1,27 @@
 # robots.txt for www.liaozhiwei.cn
 # 廖志伟个人主页 - Java资深开发工程师
+# 最后更新：2026-08-09
 
-# 默认规则：允许所有爬虫访问全部内容
+# =================================================
+# 全局规则：允许所有爬虫访问公开内容
+# =================================================
 User-agent: *
 Allow: /
+Disallow: /.git/
+Disallow: /.idea/
+Disallow: /.trae-verify/
+Disallow: /debug.log
+Disallow: /.DS_Store
+Disallow: /Thumbs.db
+Disallow: /*.bak$
+Disallow: /*.log$
+Disallow: /*.tmp$
 Crawl-delay: 1
 
-# 允许主要搜索引擎爬取（无限制）
+# =================================================
+# 主流搜索引擎爬虫（无限制）
+# =================================================
+# Google
 User-agent: Googlebot
 Allow: /
 Crawl-delay: 0
@@ -14,6 +29,15 @@ Crawl-delay: 0
 User-agent: Googlebot-Image
 Allow: /
 
+# Bing
+User-agent: bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: msnbot
+Allow: /
+
+# 百度
 User-agent: Baiduspider
 Allow: /
 Crawl-delay: 1
@@ -21,39 +45,112 @@ Crawl-delay: 1
 User-agent: Baiduspider-image
 Allow: /
 
-User-agent: bingbot
-Allow: /
-Crawl-delay: 1
-
-User-agent: YandexBot
+User-agent: Baiduspider-render
 Allow: /
 
+# 搜狗
 User-agent: Sogou web spider
 Allow: /
 Crawl-delay: 2
 
+User-agent: Sogou inst spider
+Allow: /
+Crawl-delay: 2
+
+# 360
 User-agent: 360Spider
 Allow: /
 Crawl-delay: 2
 
+User-agent: HaosouSpider
+Allow: /
+
+# 神马（UC）
+User-agent: Yisouspider
+Allow: /
+Crawl-delay: 1
+
+# 头条 / 字节
+User-agent: ToutiaoSpider
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bytespider
+Allow: /
+Crawl-delay: 1
+
+# 华为
+User-agent: PetalBot
+Allow: /
+Crawl-delay: 1
+
+# 苹果
+User-agent: Applebot
+Allow: /
+
+# Yandex
+User-agent: YandexBot
+Allow: /
+
+# =================================================
 # AI 爬虫（允许内容用于训练和检索）
+# =================================================
+# OpenAI
 User-agent: GPTBot
 Allow: /
 
 User-agent: ChatGPT-User
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
+# Anthropic
 User-agent: Claude-Web
 Allow: /
 
 User-agent: anthropic-ai
 Allow: /
 
+User-agent: ClaudeBot
+Allow: /
+
+# Perplexity
 User-agent: PerplexityBot
 Allow: /
 
-# 站点地图
+User-agent: Perplexity-User
+Allow: /
+
+# Google AI
+User-agent: Google-Extended
+Allow: /
+
+# Common Crawl（数据集，许多 AI 训练用）
+User-agent: CCBot
+Allow: /
+
+# Meta AI
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# Amazon
+User-agent: Amazonbot
+Allow: /
+
+# Diffbot / Imagesift
+User-agent: Diffbot
+Allow: /
+
+User-agent: ImagesiftBot
+Allow: /
+
+# =================================================
+# 站点地图与主机
+# =================================================
 Sitemap: https://www.liaozhiwei.cn/sitemap.xml
 
-# 主机设置
 Host: www.liaozhiwei.cn
