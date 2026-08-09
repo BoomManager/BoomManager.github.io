@@ -88,9 +88,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===== 3. 鼠标跟随效果 =====
     const follower = document.querySelector('.cursor-follower');
     if (follower && window.matchMedia('(pointer: fine)').matches) {
+        var followerX = 0, followerY = 0, followerRAF = null;
         document.addEventListener('mousemove', function(e) {
-            follower.style.left = e.clientX + 'px';
-            follower.style.top = e.clientY + 'px';
+            followerX = e.clientX;
+            followerY = e.clientY;
+            if (!followerRAF) {
+                followerRAF = requestAnimationFrame(function() {
+                    follower.style.left = followerX + 'px';
+                    follower.style.top = followerY + 'px';
+                    followerRAF = null;
+                });
+            }
         });
 
         document.querySelectorAll('a, button, .skill-tag, .skill-category, .page-entry-card, .book-card, .media-link, .toc-item, .achievement-card, .stat-card').forEach(el => {
@@ -378,7 +386,12 @@ document.addEventListener('DOMContentLoaded', function() {
         body.classList.add('dark-mode');
         if (themeSwitch) {
             themeSwitch.innerHTML = '<i class="fa fa-sun-o" aria-hidden="true"></i>';
+            themeSwitch.setAttribute('aria-pressed', 'true');
+            themeSwitch.setAttribute('aria-label', '切换为日间模式');
         }
+    } else if (themeSwitch) {
+        themeSwitch.setAttribute('aria-pressed', 'false');
+        themeSwitch.setAttribute('aria-label', '切换为夜间模式');
     }
 
     // 暗色模式跟随系统实时变化（仅当用户未手动设置主题时）
@@ -389,10 +402,18 @@ document.addEventListener('DOMContentLoaded', function() {
             const isDark = e.matches;
             if (isDark) {
                 body.classList.add('dark-mode');
-                if (themeSwitch) themeSwitch.innerHTML = '<i class="fa fa-sun-o" aria-hidden="true"></i>';
+                if (themeSwitch) {
+                    themeSwitch.innerHTML = '<i class="fa fa-sun-o" aria-hidden="true"></i>';
+                    themeSwitch.setAttribute('aria-pressed', 'true');
+                    themeSwitch.setAttribute('aria-label', '切换为日间模式');
+                }
             } else {
                 body.classList.remove('dark-mode');
-                if (themeSwitch) themeSwitch.innerHTML = '<i class="fa fa-moon-o" aria-hidden="true"></i>';
+                if (themeSwitch) {
+                    themeSwitch.innerHTML = '<i class="fa fa-moon-o" aria-hidden="true"></i>';
+                    themeSwitch.setAttribute('aria-pressed', 'false');
+                    themeSwitch.setAttribute('aria-label', '切换为夜间模式');
+                }
             }
         });
     }
@@ -403,9 +424,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (body.classList.contains('dark-mode')) {
                 this.innerHTML = '<i class="fa fa-sun-o" aria-hidden="true"></i>';
+                this.setAttribute('aria-pressed', 'true');
+                this.setAttribute('aria-label', '切换为日间模式');
                 localStorage.setItem('theme', 'dark');
             } else {
                 this.innerHTML = '<i class="fa fa-moon-o" aria-hidden="true"></i>';
+                this.setAttribute('aria-pressed', 'false');
+                this.setAttribute('aria-label', '切换为夜间模式');
                 localStorage.setItem('theme', 'light');
             }
         });
@@ -746,7 +771,26 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===== 14. 邮箱/微信一键复制 =====
-    document.querySelectorAll('.contact.info-unit span, .contact.info-unit a').forEach(el => {
+    var copyToastEl = null;
+    function showCopyToast(text) {
+        if (copyToastEl) {
+            copyToastEl.remove();
+            copyToastEl = null;
+        }
+        copyToastEl = document.createElement('div');
+        copyToastEl.className = 'copy-toast';
+        copyToastEl.textContent = '已复制：' + text;
+        document.body.appendChild(copyToastEl);
+        setTimeout(() => copyToastEl && copyToastEl.classList.add('show'), 10);
+        setTimeout(() => {
+            if (copyToastEl) {
+                copyToastEl.classList.remove('show');
+                setTimeout(() => { if (copyToastEl) { copyToastEl.remove(); copyToastEl = null; } }, 300);
+            }
+        }, 2000);
+    }
+
+    document.querySelectorAll('.contact.info-unit span, .contact.info-unit a, .contact.info-unit .contact-item[role="button"]').forEach(el => {
         const text = el.textContent.trim();
         if (text.includes('@') || /^[\w-]+$/.test(text)) {
             el.style.cursor = 'pointer';
@@ -755,27 +799,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (this.tagName === 'A') return; // 链接不拦截
                 e.preventDefault();
 
-                function showToast() {
-                    const toast = document.createElement('div');
-                    toast.className = 'copy-toast';
-                    toast.textContent = '已复制：' + text;
-                    document.body.appendChild(toast);
-                    setTimeout(() => toast.classList.add('show'), 10);
-                    setTimeout(() => {
-                        toast.classList.remove('show');
-                        setTimeout(() => toast.remove(), 300);
-                    }, 2000);
-                }
-
                 // 优先使用现代 Clipboard API（需 HTTPS 或 localhost）
                 if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(text).then(showToast).catch(() => {
-                        fallbackCopy(text, showToast);
+                    navigator.clipboard.writeText(text).then(function() { showCopyToast(text); }).catch(() => {
+                        fallbackCopy(text, function() { showCopyToast(text); });
                     });
                 } else {
-                    fallbackCopy(text, showToast);
+                    fallbackCopy(text, function() { showCopyToast(text); });
                 }
             });
+            // 键盘支持：Enter/Space 触发复制
+            if (el.getAttribute('role') === 'button') {
+                el.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+            }
         }
     });
 
@@ -975,22 +1016,53 @@ function injectShortcutPanel() {
     overlay.addEventListener('click', function(e) {
         if (e.target === overlay) closeShortcutPanel();
     });
+    // 焦点陷阱：Tab/Shift+Tab 循环在模态框内
+    overlay.addEventListener('keydown', function(e) {
+        if (e.key !== 'Tab') return;
+        var focusables = overlay.querySelectorAll('kbd, button, a, [tabindex]:not([tabindex="-1"])');
+        if (focusables.length === 0) return;
+        var first = focusables[0];
+        var last = focusables[focusables.length - 1];
+        if (e.shiftKey) {
+            if (document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            }
+        } else {
+            if (document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        }
+    });
     return overlay;
 }
 
 var shortcutOverlay = null;
 var fontSizePanel = null;
+var shortcutPrevFocus = null;
 
 function openShortcutPanel() {
     if (!shortcutOverlay) shortcutOverlay = injectShortcutPanel();
+    shortcutPrevFocus = document.activeElement;
     shortcutOverlay.classList.add('show');
     document.body.style.overflow = 'hidden';
+    // 焦点移入模态框
+    setTimeout(function() {
+        var firstFocusable = shortcutOverlay.querySelector('kbd, button, a, [tabindex]');
+        if (firstFocusable) firstFocusable.focus();
+    }, 50);
 }
 
 function closeShortcutPanel() {
     if (shortcutOverlay) {
         shortcutOverlay.classList.remove('show');
         document.body.style.overflow = '';
+        // 焦点恢复到触发元素
+        if (shortcutPrevFocus && typeof shortcutPrevFocus.focus === 'function') {
+            shortcutPrevFocus.focus();
+            shortcutPrevFocus = null;
+        }
     }
 }
 
@@ -1037,7 +1109,32 @@ document.addEventListener('DOMContentLoaded', function() {
 // Service Worker 注册（轻量 PWA，网络优先策略）
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-        navigator.serviceWorker.register('sw.js').catch(function() {
+        navigator.serviceWorker.register('sw.js').then(function(reg) {
+            // 监听新版本安装，提示用户刷新
+            reg.addEventListener('updatefound', function() {
+                var newWorker = reg.installing;
+                if (!newWorker) return;
+                newWorker.addEventListener('statechange', function() {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                        // 新版本已就绪，显示更新提示
+                        var toast = document.createElement('div');
+                        toast.className = 'copy-toast';
+                        toast.style.cssText = 'bottom:80px;cursor:pointer;padding:12px 20px;';
+                        toast.textContent = '网站已更新，点击刷新页面';
+                        document.body.appendChild(toast);
+                        setTimeout(function() { toast.classList.add('show'); }, 10);
+                        toast.addEventListener('click', function() {
+                            window.location.reload();
+                        });
+                        // 5秒后自动消失
+                        setTimeout(function() {
+                            toast.classList.remove('show');
+                            setTimeout(function() { toast.remove(); }, 300);
+                        }, 8000);
+                    }
+                });
+            });
+        }).catch(function() {
             // 注册失败静默处理，不影响正常浏览
         });
     });

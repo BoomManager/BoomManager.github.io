@@ -249,7 +249,7 @@
                     <i class="fa fa-home" aria-hidden="true"></i>
                     返回首页
                 </a>
-                <a href="javascript:history.back()" class="error-btn error-btn-secondary">
+                <a href="index.html" class="error-btn error-btn-secondary" id="goBackBtn">
                     <i class="fa fa-arrow-left" aria-hidden="true"></i>
                     返回上一页
                 </a>
@@ -267,6 +267,16 @@
     </main>
 
     <script src="assets/js/common.js"></script>
+    <script>
+        // 返回上一页：有历史记录则回退，无则跳首页
+        (function() {
+            var btn = document.getElementById('goBackBtn');
+            if (btn && history.length > 1) {
+                btn.href = 'javascript:history.back()';
+            }
+            // 无历史记录时保持 href="index.html" 作为 fallback
+        })();
+    </script>
 </body>
 
 </html>

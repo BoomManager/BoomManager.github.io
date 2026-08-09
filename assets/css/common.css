@@ -64,7 +64,7 @@ body.dark-mode {
 
     --color-text: #f3f4f6;
     --color-text-secondary: #9ca3af;
-    --color-text-muted: #6b7280;
+    --color-text-muted: #9ca3af;
 
     --color-bg: #1f2937;
     --color-bg-alt: rgba(56, 189, 248, 0.08);
@@ -495,6 +495,11 @@ body:hover .cursor-follower {
     background: rgba(26, 188, 156, 0.12);
     border-color: rgba(26, 188, 156, 0.3);
     transform: translateX(3px);
+}
+
+.contact-item:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
 }
 
 .contact-item > i {
@@ -1155,11 +1160,11 @@ body.dark-mode .book-tag-tw {
 }
 
 body.dark-mode .book-publisher-meta {
-    color: #64748b;
+    color: #9ca3af;
 }
 
 body.dark-mode .book-publisher-meta i {
-    color: #475569;
+    color: #7dd3fc;
 }
 
 body.dark-mode .book-card {
@@ -3133,5 +3138,37 @@ body,
 
     body.dark-mode .card {
         border: 2px solid #fff;
+    }
+}
+
+/* =================================================
+ * 触摸设备：禁用 :hover 粘滞效果
+ * 仅在支持 hover 的设备（鼠标）上保留 hover 交互
+ * ================================================= */
+@media (hover: none) {
+    .card:hover,
+    .page-entry-card:hover,
+    .book-card:hover,
+    .book-card:hover::before,
+    .book-card:hover .book-cover img,
+    .book-card:hover .book-title,
+    .book-card:hover .book-tag,
+    .book-card:hover .book-tag-soft,
+    .book-card:hover .book-tag-tw,
+    .book-card:hover .book-price,
+    .book-card:hover .book-link,
+    .book-card:hover .book-link i,
+    .achievement-card:hover,
+    .habit-card:hover,
+    .stat-card:hover,
+    .stat-card:hover .stat-value,
+    .media-link:hover,
+    .media-link:hover::after,
+    .card:hover::after,
+    .card:hover h2 i,
+    .page-entry-card:hover .entry-icon,
+    .toc-item:hover {
+        transform: none !important;
+        box-shadow: inherit !important;
     }
 }
