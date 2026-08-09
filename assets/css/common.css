@@ -2306,6 +2306,32 @@ body.dark-mode .sidebar-toggle:hover {
         grid-template-columns: 1fr;
     }
 
+    /* 移动端禁用 content-visibility，确保卡片即时可交互 */
+    .page-entry-card {
+        content-visibility: visible !important;
+        contain-intrinsic-size: auto !important;
+    }
+
+    /* 移动端卡片可点击视觉指示 */
+    .page-entry-card::after {
+        content: '点击访问 →';
+        display: block;
+        margin-top: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #1abc9c;
+        opacity: 0.8;
+    }
+
+    .page-entry-card:active {
+        background-color: rgba(26, 188, 156, 0.08);
+        transform: scale(0.97);
+    }
+
+    body.dark-mode .page-entry-card::after {
+        color: #38bdf8;
+    }
+
     .books-grid {
         grid-template-columns: 1fr;
         gap: 16px;
