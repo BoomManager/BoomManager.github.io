@@ -3,7 +3,7 @@
  * 策略：网络优先（保证内容新鲜），离线时回退缓存与离线页
  */
 
-const CACHE_VERSION = 'lzw-v9-20260810-fix-nav-spacing';
+const CACHE_VERSION = 'lzw-v10-20260810-force-cache-bust';
 const CORE_CACHE = CACHE_VERSION + '-core';
 const OFFLINE_URL = 'offline.html';
 
@@ -105,7 +105,7 @@ self.addEventListener('fetch', function(event) {
         request.destination === 'image' ||
         request.destination === 'font') {
         event.respondWith(
-            caches.match(request).then(function(cached) {
+            caches.match(request, { ignoreSearch: true }).then(function(cached) {
                 if (cached) return cached;
                 return fetch(request).then(function(response) {
                     // 缓存成功的响应

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
@@ -102,9 +102,9 @@
     <link rel="preconnect" href="https://github.com" crossorigin>
 
     <!-- 首屏关键资源preload（高优先级） -->
-    <link rel="preload" href="assets/css/common.css" as="style">
+    <link rel="preload" href="assets/css/common.css?v=10" as="style">
     <link rel="preload" href="assets/css/font-awesome.min.css" as="style">
-    <link rel="preload" href="assets/js/common.js" as="script">
+    <link rel="preload" href="assets/js/common.js?v=10" as="script">
     <link rel="preload" href="assets/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="assets/images/profile.jpg" as="image" fetchpriority="high">
     <link rel="preload" href="assets/images/wechat-qr.jpg" as="image">
@@ -114,12 +114,10 @@
     <link rel="prefetch" href="works.html" as="document">
     <link rel="prefetch" href="business.html" as="document">
     <link rel="prefetch" href="about.html" as="document">
-    <link rel="prefetch" href="assets/css/skills.css" as="style">
-    <link rel="prefetch" href="assets/css/works.css" as="style">
 
     <link rel="stylesheet" href="assets/css/typo.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/common.css?v=10">
 
     <!-- JSON-LD 结构化数据：个人信息（增强版） -->
     <script type="application/ld+json">
@@ -465,7 +463,7 @@
             <button class="theme-switch" id="themeSwitch" aria-label="切换夜间模式" type="button">
                 <i class="fa fa-moon-o" aria-hidden="true"></i>
             </button>
-            <button class="navbar-toggle" id="navbarToggle" aria-label="打开菜单" aria-expanded="true">
+            <button class="navbar-toggle" id="navbarToggle" aria-label="打开菜单" aria-expanded="false">
                 <i class="fa fa-bars"></i>
             </button>
         </div>
@@ -859,6 +857,6 @@
     <i class="fa fa-arrow-up" aria-hidden="true"></i>
 </button>
 
-<script src="assets/js/common.js"></script>
+<script src="assets/js/common.js?v=10"></script>
 </body>
 </html>
