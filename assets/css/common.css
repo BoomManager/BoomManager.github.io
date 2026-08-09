@@ -377,7 +377,7 @@ body:hover .cursor-follower {
 .container {
     display: flex;
     gap: 20px;
-    padding: 110px 20px 20px;
+    padding: 24px 20px 20px;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -1870,6 +1870,59 @@ body.dark-mode .navbar {
 }
 
 /* =================================================
+ * 侧边栏折叠（移动端）
+ * ================================================= */
+.sidebar-toggle {
+    display: none;
+    margin: 16px auto 0;
+    padding: 10px 20px;
+    background: rgba(26, 188, 156, 0.1);
+    color: #1abc9c;
+    border: 1px solid rgba(26, 188, 156, 0.3);
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-items: center;
+    gap: 8px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.sidebar-toggle:hover {
+    background: rgba(26, 188, 156, 0.2);
+    border-color: #1abc9c;
+}
+
+.sidebar-toggle:active {
+    transform: scale(0.96);
+}
+
+.sidebar-toggle i {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-details {
+    /* Desktop: fully visible, no overflow restriction */
+}
+
+body.sidebar-expanded .sidebar-toggle i {
+    transform: rotate(180deg);
+}
+
+body.dark-mode .sidebar-toggle {
+    background: rgba(56, 189, 248, 0.1);
+    color: #38bdf8;
+    border-color: rgba(56, 189, 248, 0.3);
+}
+
+body.dark-mode .sidebar-toggle:hover {
+    background: rgba(56, 189, 248, 0.2);
+    border-color: #38bdf8;
+}
+
+/* =================================================
  * 响应式 - 平板
  * ================================================= */
 @media (max-width: 1024px) {
@@ -1974,11 +2027,33 @@ body.dark-mode .navbar {
 
     .container {
         flex-direction: column;
-        padding: 110px 15px 24px;
+        padding: 24px 15px 24px;
     }
 
+    /* 移动端侧边栏移到主内容之后，避免遮挡主要内容 */
     .side {
         flex: none;
+        order: 2;
+    }
+
+    .main {
+        order: 1;
+    }
+
+    /* 移动端侧边栏折叠 */
+    .sidebar-toggle {
+        display: inline-flex;
+        min-height: 44px;
+    }
+
+    .sidebar-details {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+    }
+
+    body.sidebar-expanded .sidebar-details {
+        max-height: 5000px;
     }
 
     .page-content {
@@ -3442,7 +3517,7 @@ body,
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 90px 20px 32px;
+    padding: 90px 20px 0;
     position: relative;
     overflow: hidden;
 }

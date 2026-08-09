@@ -3,7 +3,7 @@
  * 策略：网络优先（保证内容新鲜），离线时回退缓存与离线页
  */
 
-const CACHE_VERSION = 'lzw-v4-20260809-hero-fix';
+const CACHE_VERSION = 'lzw-v5-20260809-mobile-nav';
 const CORE_CACHE = CACHE_VERSION + '-core';
 const OFFLINE_URL = 'offline.html';
 
