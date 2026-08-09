@@ -3574,6 +3574,7 @@ body,
     flex-wrap: wrap;
     gap: 14px;
     justify-content: center;
+    margin-top: 8px;
 }
 
 .hero-btn {
