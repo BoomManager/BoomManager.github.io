@@ -2030,14 +2030,14 @@ body.dark-mode .sidebar-toggle:hover {
         padding: 32px 15px 24px;
     }
 
-    /* 移动端侧边栏移到主内容之后，避免遮挡主要内容 */
+    /* 移动端个人信息（侧边栏）移到主内容之前，优先展示 */
     .side {
         flex: none;
-        order: 2;
+        order: 1;
     }
 
     .main {
-        order: 1;
+        order: 2;
     }
 
     /* 移动端侧边栏 - 默认展开保持与PC一致 */

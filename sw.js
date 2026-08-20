@@ -3,7 +3,7 @@
  * 策略：网络优先（保证内容新鲜），离线时回退缓存与离线页
  */
 
-const CACHE_VERSION = 'lzw-v11-20260810-fix-toc-overlay';
+const CACHE_VERSION = 'lzw-v12-20260810-mobile-sidebar-first';
 const CORE_CACHE = CACHE_VERSION + '-core';
 const OFFLINE_URL = 'offline.html';
 
